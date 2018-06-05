@@ -9,4 +9,4 @@ public class XmlwsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(XmlwsApplication.class, args);
 	}
-}
+}//hehe
