@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
+		<meta charset="UTF-8">
+		<title>Kreiranje novog oglasa</title>			
+	</head>
+
+	<body>
+		<div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">		
+				<li class="nav-item">
+					<a class="nav-link active text-danger" href="adminFanZona">Home</a>
+				</li>				
+			</ul>
+			<a class="nav-link mr-0 text-white" href="/index.html">Odjava</a>
+		</div>
+		<nav class="navbar navbar-expand-md bg-dark">
+			    <div class="mx-auto order-0 w-50">
+			        <div class="nav nav-pills bg-dark flex-row justify-content-center">
+						<ul class="nav nav-tabs bg-danger flex-row">			
+							<li class="nav-item">
+								<a class="nav-link text-white" href="adminFanZona.html">Sifarnici</a>				
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="adminUsedAd.html">Korisnici</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-danger active" href="adminAgents.html">Agenti</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="adminUsedAd.html">Komentari</a>
+							</li>
+						</ul>
+					</div>
+			    </div>
+		</nav>
+	
+		<div class="container col-md-4 mt-5">
+			<form>
+			  <div class="form-group row">
+			    <label for="inputName" class="col-sm-2 col-form-label">Ime</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="ml-2" id="inputName" placeholder="Ime">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <label for="inputLastName" class="col-sm-2 col-form-label">Prezime</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="ml-2" id="inputLastName" placeholder="Prezime">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <label for="inputPIB" class="col-sm-2 col-form-label">PIB</label>
+			    <div class="col-sm-10">
+			      <input type="number" class="ml-2" id="inputPIB" placeholder="PIB">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <label for="inputAdress" class="col-sm-2 col-form-label">Adresa</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="ml-2" id="inputAdress" placeholder="Adresa">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <label for="inputUserName" class="col-sm-2 col-form-label">Korisnicko ime</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="ml-2" id="inputUserName" placeholder="Adresa">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <label for="inputPassword" class="col-sm-2 col-form-label">Sifra</label>
+			    <div class="col-sm-10">
+			      <input type="password" class="ml-2" id="inputPassword" placeholder="sifra">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <div class="col-sm-10">
+	    			<input type="submit" value="Kreiraj agenta" class="btn btn-danger" />
+			    </div>
+			  </div>
+			</form>
+		</div>
+		<script>
+			$("input[type='submit']").click(function(event) {
+				event.preventDefault();
+				function validate() {
+				    
+				    return true;
+				}
+				if(!validate()) {
+					return;
+				}
+				var formData = JSON.stringify({
+					name:$("#inputName").val(),
+					lastName:$("#inputLastName").val(),
+					businessNo:$("#inputPIB").val(),
+					adress:$("#inputAdress").val(),
+					userName:$("#inputUserName").val(),
+					password:$("#inputPassword").val(),
+					userType:1,
+				});
+				$.ajax({
+					url: "http://localhost:8080/user",
+					type: 'POST',
+					data: formData,
+					contentType: "application/json",
+					success: function(){
+						console.log("Ajax zahtev za registraciju.");
+						window.location.href = "http://localhost:8080/admin/adminAgents.html";
+					}
+				});
+		   });
+		</script>
+	</body>
+</html>

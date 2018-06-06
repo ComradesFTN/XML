@@ -32,19 +32,26 @@ public class User {
 	@Column(name = "sifra")
 	private String password;
 	
+	@Column(name = "adresa")
+	private String adress;
+	
 	@Column(name = "tipKorisnika")
 	private int userType;
 	
-	public User(String name, String lastName, String businessNo, String userName, String password, int userType) {
+	public User(long id, String name, String lastName, String businessNo, String userName, String password,
+			String adress, int userType) {
+		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.businessNo = businessNo;
 		this.userName = userName;
 		this.password = password;
+		this.adress = adress;
 		this.userType = userType;
 	}
-
+	
 	public User() {
+
 	}
 
 	public long getId() {
@@ -101,6 +108,14 @@ public class User {
 
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+
+	public String getAdress() {
+		return adress;
+	}
+
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
 
 }
