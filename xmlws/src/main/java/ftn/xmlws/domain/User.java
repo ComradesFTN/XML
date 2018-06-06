@@ -1,16 +1,38 @@
 package ftn.xmlws.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name = "Korisnik")
 public class User {
 	
 	// 0 - admin
 	// 1 - agent
 	// 2 - klijenti
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
+	@Column(name = "Ime")
 	private String name;
+	
+	@Column(name = "Prezime")
 	private String lastName;
+	
+	@Column(name = "PIB")
 	private String businessNo;
+	
+	@Column(name = "KorisnickoIme")
 	private String userName;
+	
+	@Column(name = "sifra")
 	private String password;
+	
+	@Column(name = "tipKorisnika")
 	private int userType;
 	
 	public User(String name, String lastName, String businessNo, String userName, String password, int userType) {
@@ -23,6 +45,14 @@ public class User {
 	}
 
 	public User() {
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
