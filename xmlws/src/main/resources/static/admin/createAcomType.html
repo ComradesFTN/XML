@@ -21,13 +21,13 @@
 			        <div class="nav nav-pills bg-dark flex-row justify-content-center">
 						<ul class="nav nav-tabs bg-danger flex-row">			
 							<li class="nav-item">
-								<a class="nav-link text-white" href="adminHome.html">Sifarnici</a>				
+								<a class="nav-link text-danger active" href="adminHome.html">Sifarnici</a>				
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-white" href="adminUser.html">Korisnici</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-danger active" href="adminAgents.html">Agenti</a>
+								<a class="nav-link text-white" href="adminAgents.html">Agenti</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-white" href="adminUsedAd.html">Komentari</a>
@@ -45,45 +45,9 @@
 			      <input type="text" class="ml-2" id="inputName" placeholder="Ime">
 			    </div>
 			  </div>
-			  
-			  <div class="form-group row">
-			    <label for="inputLastName" class="col-sm-2 col-form-label">Prezime</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="ml-2" id="inputLastName" placeholder="Prezime">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group row">
-			    <label for="inputPIB" class="col-sm-2 col-form-label">PIB</label>
-			    <div class="col-sm-10">
-			      <input type="number" class="ml-2" id="inputPIB" placeholder="PIB">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group row">
-			    <label for="inputAdress" class="col-sm-2 col-form-label">Adresa</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="ml-2" id="inputAdress" placeholder="Adresa">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group row">
-			    <label for="inputUserName" class="col-sm-2 col-form-label">Korisnicko ime</label>
-			    <div class="col-sm-10">
-			      <input type="text" class="ml-2" id="inputUserName" placeholder="Adresa">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group row">
-			    <label for="inputPassword" class="col-sm-2 col-form-label">Sifra</label>
-			    <div class="col-sm-10">
-			      <input type="password" class="ml-2" id="inputPassword" placeholder="sifra">
-			    </div>
-			  </div>
-			  
 			  <div class="form-group row">
 			    <div class="col-sm-10">
-	    			<input type="submit" value="Kreiraj agenta" class="btn btn-danger" />
+	    			<input type="submit" value="Kreiraj tip" class="btn btn-danger" />
 			    </div>
 			  </div>
 			</form>
@@ -100,21 +64,16 @@
 				}
 				var formData = JSON.stringify({
 					name:$("#inputName").val(),
-					lastName:$("#inputLastName").val(),
-					businessNo:$("#inputPIB").val(),
-					adress:$("#inputAdress").val(),
-					userName:$("#inputUserName").val(),
-					password:$("#inputPassword").val(),
-					userType:1,
+					codeType:0,
 				});
 				$.ajax({
-					url: "http://localhost:8080/user",
+					url: "http://localhost:8080/aCodes",
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
 					success: function(){
 						console.log("Ajax zahtev za registraciju.");
-						window.location.href = "http://localhost:8080/admin/adminAgents.html";
+						window.location.href = "http://localhost:8080/admin/adminHome.html";
 					}
 				});
 		   });

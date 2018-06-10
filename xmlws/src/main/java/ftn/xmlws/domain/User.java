@@ -38,8 +38,11 @@ public class User {
 	@Column(name = "tipKorisnika")
 	private int userType;
 	
+	@Column(name = "Blokiran")
+	private boolean baned=false;
+
 	public User(long id, String name, String lastName, String businessNo, String userName, String password,
-			String adress, int userType) {
+			String adress, int userType, boolean baned) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
@@ -48,10 +51,10 @@ public class User {
 		this.password = password;
 		this.adress = adress;
 		this.userType = userType;
+		this.baned = baned;
 	}
-	
-	public User() {
 
+	public User() {
 	}
 
 	public long getId() {
@@ -116,6 +119,14 @@ public class User {
 
 	public void setAdress(String adress) {
 		this.adress = adress;
+	}
+
+	public boolean isBaned() {
+		return baned;
+	}
+
+	public void setBaned(boolean baned) {
+		this.baned = baned;
 	}
 
 }
