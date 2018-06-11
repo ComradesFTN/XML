@@ -6,7 +6,6 @@
 	<groupId>ftn</groupId>
 	<artifactId>xmlws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 
 	<name>xmlws</name>
 	<description>projekat iz predmeta xml i web servisi</description>
