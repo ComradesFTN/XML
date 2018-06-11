@@ -10,3 +10,5 @@ public class XmlwsApplication {
 		SpringApplication.run(XmlwsApplication.class, args);
 	}
 }
+
+//test
