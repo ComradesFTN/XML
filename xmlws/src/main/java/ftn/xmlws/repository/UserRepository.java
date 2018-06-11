@@ -7,5 +7,7 @@ import ftn.xmlws.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
+	
+	public User findByuserName (String username);
 
 }
