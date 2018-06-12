@@ -1,37 +1,50 @@
 package ftn.xmlws;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
-
+import org.apache.cxf.Bus;
+import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportResource;
 
-import ftn.xmlws.config.Config;
+import ftn.xmlws.service.soap.UserServiceSoapImpl;
+
 
 @SpringBootApplication
-public class XmlwsApplication implements WebApplicationInitializer {
+@ImportResource({ "classpath:cxf.xml" })
+public class XmlwsApplication extends SpringBootServletInitializer {
+	
+	@Autowired
+    private ApplicationContext applicationContext;
 
 	public static void main(String[] args) {
 		SpringApplication.run(XmlwsApplication.class, args);
 	}
-
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(Config.class);
-		servletContext.addListener(new ContextLoaderListener(rootContext));
-
-		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
-		webContext.setParent(rootContext);
-
-		ServletRegistration.Dynamic cxfDispatcher = servletContext.addServlet("CXF dispatcher", CXFServlet.class);
-		cxfDispatcher.setLoadOnStartup(1);
-		cxfDispatcher.addMapping("/services/*");
-
-	}
+	
+	// umesto web.xml
+	@Bean
+    public ServletRegistrationBean servletRegistrationBean(ApplicationContext context) {
+        return new ServletRegistrationBean(new CXFServlet(), "/services/*");
+    }
+	
+	// umesto cxf config klase
+    public EndpointImpl UserServiceSoap() {
+        Bus bus = (Bus) applicationContext.getBean(Bus.DEFAULT_BUS_ID);
+        Object implementor = new UserServiceSoapImpl();
+        EndpointImpl endpoint = new EndpointImpl(bus, implementor);
+        endpoint.publish("/UserServiceSoap");
+        return endpoint;
+    }
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(XmlwsApplication.class);
+    }
+   
 }
