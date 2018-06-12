@@ -8,7 +8,7 @@
 <script>
 		$(document).ready(function(){
 			$.ajax({
-				url : "http://localhost:8080/aCodes/getACodes"
+				url : "http://localhost:8080/xmlws/aCodes/getACodes"
 			}).then(
 					function(data) {
 						for (i = 0; i < data.length; i++) {
