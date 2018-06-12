@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.xmlws.domain.User;
+import ftn.xmlws.domain.VerificationToken;
 import ftn.xmlws.repository.UserRepository;
+import ftn.xmlws.repository.VerificationTokenRepository;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	public UserRepository userRepository;
+	
+	@Autowired
+	private VerificationTokenRepository tokenRepository;
 
 	@Override
 	public List<User> findAll() {
@@ -38,6 +43,19 @@ public class UserServiceImpl implements UserService{
 		}
 		userRepository.delete(user);
 		return user;
+	}
+
+	@Override
+	public void createVerificationToken(User user, String token) {
+		VerificationToken myToken = new VerificationToken(user, token);
+        tokenRepository.save(myToken);
+		
+	}
+
+	@Override
+	public VerificationToken getVerificationToken(String VerificationToken) {
+		
+		return tokenRepository.findByToken(VerificationToken);
 	}
 
 }

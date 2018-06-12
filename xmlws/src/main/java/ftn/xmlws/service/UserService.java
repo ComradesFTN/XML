@@ -2,6 +2,8 @@ package ftn.xmlws.service;
 import java.util.List;
 
 import ftn.xmlws.domain.User;
+import ftn.xmlws.domain.VerificationToken;
+
 
 public interface UserService {
 	
@@ -12,5 +14,9 @@ public interface UserService {
 	User save(User userAd);
 	
 	User delete(Long id);
+	
+	void createVerificationToken(User user, String token);
+
+	VerificationToken getVerificationToken(String VerificationToken);
 
 }
