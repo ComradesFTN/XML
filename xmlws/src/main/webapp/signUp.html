@@ -2,9 +2,9 @@
 <html >
 	<head>
 		<title>Registracija</title>
-		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/jquery-3.2.1.min.js"></script>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+		<link rel="stylesheet" href="stylesheets/bootstrap.css">
 		
 	</head>	
 	<body class="bg-light">
@@ -32,13 +32,22 @@
 			<div class="form-row">
 				<div class="form-group col-md-2">
 						<label for="email">Korisnicko ime</label>
-						<input class="form-control text-center w-26 mx-auto" type="text"  id="userName" placeholder="Korisnicko ime" required><br/>
-						<input type="submit" class="btn btn-primary bg-danger" value="Register">
+						<input class="form-control text-center w-26 mx-auto" type="text"  id="userName" placeholder="Korisnicko ime" required>
 				</div>
 				<div class="form-group col-md-2">
 					<label for="brtel">Lozinka</label> 
-					<input class="form-control text-center w-26 mx-auto" type="password" id="password" placeholder="Unesite lozinku" required><br/>
+					<input class="form-control text-center w-26 mx-auto" type="password" id="password" placeholder="Unesite lozinku" required>
 				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+						<label for="email">Email</label>
+						<input class="form-control text-center w-26 mx-auto" type="email"  id="email" placeholder="Email" required>
+				</div>
+				<div class="form-group col-md-2">
+					<label class="invisible" for="register">sdfsdfs</label> 
+					<input type="submit" class="btn btn-primary bg-danger form-control" id="register" value="Register">
+				</div>		
 			</div>
 			
 		</form>	
@@ -52,7 +61,9 @@
 						lastName:$('#lastName').val(),
 						userName:$('#userName').val(),
 						password:$('#password').val(),
+						email:$('#email').val(),
 						userType:2,
+						confirmed: false,
 					});
 					$.ajax({
 						url: "/user",

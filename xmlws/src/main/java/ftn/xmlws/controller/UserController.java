@@ -43,7 +43,6 @@ public class UserController {
 	@RequestMapping(value = "/{id}",method = RequestMethod.PUT)
 	public ResponseEntity<User> editBaned(@PathVariable Long id) {
 		User user = userService.findOne(id);
-		System.out.println("POGODIO SI ME!!!!!");
 		if(user.isBaned()==false) {
 			user.setBaned(true);
 		}else {

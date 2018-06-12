@@ -46,5 +46,4 @@ public class XmlwsApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(XmlwsApplication.class);
     }
- // da  
 }
