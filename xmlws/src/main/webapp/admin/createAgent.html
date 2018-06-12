@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
 		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
 		<meta charset="UTF-8">
 		<title>Kreiranje novog oglasa</title>			
@@ -108,13 +108,13 @@
 					userType:1,
 				});
 				$.ajax({
-					url: "http://localhost:8080/user",
+					url: "http://localhost:8080/xmlws/user",
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
 					success: function(){
 						console.log("Ajax zahtev za registraciju.");
-						window.location.href = "http://localhost:8080/admin/adminAgents.html";
+						window.location.href = "http://localhost:8080/xmlws/admin/adminAgents.html";
 					}
 				});
 		   });

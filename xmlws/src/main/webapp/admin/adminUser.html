@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<script src="/scripts/jquery-3.2.1.min.js"></script>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
 		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
 		<meta charset="UTF-8">
 		<title>Admin</title>
 		  <script>
 			$(document).ready(function(){
 				$.ajax({
-					url : "http://localhost:8080/user/getUsers"
+					url : "http://localhost:8080/xmlws/user/getUsers"
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
@@ -19,8 +19,8 @@
 												+ "<td>" + data[i].name + "</td>"
 												+ "<td>" + data[i].lastName + "</td>"
 												+ "<td>" + data[i].userName + "</td>"
-												+ "<td><button   class=\"btn btn-danger ban\" href='/user/" + data[i].id + "' >Blokiraj</button></td>"
-												+ "<td><button   class=\"btn btn-danger delete\" href='/user/" + data[i].id + "' >Ukloni</button></td>"
+												+ "<td><button   class=\"btn btn-danger ban\" href='/xmlws/user/" + data[i].id + "' >Blokiraj</button></td>"
+												+ "<td><button   class=\"btn btn-danger delete\" href='/xmlws/user/" + data[i].id + "' >Ukloni</button></td>"
 											+ "</tr>"
 										$("#tableBody").append(newRow)
 									}else{
@@ -29,8 +29,8 @@
 												+ "<td>" + data[i].name + "</td>"
 												+ "<td>" + data[i].lastName + "</td>"
 												+ "<td>" + data[i].userName + "</td>"
-												+ "<td><button   class=\"btn btn-danger ban\" href='/user/" + data[i].id + "' >Aktiviraj</button></td>"
-												+ "<td><button   class=\"btn btn-danger delete\" href='/user/" + data[i].id + "' >Ukloni</button></td>"
+												+ "<td><button   class=\"btn btn-danger ban\" href='/xmlws/user/" + data[i].id + "' >Aktiviraj</button></td>"
+												+ "<td><button   class=\"btn btn-danger delete\" href='/xmlws/user/" + data[i].id + "' >Ukloni</button></td>"
 											+ "</tr>"
 										$("#tableBody").append(newRow)
 									}
@@ -75,7 +75,7 @@
 			        	success: function(){
 			        		//ukloni i na strani 
 							alert("uspesno promenjen status");
-							window.location.href = "http://localhost:8080/admin/adminUser.html";
+							window.location.href = "http://localhost:8080/xmlws/admin/adminUser.html";
 				        }
 					});
 				}
