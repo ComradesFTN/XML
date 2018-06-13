@@ -5,16 +5,6 @@
 <script src="scripts/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" href="stylesheets/bootstrap.css">
 <title>HomePage</title>
-<script>
-		$(document).ready(function() {
-			$.ajax({
-				url: "/visit/refreshVisits",
-				type: "POST",
-			}).then(function() {
-				console.log('uspeo sam');
-			});
-		});
-</script>
 </head>
 <body class="bg-light">	
 	<ul class="nav nav-tabs bg-danger">	
@@ -25,9 +15,6 @@
 				<a class="nav-link text-white" href="cinemasPage.html">Agent</a>
 			</li>
 		</ul>
-		<script>
-
-		</script>
 		<form class="text-center mt-5" id="loginForm">
 			<div class="form-group">
 				<label for="email">Email</label>
@@ -37,7 +24,72 @@
 			</div>
 			<input type="submit" class="btn btn-primary bg-danger" value="Login"> Don't have an account? <a href="signUp.html">Sign up.</a>
 		</form>
-		
-		
+		<script>
+			$("input[type='submit']").click(function(event) {
+				var currentUser;
+				event.preventDefault();
+				function validate() {
+				    if ($('#email').val() == "" && $('#password').val() == "") {
+				        alert("Username and password are required");
+				        $('#email').focus();
+				        return false;
+				    }
+				    if ($('#email').val() == "") {
+				        alert("Username is required");
+				        $('#email').focus();
+				        return false;
+				    }
+				    if ($('#password').val() == "") {
+				    alert("Password is required");
+				    $('#password').focus();
+				        return false;
+				    }
+				    return true;
+				}
+				if(!validate()) {
+					return;
+				}
+				var formData = JSON.stringify({
+					email:$("#email").val(),
+					password:$("#password").val(),
+				});
+				$.ajax({
+					url: "/users/login",
+					type: 'POST',
+					data: formData,
+					contentType: "application/json",
+					success: function(data){
+						console.log("Ajax zahtev za login.");
+						currentUser = data;
+						
+					},
+					statusCode: {
+				    	404: function() {
+				      	alert("Email nevalidan.");
+				    	},
+				    	400: function() {
+				    		alert("Username i/ili password su netacni.");
+				    	},
+				    	401: function() {
+				    		alert("Vas nalog nije aktiviran.")
+				    	},
+						200: function() {
+							if(currentUser.userType === 0) {
+								window.location.href = "http://localhost:8080/Posetioci/homePage.html";
+							} else if(currentUser.userType === 1) {
+								window.location.href = "http://localhost:8080/AdminFanZone/adminFanZona.html";
+							} else if(currentUser.userType === 2) {
+								window.location.href = "http://localhost:8080/AdminPozoristaBioskopi/homePage";
+							} else if(currentUser.userType === 3) {
+								window.location.href = "http://localhost:8080/AdminSistema/cinemasAdmin.html";
+							}
+						},
+						202: function() {
+							window.location.href = "http://localhost:8080/Posetioci/changePassword.html";
+						}
+				  	}
+				});
+			});
+		</script>	
 </body>
 </html>

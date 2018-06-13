@@ -2,6 +2,8 @@ package ftn.xmlws.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,7 @@ public class UserController {
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET )
 	public ResponseEntity<List<User>> getUserAds() {
 		List<User> users = userService.findAll();
+		System.out.println("OVDE SAM!!!!NADJI ME!!!");
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	

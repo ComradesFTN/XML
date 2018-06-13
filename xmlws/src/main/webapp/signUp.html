@@ -54,28 +54,63 @@
 		</div>
 		
 		<script>		
-				$("input[type='submit']").click(function(event) {
-					event.preventDefault();
-					var formData = JSON.stringify({
-						name:$('#name').val(),
-						lastName:$('#lastName').val(),
-						userName:$('#userName').val(),
-						password:$('#password').val(),
-						email:$('#email').val(),
-						userType:2,
-						confirmed: false,
-					});
-					$.ajax({
-						url: "http://localhost:8080/xmlws/user",
-						type: 'POST',
-						data: formData,
-						contentType: "application/json",
-						success: function(data){
-							console.log("Ajax zahtev za registraciju.");
-							window.location.href = "http://localhost:8080/xmlws/userHome.html";
+
+		function validate(){
+			$.ajax({
+				url : "http://localhost:8080/xmlws/user/getUsers",
+				async:false,
+			}).then(
+					function(data) {
+						for (i = 0; i < data.length; i++) {
+							if(data[i].email==$('#email').val()){
+								alert("Korisnik sa ovim mailom vec postoji!");
+								provera=false;
+								return;
+							}
 						}
-					});
+			});
+		}
+		$("input[type='submit']").click(function(event) {
+			event.preventDefault();
+			var provera=true;
+				var formData = JSON.stringify({
+					name:$('#name').val(),
+					lastName:$('#lastName').val(),
+					userName:$('#userName').val(),
+					password:$('#password').val(),
+					email:$('#email').val(),
+					userType:2,
+					confirmed: false,
 				});
+				$.ajax({
+					url : "http://localhost:8080/xmlws/user/getUsers",
+					async:false,
+				}).then(
+						function(data) {
+							for (i = 0; i < data.length; i++) {
+								if(data[i].email==$('#email').val()){
+									alert("Korisnik sa ovim mailom vec postoji!");
+									provera=false;
+									break;
+								}
+							}
+							if(provera==true){
+								$.ajax({
+									url: "http://localhost:8080/xmlws/user",
+									type: 'POST',
+									data: formData,
+									contentType: "application/json",
+									async:false,
+									success: function(){
+										console.log("Ajax zahtev za registraciju.");
+										window.location.href = "http://localhost:8080/xmlws/emailConfirm.html";
+									}
+								});
+							}
+				});
+				
+		});
+			
 		</script>
 	</body>
 </html>
