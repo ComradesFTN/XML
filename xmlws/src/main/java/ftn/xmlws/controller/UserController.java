@@ -75,12 +75,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-	public ResponseEntity<User> editBaned(@PathVariable Long id) {
+	public ResponseEntity<User> editbanned(@PathVariable Long id) {
 		User user = userService.findOne(id);
-		if(user.isBaned()==false) {
-			user.setBaned(true);
+		if(user.isbanned()==false) {
+			user.setbanned(true);
 		}else {
-			user.setBaned(false);
+			user.setbanned(false);
 		}
 		User editedUser = userService.save(user);
 		return new ResponseEntity<>(editedUser, HttpStatus.OK);

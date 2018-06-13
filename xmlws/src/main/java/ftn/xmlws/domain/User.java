@@ -39,7 +39,7 @@ public class User {
 	private int userType;
 	
 	@Column(name = "Blokiran")
-	private boolean baned=false;
+	private boolean banned=false;
 	
 	@Column(name = "Email")
 	private String email;
@@ -48,7 +48,7 @@ public class User {
 	private boolean confirmed=false;
 	
 	public User(long id, String name, String lastName, String businessNo, String userName, String password,
-			String adress, int userType, boolean baned, String email, boolean confirmed) {
+			String adress, int userType, boolean banned, String email, boolean confirmed) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
@@ -57,7 +57,7 @@ public class User {
 		this.password = password;
 		this.adress = adress;
 		this.userType = userType;
-		this.baned = baned;
+		this.banned = banned;
 		this.email = email;
 		this.confirmed = confirmed;
 	}
@@ -129,12 +129,12 @@ public class User {
 		this.adress = adress;
 	}
 
-	public boolean isBaned() {
-		return baned;
+	public boolean isbanned() {
+		return banned;
 	}
 
-	public void setBaned(boolean baned) {
-		this.baned = baned;
+	public void setbanned(boolean banned) {
+		this.banned = banned;
 	}
 
 	public String getEmail() {
