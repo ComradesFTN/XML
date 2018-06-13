@@ -18,8 +18,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ftn.xmlws.domain.User;
 import ftn.xmlws.domain.VerificationToken;
+import ftn.xmlws.dto.UserDTO;
 import ftn.xmlws.service.EmailService;
 import ftn.xmlws.service.UserService;
+
 
 @Controller
 @RequestMapping(value = "/user")
@@ -87,6 +89,31 @@ public class UserController {
 		}
 		User editedUser = userService.save(user);
 		return new ResponseEntity<>(editedUser, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<User> loginProcess(@RequestBody UserDTO userDTO, HttpSession session) {
+		String email = userDTO.getEmail();
+		String pass = userDTO.getPassword();
+		System.out.println("email: " + email + "pass: "+ pass);
+		User currentUser = userService.getUserByEmail(email);
+		//System.out.println("trenutni korisnik: " + currentUser.getEmail());
+		if(currentUser == null) {
+			System.out.println("Nepostojeci mail");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			
+		}
+		if(currentUser.getPassword().equals(pass)) {
+			if(currentUser.isConfirmed()) {
+				session.setAttribute("loggedUser", currentUser);
+				if(currentUser.getUserType()==1 || currentUser.getUserType()==2) {
+					return new ResponseEntity<>(currentUser, HttpStatus.OK);				
+				}
+			} else return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	
 	}
 	
 }

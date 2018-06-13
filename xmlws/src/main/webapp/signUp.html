@@ -54,24 +54,18 @@
 		</div>
 		
 		<script>		
-
-		function validate(){
-			$.ajax({
-				url : "http://localhost:8080/xmlws/user/getUsers",
-				async:false,
-			}).then(
-					function(data) {
-						for (i = 0; i < data.length; i++) {
-							if(data[i].email==$('#email').val()){
-								alert("Korisnik sa ovim mailom vec postoji!");
-								provera=false;
-								return;
-							}
-						}
-			});
-		}
 		$("input[type='submit']").click(function(event) {
 			event.preventDefault();
+			function validate(){
+				if($('#name').val()=="" || $('#lastName').val()=="" || $('#userName').val()=="" || $('#password').val()=="" || $('#email').val()==""){
+					alert("Molimo vas popunite sva polja!");
+					return false;
+				}
+				return true;
+			}
+			if(!validate()) {
+				return;
+			}
 			var provera=true;
 				var formData = JSON.stringify({
 					name:$('#name').val(),

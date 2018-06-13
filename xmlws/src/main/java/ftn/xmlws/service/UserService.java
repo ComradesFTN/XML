@@ -18,5 +18,7 @@ public interface UserService {
 	void createVerificationToken(User user, String token);
 
 	VerificationToken getVerificationToken(String VerificationToken);
+	
+	User getUserByEmail(String email);
 
 }

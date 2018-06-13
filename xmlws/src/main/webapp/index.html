@@ -18,11 +18,11 @@
 		<form class="text-center mt-5" id="loginForm">
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input class="form-control text-center w-25 mx-auto" type="email" id="email" placeholder="Enter email"><br/>				
-			    <label for="password">Password</label>
-			    <input class="form-control text-center w-25 mx-auto" type="password"  id="password" placeholder="Password">			
+				<input class="form-control text-center w-25 mx-auto" type="email" id="email" placeholder="Unesite email"><br/>				
+			    <label for="password">Sifra</label>
+			    <input class="form-control text-center w-25 mx-auto" type="password"  id="password" placeholder="Sifra">			
 			</div>
-			<input type="submit" class="btn btn-primary bg-danger" value="Login"> Don't have an account? <a href="signUp.html">Sign up.</a>
+			<input type="submit" class="btn btn-primary bg-danger" value="Prijavi se"> Nemate nalog? <a href="signUp.html">Registruj se.</a>
 		</form>
 		<script>
 			$("input[type='submit']").click(function(event) {
@@ -54,7 +54,7 @@
 					password:$("#password").val(),
 				});
 				$.ajax({
-					url: "/users/login",
+					url: "http://localhost:8080/xmlws/user/login",
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
@@ -74,15 +74,15 @@
 				    		alert("Vas nalog nije aktiviran.")
 				    	},
 						200: function() {
-							if(currentUser.userType === 0) {
-								window.location.href = "http://localhost:8080/Posetioci/homePage.html";
+							if(currentUser.userType === 2) {
+								window.location.href = "http://localhost:8080/xmlws/userHome.html";
 							} else if(currentUser.userType === 1) {
-								window.location.href = "http://localhost:8080/AdminFanZone/adminFanZona.html";
-							} else if(currentUser.userType === 2) {
-								window.location.href = "http://localhost:8080/AdminPozoristaBioskopi/homePage";
-							} else if(currentUser.userType === 3) {
-								window.location.href = "http://localhost:8080/AdminSistema/cinemasAdmin.html";
+								window.location.href = "http://localhost:8080/xmlws/agent/agentHome.html";
 							}
+							/*} else if(currentUser.userType === 2) {
+								//window.location.href = "http://localhost:8080/AdminPozoristaBioskopi/homePage";
+							
+						},*/
 						},
 						202: function() {
 							window.location.href = "http://localhost:8080/Posetioci/changePassword.html";
