@@ -60,33 +60,10 @@
 					contentType: "application/json",
 					success: function(data){
 						console.log("Ajax zahtev za login.");
-						currentUser = data;
-						
+						currentUser = data;						
 					},
-					statusCode: {
-				    	404: function() {
-				      	alert("Email nevalidan.");
-				    	},
-				    	400: function() {
-				    		alert("Username i/ili password su netacni.");
-				    	},
-				    	401: function() {
-				    		alert("Vas nalog nije aktiviran.")
-				    	},
-						200: function() {
-							if(currentUser.userType === 2) {
-								window.location.href = "http://localhost:8080/xmlws/userHome.html";
-							} else if(currentUser.userType === 1) {
-								window.location.href = "http://localhost:8080/xmlws/agent/agentHome.html";
-							}
-							/*} else if(currentUser.userType === 2) {
-								//window.location.href = "http://localhost:8080/AdminPozoristaBioskopi/homePage";
-							
-						},*/
-						},
-						202: function() {
-							window.location.href = "http://localhost:8080/Posetioci/changePassword.html";
-						}
+					error: function(data,errorMsg){	
+						
 				  	}
 				});
 			});

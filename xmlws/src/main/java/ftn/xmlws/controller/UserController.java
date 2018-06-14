@@ -2,17 +2,22 @@ package ftn.xmlws.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -40,6 +45,16 @@ public class UserController {
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "getUser", method = RequestMethod.GET )
+	public ResponseEntity<User> getUser(@RequestHeader("Cookie") String cookie) {
+		System.out.println("OVDE SAM!!!!NADJI ME!!!");
+		String[] parse = cookie.split("=");		
+		System.out.println("OVDE SAM!!!!NADJI ME!!!" + Long.parseLong(parse[1]));
+		System.out.println(Long.parseLong(parse[1]));
+		User user = userService.findOne(Long.parseLong(parse[1]));
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<User> addUserAd(@RequestBody User user) {
 		User newUser = userService.save(user);
@@ -51,7 +66,7 @@ public class UserController {
 				System.out.println("Greska prilikom slanja emaila: " + e.getMessage());
 			}
 		}
-		System.out.println("NADJI ME!!!!!!! KREIRAO SAM KORISNIKA!!!");
+		System.out.println("NADJI ME!!!!!!! KREIRAO SAM KORISNIKA!!!");		
 		return new ResponseEntity<>(newUser, HttpStatus.OK);
 
 	}
@@ -91,29 +106,27 @@ public class UserController {
 		return new ResponseEntity<>(editedUser, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<User> loginProcess(@RequestBody UserDTO userDTO, HttpSession session) {
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")	 
+	public ResponseEntity<User> loginProcess(@RequestBody UserDTO userDTO) {
 		String email = userDTO.getEmail();
 		String pass = userDTO.getPassword();
-		System.out.println("email: " + email + "pass: "+ pass);
+		System.out.println("email: " + email + "pass: "+ pass);		
 		User currentUser = userService.getUserByEmail(email);
-		//System.out.println("trenutni korisnik: " + currentUser.getEmail());
-		if(currentUser == null) {
+		if(currentUser.equals(null)) {
 			System.out.println("Nepostojeci mail");
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			
 		}
 		if(currentUser.getPassword().equals(pass)) {
 			if(currentUser.isConfirmed()) {
-				session.setAttribute("loggedUser", currentUser);
 				if(currentUser.getUserType()==1 || currentUser.getUserType()==2) {
-					return new ResponseEntity<>(currentUser, HttpStatus.OK);				
+					HttpHeaders headers = new HttpHeaders();
+					headers.add(HttpHeaders.SET_COOKIE, "Id="+currentUser.getId());
+					return new ResponseEntity<>(currentUser,headers,HttpStatus.OK);				
 				}
 			} else return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 			
 		}
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 	}
-	
 }
