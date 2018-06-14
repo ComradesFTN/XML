@@ -107,26 +107,31 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")	 
-	public ResponseEntity<User> loginProcess(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<String> loginProcess(@RequestBody UserDTO userDTO) {
 		String email = userDTO.getEmail();
 		String pass = userDTO.getPassword();
 		System.out.println("email: " + email + "pass: "+ pass);		
 		User currentUser = userService.getUserByEmail(email);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Acccess-Control-Expose-Headers","Error2");
 		if(currentUser.equals(null)) {
-			System.out.println("Nepostojeci mail");
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			headers.add("Error2","Nepostojeci email!");
+			return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
 			
 		}
 		if(currentUser.getPassword().equals(pass)) {
 			if(currentUser.isConfirmed()) {
 				if(currentUser.getUserType()==1 || currentUser.getUserType()==2) {
-					HttpHeaders headers = new HttpHeaders();
 					headers.add(HttpHeaders.SET_COOKIE, "Id="+currentUser.getId());
-					return new ResponseEntity<>(currentUser,headers,HttpStatus.OK);				
+					return new ResponseEntity<>(headers,HttpStatus.OK);				
 				}
-			} else return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			} else {
+				headers.add("Error2","Vas nalog nije aktivan!");
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+				}
 			
 		}
+		headers.add("Error2","Username i/ili password su netacni.");
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 	}
 }
