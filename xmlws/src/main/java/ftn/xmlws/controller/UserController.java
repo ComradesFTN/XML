@@ -134,4 +134,15 @@ public class UserController {
 		headers.add("Error2","Username i/ili password su netacni.");
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 	}
+	
+	@RequestMapping(value = "/editUser/{userId}",method = RequestMethod.PUT, consumes = "application/json")
+	public ResponseEntity<User> editUser(@PathVariable Long userId, @RequestBody User user) {
+		User editedUser = userService.findOne(userId);
+		editedUser.setName(user.getName());
+		editedUser.setLastName(user.getLastName());
+		editedUser.setUserName(user.getUserName());
+		editedUser.setPassword(user.getPassword());
+		User editedUser2 = userService.save(editedUser);
+		return new ResponseEntity<>(editedUser2, HttpStatus.OK);
+	}
 }

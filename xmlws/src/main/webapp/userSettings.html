@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<title>Registracija</title>
+		<script src="scripts/jquery-3.2.1.min.js"></script>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="stylesheets/bootstrap.css">
+	</head>	
+	<body class="bg-light">
+		<ul class="nav nav-tabs bg-danger">	
+			<li class="nav-item">
+				<a class="nav-link text-white" href="userHome.html">Home</a>				
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="#">Settings</a>				
+			</li>
+		</ul>
+		
+		<div class="container mx-auto">
+		<form class="mt-5 text-center needs-validation" id="registerForm" novadalite>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<label for="name">Ime</label>
+				    <input class="form-control text-center w-26 mx-auto" type="text" id="name" required>
+				</div>
+				<div class="invalid-feedback">
+          			Please choose a username.
+        		</div>
+				<div class="form-group col-md-2">
+				    <label for="lastName">Prezime</label>
+				    <input class="form-control text-center w-26 mx-auto" type="text" id="lastName" required>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+						<label for="email">Korisnicko ime</label>
+						<input class="form-control text-center w-26 mx-auto" type="text"  id="userName" required>
+				</div>
+				<div class="form-group col-md-2">
+					<label for="brtel">Lozinka</label> 
+					<input class="form-control text-center w-26 mx-auto" type="password" id="password"  required>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<input type="submit" class="btn btn-primary bg-danger form-control" id="register" value="Done">
+				</div>		
+			</div>
+			
+		</form>	
+		</div>
+		
+		<script>
+		var currnetUserId;
+		var currentUserEmail;
+		$(document).ready(function(){
+			$.ajax({
+				url : "http://localhost:8080/user/getUser"
+			}).then(
+					function(data) {
+						currnetUserId = data.id;
+						currentUserEmail = data.email;
+						$('#name').val(data.name);
+						$('#lastName').val(data.lastName);
+						$('#userName').val(data.userName);
+						$('#password').val(data.password);
+						
+			});
+		});
+		$("input[type='submit']").click(function(event) {
+			var test=false;
+			if($('#email').val()==currentUserEmail){
+				test=true;
+			}
+			event.preventDefault();
+			function validate(){
+				if($('#name').val()=="" || $('#lastName').val()=="" || $('#userName').val()=="" || $('#password').val()=="" || $('#email').val()==""){
+					alert("Molimo vas popunite sva polja!");
+					return false;
+				}
+				return true;
+			}
+			if(!validate()) {
+				return;
+			}
+			var provera=true;
+				var formData = JSON.stringify({
+					name:$('#name').val(),
+					lastName:$('#lastName').val(),
+					userName:$('#userName').val(),
+					password:$('#password').val(),
+					email:$('#email').val(),
+					userType:2,
+					confirmed: false,
+				});
+				$.ajax({
+					url: "http://localhost:8080/user/editUser/" + currnetUserId,
+					type: 'PUT',
+					data: formData,
+					contentType: "application/json",
+					async:false,
+					success: function(){
+						console.log("Ajax zahtev za registraciju.");
+						window.location.href = "http://localhost:8080/userHome.html";
+					}
+				});
+				
+		});
+			
+		</script>
+	</body>
+</html>
