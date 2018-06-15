@@ -47,11 +47,10 @@ public class UserController {
 	
 	@RequestMapping(value = "getUser", method = RequestMethod.GET )
 	public ResponseEntity<User> getUser(@RequestHeader("Cookie") String cookie) {
-		System.out.println("OVDE SAM!!!!NADJI ME!!!");
-		String[] parse = cookie.split("=");		
-		System.out.println("OVDE SAM!!!!NADJI ME!!!" + Long.parseLong(parse[1]));
-		System.out.println(Long.parseLong(parse[1]));
-		User user = userService.findOne(Long.parseLong(parse[1]));
+		System.out.println(cookie);
+		String[] parse = cookie.split("\\=");
+		String[] parse2 = parse[1].split("\\;");
+		User user = userService.findOne(Long.parseLong(parse2[0]));
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
@@ -145,4 +144,13 @@ public class UserController {
 		User editedUser2 = userService.save(editedUser);
 		return new ResponseEntity<>(editedUser2, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET )
+	public ResponseEntity<User> getUser() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.SET_COOKIE, null);
+		return new ResponseEntity<>(headers, HttpStatus.OK);
+	}
+	
+	
 }

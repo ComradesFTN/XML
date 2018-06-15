@@ -55,7 +55,7 @@
 		var currentUserEmail;
 		$(document).ready(function(){
 			$.ajax({
-				url : "http://localhost:8080/user/getUser"
+				url : "http://localhost:8080/xmlws/user/getUser"
 			}).then(
 					function(data) {
 						currnetUserId = data.id;
@@ -94,14 +94,14 @@
 					confirmed: false,
 				});
 				$.ajax({
-					url: "http://localhost:8080/user/editUser/" + currnetUserId,
+					url: "http://localhost:8080/xmlws/user/editUser/" + currnetUserId,
 					type: 'PUT',
 					data: formData,
 					contentType: "application/json",
 					async:false,
 					success: function(){
 						console.log("Ajax zahtev za registraciju.");
-						window.location.href = "http://localhost:8080/userHome.html";
+						window.location.href = "http://localhost:8080/xmlws/userHome.html";
 					}
 				});
 				
