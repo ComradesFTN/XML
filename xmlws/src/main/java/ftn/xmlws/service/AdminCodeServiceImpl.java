@@ -1,6 +1,7 @@
 package ftn.xmlws.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,8 @@ public class AdminCodeServiceImpl implements AdminCodeService{
 
 	@Override
 	public AdminCode findOne(Long id) {
-		return aCodeRepository.findOne(id);
+		Optional<AdminCode> optAdm = aCodeRepository.findById(id);		
+		return optAdm.get();
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class AdminCodeServiceImpl implements AdminCodeService{
 
 	@Override
 	public AdminCode delete(Long id) {
-		AdminCode aCode = aCodeRepository.findOne(id);
+		AdminCode aCode = this.findOne(id);
 		if(aCode == null){
 			throw new IllegalArgumentException("Tried to delete"
 					+ "non-existant userAd");
