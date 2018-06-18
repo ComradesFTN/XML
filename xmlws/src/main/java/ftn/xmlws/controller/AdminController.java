@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ftn.xmlws.domain.AccomodationType;
-
+import ftn.xmlws.domain.Category;
+import ftn.xmlws.domain.ExtraServices;
 import ftn.xmlws.service.AdminService;
 
 @Controller
@@ -28,7 +29,7 @@ public class AdminController {
 		return new ResponseEntity<>(aTypes, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "addAccomodationType", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<AccomodationType> addAccomType(@RequestBody AccomodationType accomodationType) {
 		AccomodationType newAccomType = aService.saveAcomType(accomodationType);
 		return new ResponseEntity<>(newAccomType, HttpStatus.OK);
@@ -38,6 +39,44 @@ public class AdminController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<AccomodationType> deleteAccomType(@PathVariable Long id) {
 		AccomodationType deleted = aService.deleteAcomType(id);
+		return new ResponseEntity<>(deleted, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getCategories", method = RequestMethod.GET )
+	public ResponseEntity<List<Category>> getCategories() {
+		List<Category> categoryTypes = aService.findAllCategories();
+		return new ResponseEntity<>(categoryTypes, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "addCategory", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+		Category newCategory = aService.saveCategory(category);
+		return new ResponseEntity<>(newCategory, HttpStatus.OK);
+
+	}
+	
+	@RequestMapping(value = "category/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
+		Category deleted = aService.deleteCategory(id);
+		return new ResponseEntity<>(deleted, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getExtraServices", method = RequestMethod.GET )
+	public ResponseEntity<List<ExtraServices>> getExtraServices() {
+		List<ExtraServices> extraServices = aService.findAllExtraServices();
+		return new ResponseEntity<>(extraServices, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "addExtraService", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<ExtraServices> addExtraServices(@RequestBody ExtraServices extraService) {
+		ExtraServices newExtraService = aService.saveExtraService(extraService);
+		return new ResponseEntity<>(newExtraService, HttpStatus.OK);
+
+	}
+	
+	@RequestMapping(value = "extraService/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<ExtraServices> deleteExtraService(@PathVariable Long id) {
+		ExtraServices deleted = aService.deleteExtraService(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	}
 }

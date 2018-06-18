@@ -70,13 +70,12 @@
 					type:$("#inputName").val(),
 				});
 				$.ajax({
-					url: "http://localhost:8080/xmlws/admin",
+					url: "http://localhost:8080/xmlws/admin/addAccomodationType",
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
 					success: function(){
-						console.log("Ajax zahtev za registraciju.");
-						window.location.href = "http://localhost:8080/xmlws/admin/adminHome.html";
+						window.location.href = "http://localhost:8080/xmlws/adminPages/adminHome.html";
 					}
 				});
 		   });
