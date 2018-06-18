@@ -40,9 +40,9 @@
 		<div class="container col-md-4 mt-5">
 			<form>
 			  <div class="form-group row">
-			    <label for="inputName" class="col-sm-2 col-form-label">Ime</label>
+			    <label for="inputName" class="col-sm-2 col-form-label">Naziv</label>
 			    <div class="col-sm-10">
-			      <input type="text" class="ml-2" id="inputName" placeholder="Ime">
+			      <input type="text" class="ml-2" id="inputName" placeholder="Naziv">
 			    </div>
 			  </div>
 			  <div class="form-group row">
@@ -56,18 +56,21 @@
 			$("input[type='submit']").click(function(event) {
 				event.preventDefault();
 				function validate() {
-				    
-				    return true;
+				    if($("#inputName").val()==""){
+				    	alert("Molimo vas popunite polje za naziv tipa!");
+				    	return false;
+				    }else{
+				    	return true;
+				    }
 				}
 				if(!validate()) {
 					return;
 				}
 				var formData = JSON.stringify({
-					name:$("#inputName").val(),
-					codeType:0,
+					type:$("#inputName").val(),
 				});
 				$.ajax({
-					url: "http://localhost:8080/xmlws/aCodes",
+					url: "http://localhost:8080/xmlws/admin",
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
