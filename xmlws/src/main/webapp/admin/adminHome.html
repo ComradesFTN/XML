@@ -8,18 +8,16 @@
 <script>
 		$(document).ready(function(){
 			$.ajax({
-				url : "http://localhost:8080/xmlws/aCodes/getACodes"
+				url : "http://localhost:8080/xmlws/admin/getAccomTypes"
 			}).then(
 					function(data) {
 						for (i = 0; i < data.length; i++) {
-							if(data[i].codeType==0){
-								newRow = 
-									"<tr>"
-										+ "<td>" + data[i].name + "</td>"
-										+ "<td><button   class=\"btn btn-danger delete\" href='/aCodes/" + data[i].id + "' >Ukloni</button></td>"
-									+ "</tr>"
-								$("#tableBody").append(newRow)
-							}
+							newRow = 
+								"<tr>"
+									+ "<td>" + data[i].type + "</td>"
+									+ "<td><button   class=\"btn btn-danger delete\" href='/admin/" + data[i].id + "' >Ukloni</button></td>"
+								+ "</tr>"
+							$("#tableBody").append(newRow)
 						}
 					});
 		});
@@ -59,7 +57,7 @@
 			        <div class="nav nav-pills bg-dark flex-row justify-content-center">
 						<ul class="nav nav-tabs bg-danger flex-row">			
 							<li class="nav-item">
-								<a class="nav-link text-danger active" href="adminFanZona.html">Sifarnici</a>				
+								<a class="nav-link text-danger active" href="adminHome.html">Sifarnici</a>				
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-white" href="adminUser.html">Korisnici</a>

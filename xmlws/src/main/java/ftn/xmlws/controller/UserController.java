@@ -39,7 +39,6 @@ public class UserController {
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET )
 	public ResponseEntity<List<User>> getUserAds() {
 		List<User> users = userService.findAll();
-		System.out.println("OVDE SAM!!!!NADJI ME!!!");
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
