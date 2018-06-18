@@ -31,7 +31,7 @@ import ftn.xmlws.service.UserService;
 public class UserController {
 	
 	@Autowired
-	private UserService userService;
+	private UserService userService;	
 	
 	@Autowired
 	private EmailService emailService;

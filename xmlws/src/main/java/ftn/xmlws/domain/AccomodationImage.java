@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ImagesSet {
+public class AccomodationImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class ImagesSet {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Accomodation accomodation;
 
-	public ImagesSet(String url) {
+	public AccomodationImage(String url) {
 		this.url = url;
 	}
 
@@ -49,7 +49,7 @@ public class ImagesSet {
 		this.accomodation = accomodation;
 	}
 
-	public ImagesSet() {
+	public AccomodationImage() {
 
 	}
 

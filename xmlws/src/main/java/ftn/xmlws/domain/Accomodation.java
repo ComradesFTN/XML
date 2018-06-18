@@ -44,20 +44,17 @@ public class Accomodation {
 	private String description;
 
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ImagesSet> images;
+	private List<AccomodationImage> images;
 
 	@Column
 	private int capacity;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "accomodation_services", joinColumns = @JoinColumn(name = "accomodation_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
-	private Set<ExtraServices> ExtraServices;
+	private Set<ExtraServices> extraServices;
 
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Term> terms;
-
-	@Column
-	private int availableSpots;
 
 	public Long getId() {
 		return id;
@@ -115,11 +112,11 @@ public class Accomodation {
 		this.description = description;
 	}
 
-	public List<ImagesSet> getImages() {
+	public List<AccomodationImage> getImages() {
 		return images;
 	}
 
-	public void setImages(List<ImagesSet> images) {
+	public void setImages(List<AccomodationImage> images) {
 		this.images = images;
 	}
 
@@ -132,11 +129,11 @@ public class Accomodation {
 	}
 
 	public Set<ExtraServices> getExtraServices() {
-		return ExtraServices;
+		return extraServices;
 	}
 
 	public void setExtraServices(Set<ExtraServices> extraServices) {
-		ExtraServices = extraServices;
+		this.extraServices = extraServices;
 	}
 
 	public List<Term> getTerms() {
@@ -147,21 +144,13 @@ public class Accomodation {
 		this.terms = terms;
 	}
 
-	public int getAvailableSpots() {
-		return availableSpots;
-	}
-
-	public void setAvailableSpots(int availableSpots) {
-		this.availableSpots = availableSpots;
-	}
-
 	public Accomodation() {
 
 	}
 
 	public Accomodation(Long id, String name, String country, String address, AccomodationType accomodationType,
-			Category category, String description, List<ImagesSet> images, int capacity,
-			Set<ftn.xmlws.domain.ExtraServices> extraServices, List<Term> terms, int availableSpots) {
+			Category category, String description, List<AccomodationImage> images, int capacity,
+			Set<ftn.xmlws.domain.ExtraServices> extraServices, List<Term> terms) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -172,9 +161,8 @@ public class Accomodation {
 		this.description = description;
 		this.images = images;
 		this.capacity = capacity;
-		ExtraServices = extraServices;
+		this.extraServices = extraServices;
 		this.terms = terms;
-		this.availableSpots = availableSpots;
 	}
 
 }
