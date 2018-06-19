@@ -2,22 +2,28 @@
 <html >
 	<head>
 		<title>Registracija</title>
-		<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="stylesheets/bootstrap.css">
+		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
 	</head>	
 	<body class="bg-light">
-		<ul class="nav nav-tabs bg-danger">	
-			<li class="nav-item">
-				<a class="nav-link text-white" href="userHome.html">Home</a>				
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-white" href="#">Settings</a>				
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-white" href="login.html">Odjava</a>				
-			</li>
-		</ul>
+		<div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientHome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSearch.html">Pretraga</a>
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="index.html">Rezervacije</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active text-danger" href="clientSettings.html">Podesavanje</a>
+				</li>					
+			</ul>
+			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
+		</div>
 		
 		<div class="container mx-auto">
 		<form class="mt-5 text-center needs-validation" id="registerForm" novadalite>

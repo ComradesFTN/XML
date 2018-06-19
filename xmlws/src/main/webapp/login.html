@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="stylesheets/bootstrap.css">
+<title>HomePage</title>
+</head>
+<body class="bg-light">	
+	<ul class="nav nav-tabs bg-danger">	
+			<li class="nav-item">
+				<a class="nav-link text-white" href="adminPages/adminHome.html">Admin</a>				
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="../agent">Agent</a>
+			</li>
+		</ul>
+		<form class="text-center mt-5" id="loginForm">
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input class="form-control text-center w-25 mx-auto" type="email" id="email" placeholder="Unesite email"><br/>				
+			    <label for="password">Sifra</label>
+			    <input class="form-control text-center w-25 mx-auto" type="password"  id="password" placeholder="Sifra">			
+			</div>
+			<input type="submit" class="btn btn-primary bg-danger" value="Prijavi se"> Nemate nalog? <a href="signUp.html">Registruj se.</a>
+		</form>
+		<script>
+			$("input[type='submit']").click(function(event) {
+				var currentUser;
+				event.preventDefault();
+				function validate() {
+				    if ($('#email').val() == "" && $('#password').val() == "") {
+				        alert("Username and password are required");
+				        $('#email').focus();
+				        return false;
+				    }
+				    if ($('#email').val() == "") {
+				        alert("Username is required");
+				        $('#email').focus();
+				        return false;
+				    }
+				    if ($('#password').val() == "") {
+				    alert("Password is required");
+				    $('#password').focus();
+				        return false;
+				    }
+				    return true;
+				}
+				if(!validate()) {
+					return;
+				}
+				var formData = JSON.stringify({
+					email:$("#email").val(),
+					password:$("#password").val(),
+				});
+				$.ajax({
+					url: "http://localhost:8080/xmlws/user/login",
+					type: 'POST',
+					data: formData,
+					contentType: "application/json",
+					success: function(){
+						console.log("Ajax zahtev za login.");
+						window.location.href = "http://localhost:8080/xmlws/clientPages/clientHome.html";
+						currentUser = data;						
+					},
+					error: function(request){
+						alert("Greska!");
+						
+				  	}
+				});
+			});
+		</script>	
+</body>
+</html>
