@@ -10,15 +10,23 @@ import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.Term;
+import ftn.xmlws.dto.AccomodationSoapDTO;
 
 @WebService
 public interface AccomodationServiceSoap {
 	
+	public List<AccomodationType> findAllTypes();
+	public List<Category> findAllCategories();
+	public List<ExtraService> findAllServices();
+	public List<AccomodationSoapDTO> findAllAccomodations();
+	
 	public Accomodation save(Accomodation acc);	
+	
 	public AccomodationImage findImageById(Long id);
 	public AccomodationType findTypeById(Long id);
 	public Category findCategoryById(Long id);
 	public ExtraService findExtraServiceById(Long id);
 	public Term findTermById(Long id);
+	
 	public List<Accomodation> getAccomodationsOfAgent(Long id);
 }

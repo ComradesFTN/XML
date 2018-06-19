@@ -1,5 +1,6 @@
 package ftn.xmlws.service.soap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jws.WebService;
@@ -13,11 +14,13 @@ import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.Term;
+import ftn.xmlws.dto.AccomodationSoapDTO;
 import ftn.xmlws.repository.AccomodationImageRepository;
 import ftn.xmlws.repository.AccomodationRepository;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
 import ftn.xmlws.repository.ExtraServiceRepository;
+import ftn.xmlws.repository.MonthPriceRepository;
 import ftn.xmlws.repository.TermRepository;
 
 @Service
@@ -41,6 +44,9 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	
 	@Autowired
 	private TermRepository termRepository;
+	
+	@Autowired
+	private MonthPriceRepository monthPriceRepository;
 	
 	@Override
 	public Accomodation save(Accomodation acc) {			
@@ -76,6 +82,44 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	public List<Accomodation> getAccomodationsOfAgent(Long id) {
 		return accomodationRepository.findByAgent(id);
 	}
+
+	@Override
+	public List<AccomodationType> findAllTypes() {
+		return accomodationTypeRepository.findAll();
+	}
+
+	@Override
+	public List<Category> findAllCategories() {
+		return categoryRepository.findAll();
+	}
+
+	@Override
+	public List<ExtraService> findAllServices() {
+		return extraServiceRepository.findAll();
+	}
+
+	@Override
+	public List<AccomodationSoapDTO> findAllAccomodations() {
+		List<Accomodation> accomodations = accomodationRepository.findAll();
+		List<AccomodationSoapDTO> accomodationsDTO = new ArrayList<AccomodationSoapDTO>();
+		for(Accomodation accomodation : accomodations){
+			AccomodationSoapDTO accomodationDTO = new AccomodationSoapDTO();
+			accomodationDTO.setAccomodationTypeId(accomodation.getAccomodationType().getId());
+			accomodationDTO.setAddress(accomodation.getAddress());
+			accomodationDTO.setCapacity(accomodation.getCapacity());
+			accomodationDTO.setCategoryId(accomodation.getCategory().getId());
+			accomodationDTO.setCountry(accomodation.getCountry());
+			accomodationDTO.setDescription(accomodation.getDescription());
+			for(ExtraService es : accomodation.getExtraServices()){
+				accomodationDTO.getExtraServicesIds().add(es.getId());
+			}
+			accomodationDTO.setName(accomodation.getName());
+			accomodationDTO.setId(accomodation.getId());
+			accomodationsDTO.add(accomodationDTO);
+		}
+		return accomodationsDTO;
+	}
+	
 	
 	
 	

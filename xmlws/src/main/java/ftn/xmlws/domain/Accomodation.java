@@ -1,5 +1,7 @@
 package ftn.xmlws.domain;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,21 +46,32 @@ public class Accomodation {
 	private String description;
 
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<AccomodationImage> images;
+	private List<AccomodationImage> images = new ArrayList<AccomodationImage>();
 
 	@Column
 	private int capacity;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "accomodation_services", joinColumns = @JoinColumn(name = "accomodation_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
-	private Set<ExtraService> extraServices;
+	private Set<ExtraService> extraServices = new HashSet<ExtraService>();
 
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Term> terms;
+	private List<Term> terms = new ArrayList<Term>();
 	
 	@Column
 	private Long agent;
 	
+	@Column
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<MonthPrice> pricePlan = new ArrayList<MonthPrice>();
+
+	public List<MonthPrice> getPricePlan() {
+		return pricePlan;
+	}
+
+	public void setPricePlan(List<MonthPrice> pricePlan) {
+		this.pricePlan = pricePlan;
+	}
 
 	public Long getAgent() {
 		return agent;
@@ -162,7 +175,7 @@ public class Accomodation {
 
 	public Accomodation(Long id, String name, String country, String address, AccomodationType accomodationType,
 			Category category, String description, List<AccomodationImage> images, int capacity,
-			Set<ftn.xmlws.domain.ExtraService> extraServices, List<Term> terms, Long agent) {
+			Set<ftn.xmlws.domain.ExtraService> extraServices, List<Term> terms, Long agent, List<MonthPrice> pricePlan) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -176,6 +189,7 @@ public class Accomodation {
 		this.extraServices = extraServices;
 		this.terms = terms;
 		this.agent = agent;
+		this.pricePlan = pricePlan;
 	}
 
 }
