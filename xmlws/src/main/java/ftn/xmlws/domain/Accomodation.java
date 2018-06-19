@@ -51,7 +51,7 @@ public class Accomodation {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "accomodation_services", joinColumns = @JoinColumn(name = "accomodation_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
-	private Set<ExtraService> extraService;
+	private Set<ExtraService> extraServices;
 
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Term> terms;
@@ -140,12 +140,12 @@ public class Accomodation {
 		this.capacity = capacity;
 	}
 
-	public Set<ExtraService> getExtraService() {
-		return extraService;
+	public Set<ExtraService> getExtraServices() {
+		return extraServices;
 	}
 
-	public void setExtraService(Set<ExtraService> extraService) {
-		this.extraService = extraService;
+	public void setExtraServices(Set<ExtraService> extraServices) {
+		this.extraServices = extraServices;
 	}
 
 	public List<Term> getTerms() {
@@ -162,7 +162,7 @@ public class Accomodation {
 
 	public Accomodation(Long id, String name, String country, String address, AccomodationType accomodationType,
 			Category category, String description, List<AccomodationImage> images, int capacity,
-			Set<ftn.xmlws.domain.ExtraService> extraService, List<Term> terms, Long agent) {
+			Set<ftn.xmlws.domain.ExtraService> extraServices, List<Term> terms, Long agent) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -173,7 +173,7 @@ public class Accomodation {
 		this.description = description;
 		this.images = images;
 		this.capacity = capacity;
-		this.extraService = extraService;
+		this.extraServices = extraServices;
 		this.terms = terms;
 		this.agent = agent;
 	}

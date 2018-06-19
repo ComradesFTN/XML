@@ -63,7 +63,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "getExtraServices", method = RequestMethod.GET )
 	public ResponseEntity<List<ExtraService>> getExtraServices() {
-		List<ExtraService> extraServices = aService.findAllExtraService();
+		List<ExtraService> extraServices = aService.findAllExtraServices();
 		return new ResponseEntity<>(extraServices, HttpStatus.OK);
 	}
 	

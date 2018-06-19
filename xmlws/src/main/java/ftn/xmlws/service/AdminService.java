@@ -10,7 +10,7 @@ public interface AdminService {
 	
 	List<AccomodationType> findAllAccomoations();
 	List<Category> findAllCategories();
-	List<ExtraService> findAllExtraService();
+	List<ExtraService> findAllExtraServices();
 	
 	AccomodationType findOneAcomType(Long id);
 	Category findOneCategory(Long id);

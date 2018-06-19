@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<ExtraService> findAllExtraService() {
+	public List<ExtraService> findAllExtraServices() {
 		return extraServiceRepository.findAll();
 	}
 
