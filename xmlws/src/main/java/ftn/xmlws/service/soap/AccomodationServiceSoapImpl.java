@@ -1,5 +1,7 @@
 package ftn.xmlws.service.soap;
 
+import java.util.List;
+
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,13 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationImage;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
-import ftn.xmlws.domain.ExtraServices;
+import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.repository.AccomodationImageRepository;
 import ftn.xmlws.repository.AccomodationRepository;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
-import ftn.xmlws.repository.ExtraServicesRepository;
+import ftn.xmlws.repository.ExtraServiceRepository;
 import ftn.xmlws.repository.TermRepository;
 
 @Service
@@ -35,7 +37,7 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	private CategoryRepository categoryRepository;
 	
 	@Autowired
-	private ExtraServicesRepository extraServicesRepository;
+	private ExtraServiceRepository extraServiceRepository;
 	
 	@Autowired
 	private TermRepository termRepository;
@@ -61,14 +63,21 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	}
 
 	@Override
-	public ExtraServices findExtraServicesById(Long id) {
-		return extraServicesRepository.findById(id).get();
+	public ExtraService findExtraServiceById(Long id) {
+		return extraServiceRepository.findById(id).get();
 	}
 
 	@Override
 	public Term findTermById(Long id) {
 		return termRepository.findById(id).get();
 	}
+
+	@Override
+	public List<Accomodation> getAccomodationsOfAgent(Long id) {
+		return accomodationRepository.findByAgent(id);
+	}
+	
+	
 	
 	
 	

@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
-import ftn.xmlws.domain.ExtraServices;
-import ftn.xmlws.domain.User;
+import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
-import ftn.xmlws.repository.ExtraServicesRepository;
+import ftn.xmlws.repository.ExtraServiceRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -24,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
 	CategoryRepository categoryRepository;
 	
 	@Autowired
-	ExtraServicesRepository extraServiceRepository;
+	ExtraServiceRepository extraServiceRepository;
 
 	@Override
 	public List<AccomodationType> findAllAccomoations() {
@@ -37,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<ExtraServices> findAllExtraServices() {
+	public List<ExtraService> findAllExtraService() {
 		return extraServiceRepository.findAll();
 	}
 
@@ -54,8 +53,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ExtraServices findOneExtraService(Long id) {
-		Optional<ExtraServices> extraServices = extraServiceRepository.findById(id);
+	public ExtraService findOneExtraService(Long id) {
+		Optional<ExtraService> extraServices = extraServiceRepository.findById(id);
 		return extraServices.get();
 	}
 
@@ -70,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ExtraServices saveExtraService(ExtraServices eService) {
+	public ExtraService saveExtraService(ExtraService eService) {
 		return extraServiceRepository.save(eService);
 	}
 
@@ -97,8 +96,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ExtraServices deleteExtraService(Long id) {
-		ExtraServices eService = this.findOneExtraService(id);
+	public ExtraService deleteExtraService(Long id) {
+		ExtraService eService = this.findOneExtraService(id);
 		if(eService == null){
 			throw new IllegalArgumentException("Tried to delete"
 					+ "non-existant eService");

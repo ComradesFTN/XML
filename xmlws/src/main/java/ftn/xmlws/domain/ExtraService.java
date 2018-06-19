@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ExtraServices {
+public class ExtraService {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class ExtraServices {
 		this.name = name;
 	}
 	
-	public ExtraServices() {
+	public ExtraService() {
 		
 	}
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
-import ftn.xmlws.domain.ExtraServices;
+import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.service.AdminService;
 
 @Controller
@@ -62,21 +62,21 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "getExtraServices", method = RequestMethod.GET )
-	public ResponseEntity<List<ExtraServices>> getExtraServices() {
-		List<ExtraServices> extraServices = aService.findAllExtraServices();
+	public ResponseEntity<List<ExtraService>> getExtraServices() {
+		List<ExtraService> extraServices = aService.findAllExtraService();
 		return new ResponseEntity<>(extraServices, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "addExtraService", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<ExtraServices> addExtraServices(@RequestBody ExtraServices extraService) {
-		ExtraServices newExtraService = aService.saveExtraService(extraService);
+	public ResponseEntity<ExtraService> addExtraServices(@RequestBody ExtraService extraService) {
+		ExtraService newExtraService = aService.saveExtraService(extraService);
 		return new ResponseEntity<>(newExtraService, HttpStatus.OK);
 
 	}
 	
 	@RequestMapping(value = "extraService/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<ExtraServices> deleteExtraService(@PathVariable Long id) {
-		ExtraServices deleted = aService.deleteExtraService(id);
+	public ResponseEntity<ExtraService> deleteExtraService(@PathVariable Long id) {
+		ExtraService deleted = aService.deleteExtraService(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	}
 }

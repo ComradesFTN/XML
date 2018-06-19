@@ -12,5 +12,6 @@ public interface UserServiceSoap {
 	@ResponseWrapper(className="ftn.xmlws.domain.User")
 	@WebResult(name="returnedUser")*/
 	public User verifyAgentLogin(String username);
+	public User findOne(Long id);
 
 }

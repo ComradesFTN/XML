@@ -20,4 +20,9 @@ public class UserServiceSoapImpl implements UserServiceSoap {
 		return userRepository.findByuserName(username);
 	}
 
+	@Override
+	public User findOne(Long id) {
+		return userRepository.findById(id).get();
+	}
+
 }
