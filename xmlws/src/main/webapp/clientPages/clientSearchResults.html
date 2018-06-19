@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<title>Registracija</title>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
+		
+	</head>	
+	<body class="bg-light">
+		<div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientHome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active text-danger" href="clientSearch.html">Pretraga</a>
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientReservations.html">Rezervacije</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSettings.html">Podesavanje</a>
+				</li>					
+			</ul>
+			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
+		</div>
+		<div class="row">
+		 <div class="col">
+				
+			</div>
+			<div class="col-6">
+				<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Slike</th>
+						<th>Opis</th>
+						<th>Cena</th>
+						<th>Ocena</th>
+						<th>Kategorija</th>
+						<th>Rezervisi</th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+				</tbody>
+				</table>
+				<div class="form-group row">
+			    	<label for="sortCombobox" class="col-sm-2 col-form-label">Sortiraj po:</label>
+			      	 <select id="sortCombobox" class="col-sm-2">
+					  <option value="cena1">Rastucoj ceni</option>
+					  <option value="cena2">Opadajucoj ceni</option>
+					  <option value="ocena1">Rastucoj oceni</option>
+					  <option value="ocena2">Opadajucoj oceni</option>
+					  <option value="kategorija">Kategoriji</option>
+					</select> 
+	    			<input type="submit" value="Sortiraj" class="btn btn-danger ml-4" />
+	    			
+			  </div>
+				
+			</div>
+			<div class="col">
+				
+			</div>
+		</div>
+	</body>
+</html>
