@@ -1,8 +1,6 @@
 package ftn.xmlws.domain;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,8 +15,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Accomodation {
 
 	@Id
@@ -35,18 +37,18 @@ public class Accomodation {
 	private String address;
 
 	@JoinColumn(name = "type_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private AccomodationType accomodationType;
 
 	@JoinColumn(name = "category_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
 
 	@Column
 	private String description;
 
-	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<AccomodationImage> images = new ArrayList<AccomodationImage>();
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<AccomodationImage> images = new HashSet<AccomodationImage>();
 
 	@Column
 	private int capacity;
@@ -55,21 +57,22 @@ public class Accomodation {
 	@JoinTable(name = "accomodation_services", joinColumns = @JoinColumn(name = "accomodation_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private Set<ExtraService> extraServices = new HashSet<ExtraService>();
 
-	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Term> terms = new ArrayList<Term>();
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Term> terms = new HashSet<Term>();
 	
 	@Column
 	private Long agent;
 	
 	@Column
+	@XmlTransient
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<MonthPrice> pricePlan = new ArrayList<MonthPrice>();
+	private Set<MonthPrice> pricePlan = new HashSet<MonthPrice>();
 
-	public List<MonthPrice> getPricePlan() {
+	public Set<MonthPrice> getPricePlan() {
 		return pricePlan;
 	}
 
-	public void setPricePlan(List<MonthPrice> pricePlan) {
+	public void setPricePlan(Set<MonthPrice> pricePlan) {
 		this.pricePlan = pricePlan;
 	}
 
@@ -135,15 +138,7 @@ public class Accomodation {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<AccomodationImage> getImages() {
-		return images;
-	}
-
-	public void setImages(List<AccomodationImage> images) {
-		this.images = images;
-	}
+	}	
 
 	public int getCapacity() {
 		return capacity;
@@ -159,13 +154,21 @@ public class Accomodation {
 
 	public void setExtraServices(Set<ExtraService> extraServices) {
 		this.extraServices = extraServices;
+	}	
+
+	public Set<AccomodationImage> getImages() {
+		return images;
 	}
 
-	public List<Term> getTerms() {
+	public void setImages(Set<AccomodationImage> images) {
+		this.images = images;
+	}
+
+	public Set<Term> getTerms() {
 		return terms;
 	}
 
-	public void setTerms(List<Term> terms) {
+	public void setTerms(Set<Term> terms) {
 		this.terms = terms;
 	}
 
@@ -174,8 +177,8 @@ public class Accomodation {
 	}
 
 	public Accomodation(Long id, String name, String country, String address, AccomodationType accomodationType,
-			Category category, String description, List<AccomodationImage> images, int capacity,
-			Set<ftn.xmlws.domain.ExtraService> extraServices, List<Term> terms, Long agent, List<MonthPrice> pricePlan) {
+			Category category, String description, Set<AccomodationImage> images, int capacity,
+			Set<ExtraService> extraServices, Set<Term> terms, Long agent, HashSet<MonthPrice> pricePlan) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -191,5 +194,8 @@ public class Accomodation {
 		this.agent = agent;
 		this.pricePlan = pricePlan;
 	}
+	
+	
+	
 
 }

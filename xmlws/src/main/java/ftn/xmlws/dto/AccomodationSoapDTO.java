@@ -1,6 +1,8 @@
 package ftn.xmlws.dto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -19,6 +21,7 @@ public class AccomodationSoapDTO {
 	private int capacity;
 	private Set<Long> extraServicesIds = new HashSet<Long>();
 	//private List<TermSoap> termsSoap;
+	private List<Long> monthPricesIds = new ArrayList<Long>();
 	public Long getAccomodationTypeId() {
 		return accomodationTypeId;
 	}
@@ -94,6 +97,12 @@ public class AccomodationSoapDTO {
 	}
 	public void setAgent(Long agent) {
 		this.agent = agent;
+	}
+	public List<Long> getMonthPricesIds() {
+		return monthPricesIds;
+	}
+	public void setMonthPricesIds(List<Long> monthPricesIds) {
+		this.monthPricesIds = monthPricesIds;
 	}
 	
 }

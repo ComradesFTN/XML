@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.jws.WebService;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import ftn.xmlws.domain.AccomodationImage;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
+import ftn.xmlws.domain.MonthPrice;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.dto.AccomodationSoapDTO;
 import ftn.xmlws.repository.AccomodationImageRepository;
@@ -46,7 +48,7 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	private TermRepository termRepository;
 	
 	@Autowired
-	private MonthPriceRepository monthPriceRepository;
+	private MonthPriceRepository monthPriceRepository;	
 	
 	@Override
 	public Accomodation save(Accomodation acc) {			
@@ -116,10 +118,41 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 			}
 			accomodationDTO.setName(accomodation.getName());
 			accomodationDTO.setId(accomodation.getId());
+			List<MonthPrice> mps = monthPriceRepository.findAll();
+			for(MonthPrice mp : mps){
+				if(mp.getAccomodation().getId().equals(accomodation.getId())){
+					accomodationDTO.getMonthPricesIds().add(mp.getId());
+				}
+			}
 			accomodationsDTO.add(accomodationDTO);
 		}
 		return accomodationsDTO;
 	}
+
+	@Override
+	@Transactional
+	public Accomodation findAccomodationById(Long id) {
+		return accomodationRepository.findById(id).get();
+	}
+
+	@Override
+	@Transactional
+	public MonthPrice saveMP(MonthPrice mp,Long accId) {
+		mp.setAccomodation(accomodationRepository.findById(accId).get());		
+		return monthPriceRepository.save(mp);
+	}
+
+	@Override
+	public List<MonthPrice> findAllMonthPrices() {
+		return monthPriceRepository.findAll();
+	}
+
+	@Override
+	@Transactional
+	public MonthPrice findMonthPriceById(Long id) {
+		return monthPriceRepository.findById(id).get();
+	}
+	
 	
 	
 	

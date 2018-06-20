@@ -23,7 +23,7 @@ public class MonthPrice {
 	private float price;
 	
 	@JoinColumn(name = "accomodation_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Accomodation accomodation;
 
 	public Long getId() {
