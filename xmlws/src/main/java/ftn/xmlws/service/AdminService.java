@@ -8,7 +8,7 @@ import ftn.xmlws.domain.ExtraService;
 
 public interface AdminService {
 	
-	List<AccomodationType> findAllAccomoations();
+	List<AccomodationType> findAllAccomoations(); //trazi sve tipove akomodacija
 	List<Category> findAllCategories();
 	List<ExtraService> findAllExtraServices();
 	

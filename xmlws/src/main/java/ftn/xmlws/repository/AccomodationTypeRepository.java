@@ -7,5 +7,7 @@ import ftn.xmlws.domain.AccomodationType;
 
 @Repository
 public interface AccomodationTypeRepository extends JpaRepository<AccomodationType, Long> {
+	
+	public AccomodationType findByType(String type);
 
 }

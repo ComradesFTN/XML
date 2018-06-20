@@ -7,5 +7,7 @@ import ftn.xmlws.domain.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+	
+	public Category findByCategory(String category);
 
 }

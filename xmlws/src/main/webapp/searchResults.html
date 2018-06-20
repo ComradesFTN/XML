@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<title>Rezultati</title>
+		<script src="scripts/jquery-3.2.1.min.js"></script>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="stylesheets/bootstrap.css">
+		
+	</head>	
+	<body class="bg-light">
+		<div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">	
+				<li class="nav-item">
+					<a class="nav-link active text-danger" href="index.html">Home</a>
+				</li>						
+			</ul>
+			<a class="nav-link mr-0 text-white" href="login.html">Prijava</a>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<h2 class="text-center">Smestaj</h2>
+		
+		
+		<script>
+		$(document).ready(function() {
+			var temp = localStorage.getItem('searchRes');
+			var data = $.parseJSON(temp);
+			if (data !== undefined) {
+				for (i = 0; i < data.length; i++) {
+						newRow = 
+							"<tr>"
+							+ "<td>" + data[i].name + "</td>"
+							+ "<td>" + data[i].description + "</td>"
+							+ "<td>" + data[i].category + "</td>"
+							+ "<td> / </td>"
+							+ "<td> / </td>"
+							+ "<td><button type=\"button\" bookReq-id=\"" + data[i].id + "\" class=\"btn btn-success rezervisi\">Rezervisi</button></td>"
+							
+						+ "</tr>"
+						$("#tableBody").append(newRow)
+						//$(".table").trigger("update");
+				}
+
+			}
+		});
+		
+		</script>
+		
+		<div class="row">
+		 <div class="col">
+				
+			</div>
+			<div class="col-6">
+				<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Naziv</th>
+						<th>Opis</th>
+						<th>Kategorija</th>
+						<th>Cena</th>
+						<th>Ocena</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+				</tbody>
+				</table>
+			</div>
+			<div class="col">
+				
+			</div>
+		</div>
+		
+	</body>
+</html>
