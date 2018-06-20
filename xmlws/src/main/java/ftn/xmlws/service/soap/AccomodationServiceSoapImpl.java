@@ -109,6 +109,7 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 			accomodationDTO.setCapacity(accomodation.getCapacity());
 			accomodationDTO.setCategoryId(accomodation.getCategory().getId());
 			accomodationDTO.setCountry(accomodation.getCountry());
+			accomodationDTO.setAgent(accomodation.getAgent());
 			accomodationDTO.setDescription(accomodation.getDescription());
 			for(ExtraService es : accomodation.getExtraServices()){
 				accomodationDTO.getExtraServicesIds().add(es.getId());

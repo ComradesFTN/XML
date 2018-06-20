@@ -13,6 +13,7 @@ public class AccomodationSoapDTO {
 	private String address;
 	private Long accomodationTypeId;	
 	private Long categoryId;
+	private Long agent;
 	private String description;
 	//private List<AccomodationImageSoap> imagesSoap;
 	private int capacity;
@@ -87,6 +88,12 @@ public class AccomodationSoapDTO {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Long getAgent() {
+		return agent;
+	}
+	public void setAgent(Long agent) {
+		this.agent = agent;
 	}
 	
 }
