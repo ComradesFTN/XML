@@ -11,9 +11,18 @@ public class SearchResultDTO {
 	private String category;
 	private String startDate;
 	private String endDate;
+	private float totalPrice;
 
 	public SearchResultDTO() {
 
+	}
+
+	public float getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public String getStartDate() {

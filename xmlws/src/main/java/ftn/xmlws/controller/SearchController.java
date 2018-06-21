@@ -3,6 +3,7 @@ package ftn.xmlws.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +24,7 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
+import ftn.xmlws.domain.MonthPrice;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.dto.SearchDTO;
 import ftn.xmlws.repository.AccomodationRepository;
@@ -54,12 +56,15 @@ public class SearchController {
 	@Autowired
 	TermService termService;
 
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "search", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<List<SearchResultDTO>> getAccomodations(@RequestBody SearchDTO searchDTO) throws ParseException {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = sdf.parse(searchDTO.getStartDate());
 	    Date endDate = sdf.parse(searchDTO.getEndDate());
+	    
+	    
 		
 		List<SearchResultDTO> searchResultDTOList = new ArrayList<SearchResultDTO>();
 		List<Accomodation> resultAccomodations = new ArrayList<Accomodation>();
@@ -92,6 +97,13 @@ public class SearchController {
 		
 		for (Accomodation ac : accomodations) {
 			boolean ok = true;
+			
+			if(ac.getPricePlan().isEmpty()) {
+				ok = false;
+			}
+			
+			
+			
 			if (category != null) {
 				if (!(ac.getCategory().equals(category))) {
 					ok = false;
@@ -148,6 +160,24 @@ public class SearchController {
 			searchRes.setName(resAc.getName());
 			searchRes.setStartDate(searchDTO.getStartDate());
 			searchRes.setEndDate(searchDTO.getEndDate());
+			
+
+			Calendar cStart = Calendar.getInstance(); cStart.setTime(startDate);
+			Calendar cEnd = Calendar.getInstance(); cEnd.setTime(endDate);
+			
+			float sum = 0;
+			
+			while (cStart.before(cEnd) || cStart.equals(cEnd)) {
+
+			    ArrayList<MonthPrice> list = new ArrayList<>(resAc.getPricePlan());			    
+			    float monthPrice = list.get(cStart.get(Calendar.MONTH)-1).getPrice();
+			    sum += monthPrice;
+			    cStart.add(Calendar.DAY_OF_MONTH, 1);
+
+			}
+			
+			sum *= resAc.getCapacity();
+			searchRes.setTotalPrice(sum);
 			searchResultDTOList.add(searchRes);
 		}
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
