@@ -170,7 +170,7 @@ public class SearchController {
 			while (cStart.before(cEnd) || cStart.equals(cEnd)) {
 
 			    ArrayList<MonthPrice> list = new ArrayList<>(resAc.getPricePlan());			    
-			    float monthPrice = list.get(cStart.get(Calendar.MONTH)-1).getPrice();
+			    float monthPrice = list.get(cStart.get(Calendar.MONTH)).getPrice();
 			    sum += monthPrice;
 			    cStart.add(Calendar.DAY_OF_MONTH, 1);
 
