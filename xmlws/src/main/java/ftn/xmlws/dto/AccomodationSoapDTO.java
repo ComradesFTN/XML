@@ -17,7 +17,7 @@ public class AccomodationSoapDTO {
 	private Long categoryId;
 	private Long agent;
 	private String description;
-	//private List<AccomodationImageSoap> imagesSoap;
+	private List<Long> accomodationImagesIds = new ArrayList<Long>();
 	private int capacity;
 	private Set<Long> extraServicesIds = new HashSet<Long>();
 	//private List<TermSoap> termsSoap;
@@ -103,6 +103,12 @@ public class AccomodationSoapDTO {
 	}
 	public void setMonthPricesIds(List<Long> monthPricesIds) {
 		this.monthPricesIds = monthPricesIds;
+	}
+	public List<Long> getAccomodationImagesIds() {
+		return accomodationImagesIds;
+	}
+	public void setAccomodationImagesIds(List<Long> accomodationImagesIds) {
+		this.accomodationImagesIds = accomodationImagesIds;
 	}
 	
 }

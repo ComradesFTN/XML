@@ -124,6 +124,12 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 					accomodationDTO.getMonthPricesIds().add(mp.getId());
 				}
 			}
+			List<AccomodationImage> ais = accomodationImageRepository.findAll();
+			for(AccomodationImage ai : ais ){
+				if(ai.getAccomodation().getId().equals(accomodation.getId())){
+					accomodationDTO.getAccomodationImagesIds().add(ai.getId());					
+				}
+			}				
 			accomodationsDTO.add(accomodationDTO);
 		}
 		return accomodationsDTO;
