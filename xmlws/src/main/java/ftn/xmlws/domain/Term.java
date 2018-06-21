@@ -39,8 +39,8 @@ public class Term {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 
-	@Column(nullable = false)
-	private boolean reserved;
+	@Column
+	private boolean confirmed;
 
 	public Long getId() {
 		return id;
@@ -90,16 +90,16 @@ public class Term {
 		this.user = user;
 	}
 
-	public boolean isReserved() {
-		return reserved;
+	public boolean isconfirmed() {
+		return confirmed;
 	}
 
-	public void setReserved(boolean reserved) {
-		this.reserved = reserved;
+	public void setconfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 
 	public Term(Long id, Date startDate, Date endDate, float price, Accomodation accomodation, User user,
-			boolean reserved) {
+			boolean confirmed) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
@@ -107,7 +107,7 @@ public class Term {
 		this.price = price;
 		this.accomodation = accomodation;
 		this.user = user;
-		this.reserved = reserved;
+		this.confirmed = confirmed;
 	}
 	
 	public Term() {

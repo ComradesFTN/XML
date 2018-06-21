@@ -34,22 +34,56 @@
 		  	<div class="row mx-auto">Do:<strong><label id="datumDo"></strong></div>
 			<div class="row mx-auto">Cena:</div>
 			<div class="row mx-auto">Ocena:</div>
-			<div class="row mx-auto"><button type="submit" class="btn btn-danger rezervisi">Rezervisi</button></div>
+			<div class="row mx-auto"><button type="submit" id="rezz" class="btn btn-danger rezervisi">Rezervisi</button></div>
 		</div>
 		
 		<script>
-			var temp = localStorage.getItem("chosenRes");
-			var data = $.parseJSON(temp);
-			if (data !== undefined) {
-				var naziv = document.getElementById("naziv");
-				naziv.innerHTML = data.name;
-				var kat = document.getElementById("kategorija");
-				kat.innerHTML = data.category;
-				var datumOd = document.getElementById("datumOd");
-				datumOd.innerHTML = data.startDate;
-				var datumDo = document.getElementById("datumDo");
-				datumDo.innerHTML = data.endDate;
-			}
+		var currentUserId = '';
+			$(document).ready(function(){
+				$.ajax({
+					url : "http://localhost:8080/xmlws/user/getUser"
+				}).then(
+						function(data) {
+							currnetUserId = data.id;							
+				});
+				
+				var temp = localStorage.getItem("chosenRes");
+				var data = $.parseJSON(temp);
+				if (data !== undefined) {
+					var naziv = document.getElementById("naziv");
+					naziv.innerHTML = data.name;
+					var kat = document.getElementById("kategorija");
+					kat.innerHTML = data.category;
+					var datumOd = document.getElementById("datumOd");
+					datumOd.innerHTML = data.startDate;
+					var datumDo = document.getElementById("datumDo");
+					datumDo.innerHTML = data.endDate;
+				}
+				
+			});
+			
+			
+			$("input[type='submit']").click(function(event) {
+				event.preventDefault();
+				var formData = JSON.stringify({
+					startDate:$("#datumOd").val(),
+					endDate:$("#datumDo").val(),
+					userId:currentUserId, 
+					accomodationId:data.id, 
+
+				});
+				$.ajax({
+					url: "http://localhost:8080/xmlws/term/create",
+					type: 'POST',
+					data: formData,
+					contentType: "application/json",
+					success: function(data){
+						localStorage.setItem('confirmedRes', JSON.stringify(data));
+						window.location.href = "http://localhost:8080/xmlws/clientPages/clientReservations.html";
+					}
+				});
+			});
+			
 		
 		</script>
 

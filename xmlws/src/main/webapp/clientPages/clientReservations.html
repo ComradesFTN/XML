@@ -33,12 +33,10 @@
 				<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th>Slike</th>
-						<th>Opis</th>
-						<th>Cena</th>
-						<th>Ocena</th>
-						<th>Kategorija</th>
-						<th>Otkazi</th>
+						<th>Naziv smestaja</th>
+						<th>Od</th>
+						<th>Do</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody id="tableBody">
@@ -50,5 +48,22 @@
 				
 			</div>
 		</div>
+		
+		<script>
+		var temp = localStorage.getItem("confirmedRes");
+		var data = $.parseJSON(temp);
+		if (data !== undefined) {
+			
+				newRow = 
+					"<tr>"
+					+ "<td>" + data.accomodationName + "</td>"
+					+ "<td>" + data.startDate + "</td>"
+					+ "<td>" + data.endDate + "</td>"
+					+ "<td><button type=\"button\" cancel-id=\"" + data[i].id + "\" class=\"btn btn-danger otkazi\">Otkazi</button></td>"
+					
+				+ "</tr>"
+				$("#tableBody").append(newRow)
+		}
+		</script>
 	</body>
 </html>
