@@ -25,7 +25,7 @@ public class Accomodation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id; //manda
 
 	@Column
 	private String name;
