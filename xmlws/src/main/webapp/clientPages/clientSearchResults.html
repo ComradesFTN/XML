@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html >
 	<head>
-		<title>Registracija</title>
+		<title>Rezultati</title>
 		<script src="../scripts/jquery-3.2.1.min.js"></script>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
 		
 	</head>	
 	<body class="bg-light">
-		<div class="nav nav-tabs bg-danger">
+				<div class="nav nav-tabs bg-danger">
 			<ul class="nav nav-tabs mr-auto bg-danger">	
 				<li class="nav-item">
 					<a class="nav-link text-white" href="clientHome.html">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active text-danger" href="clientSearch.html">Pretraga</a>
+					<a class="nav-link text-danger active" href="clientSearch.html">Pretraga</a>
 				</li>	
 				<li class="nav-item">
 					<a class="nav-link text-white" href="clientReservations.html">Rezervacije</a>
@@ -25,7 +25,53 @@
 			</ul>
 			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
 		</div>
-		<div class="row">
+		<br/>
+		<br/>
+		<h2 class="text-center">Smestaj</h2>
+		
+		
+		<script>
+		var tableData = [];
+		$(document).ready(function() {
+			var temp = localStorage.getItem('searchRes');
+			var data = $.parseJSON(temp);
+			if (data !== undefined) {
+				for (i = 0; i < data.length; i++) {
+						newRow = 
+							"<tr>"
+							+ "<td>" + data[i].name + "</td>"
+							+ "<td>" + data[i].description + "</td>"
+							+ "<td>" + data[i].category + "</td>"
+							+ "<td> / </td>"
+							+ "<td> / </td>"
+							+ "<td><button type=\"button\" bookReq-id=\"" + data[i].id + "\" class=\"btn btn-success rezervisi\">Rezervisi</button></td>"
+							
+						+ "</tr>"
+						$("#tableBody").append(newRow)
+						//$(".table").trigger("update");
+				}
+				tableData = data;
+
+			}
+		});
+		
+		$(document).on("click", ".rezervisi", function(event){
+			event.preventDefault(); 
+
+			var bookReq = $(this).attr("bookReq-id");
+			var chosenReservation = '';
+			for(i = 0; i < tableData.length; i++) {
+				if(tableData[i].id == bookReq) {
+					chosenReservation = tableData[i];
+				}
+			}
+			
+			localStorage.setItem('chosenRes', JSON.stringify(chosenReservation));
+			window.location.href = "http://localhost:8080/xmlws/clientPages/confirmReservation.html";
+		});
+		</script>
+		
+	   <div class="row">
 		 <div class="col">
 				
 			</div>
@@ -33,12 +79,12 @@
 				<table class="table">
 				<thead class="thead-dark">
 					<tr>
-						<th>Slike</th>
+						<th>Naziv</th>
 						<th>Opis</th>
+						<th>Kategorija</th>
 						<th>Cena</th>
 						<th>Ocena</th>
-						<th>Kategorija</th>
-						<th>Rezervisi</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody id="tableBody">
@@ -46,7 +92,7 @@
 				</table>
 				<div class="form-group row">
 			    	<label for="sortCombobox" class="col-sm-2 col-form-label">Sortiraj po:</label>
-			      	 <select id="sortCombobox" class="col-sm-2">
+			      	 <select id="sortCombobox" class="col-sm-4">
 					  <option value="cena1">Rastucoj ceni</option>
 					  <option value="cena2">Opadajucoj ceni</option>
 					  <option value="ocena1">Rastucoj oceni</option>
@@ -62,5 +108,10 @@
 				
 			</div>
 		</div>
+		
+		
+		
 	</body>
 </html>
+
+

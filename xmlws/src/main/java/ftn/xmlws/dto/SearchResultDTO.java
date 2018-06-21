@@ -4,14 +4,32 @@ import java.util.List;
 
 // Mora jos slike tu da vrati kao i..ocenu korisnika i cenu
 public class SearchResultDTO {
-	
+
 	private Long id; // accomodation id
 	private String name;
 	private String description;
 	private String category;
-	
+	private String startDate;
+	private String endDate;
+
 	public SearchResultDTO() {
-		
+
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public Long getId() {
@@ -45,8 +63,5 @@ public class SearchResultDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-	
 
 }

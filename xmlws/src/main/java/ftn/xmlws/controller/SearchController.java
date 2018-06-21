@@ -99,7 +99,7 @@ public class SearchController {
 			}
 
 			//mora se porediti el od seta i od liste
-			if (extraServicesList != null) {
+			if (!(extraServicesList.isEmpty())) {
 				if (!(ac.getExtraServices().equals(extraServicesList))) {
 					ok = false;
 				}
@@ -132,6 +132,8 @@ public class SearchController {
 			searchRes.setDescription(resAc.getDescription());
 			searchRes.setId(resAc.getId());
 			searchRes.setName(resAc.getName());
+			searchRes.setStartDate(searchDTO.getStartDate());
+			searchRes.setEndDate(searchDTO.getEndDate());
 			searchResultDTOList.add(searchRes);
 		}
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);

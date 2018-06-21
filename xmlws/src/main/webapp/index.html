@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html >
 	<head>
-		<title>Registracija</title>
+		<title>Pretraga</title>
 		<script src="scripts/jquery-3.2.1.min.js"></script>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="stylesheets/bootstrap.css">
@@ -106,7 +106,7 @@
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
-								input+=' <input type="checkbox" class="ml-2" id="service'+data[i].id+'"> '+data[i].name+'<br/>';
+								input=' <input type="checkbox" class="ml-2" id="service'+data[i].id+'"> '+data[i].name+'<br/>';
 								$("#services").append(input);
 							}
 							servicesData = data;
@@ -132,7 +132,7 @@
 				var selectedServices= new Array();
 				for(i = 0; i<servicesData.length; i++){
 					if($("#service"+servicesData[i].id).is(':checked')){
-						selectedServices.push(servicesData[i]);
+						selectedServices.push(servicesData[i].id);
 					}
 				}
 				

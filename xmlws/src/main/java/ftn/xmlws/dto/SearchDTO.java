@@ -3,15 +3,33 @@ package ftn.xmlws.dto;
 import java.util.List;
 
 public class SearchDTO {
-	
+
 	private String country;
 	private String capacity;
 	private String accomodationType;
 	private String category;
 	private List<String> extraServices;
-	
+	private String startDate;
+	private String endDate;
+
 	public SearchDTO() {
-		
+
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getCountry() {
@@ -53,8 +71,5 @@ public class SearchDTO {
 	public void setExtraServices(List<String> extraServices) {
 		this.extraServices = extraServices;
 	}
-	
-	
-	
 
 }

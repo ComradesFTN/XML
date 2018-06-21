@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>Rezultati</title>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
+		
+	</head>	
+	<body class="bg-light">
+				<div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientHome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSearch.html">Pretraga</a>
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientReservations.html">Rezervacije</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSettings.html">Podesavanje</a>
+				</li>					
+			</ul>
+			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
+		</div>
+		<br/>
+		
+		<div class="col-md-2 text-center">
+		  	<div class="row mx-auto">Naziv:<strong><p class="col" id="naziv"></p></strong></div>
+		  	<div class="row mx-auto">Kategorija:<strong><p class="col" id="kategorija"></p></strong></div>
+		  	<div class="row mx-auto">Od:<strong><label id="datumOd"></label></div>
+		  	<div class="row mx-auto">Do:<strong><label id="datumDo"></strong></div>
+			<div class="row mx-auto">Cena:</div>
+			<div class="row mx-auto">Ocena:</div>
+			<div class="row mx-auto"><button type="submit" class="btn btn-danger rezervisi">Rezervisi</button></div>
+		</div>
+		
+		<script>
+			var temp = localStorage.getItem("chosenRes");
+			var data = $.parseJSON(temp);
+			if (data !== undefined) {
+				var naziv = document.getElementById("naziv");
+				naziv.innerHTML = data.name;
+				var kat = document.getElementById("kategorija");
+				kat.innerHTML = data.category;
+				var datumOd = document.getElementById("datumOd");
+				datumOd.innerHTML = data.startDate;
+				var datumDo = document.getElementById("datumDo");
+				datumDo.innerHTML = data.endDate;
+			}
+		
+		</script>
+
+</body>
+</html>
