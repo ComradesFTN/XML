@@ -18,7 +18,7 @@ public class AccomodationImage {
 	private String url;
 
 	@JoinColumn(name = "accomodation_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Accomodation accomodation;
 
 	public AccomodationImage(String url) {

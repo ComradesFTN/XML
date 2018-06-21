@@ -47,7 +47,9 @@ public class Accomodation {
 	@Column
 	private String description;
 
-	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Column
+	@XmlTransient
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<AccomodationImage> images = new HashSet<AccomodationImage>();
 
 	@Column

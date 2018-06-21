@@ -152,6 +152,11 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	public MonthPrice findMonthPriceById(Long id) {
 		return monthPriceRepository.findById(id).get();
 	}
+
+	@Override
+	public AccomodationImage saveAccomodationImage(AccomodationImage accImg) {	
+		return accomodationImageRepository.save(accImg);
+	}
 	
 	
 	
