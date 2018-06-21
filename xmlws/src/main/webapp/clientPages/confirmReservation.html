@@ -38,17 +38,18 @@
 		</div>
 		
 		<script>
-		var currentUserId = '';
+		var currentUserId;
+		var data;
 			$(document).ready(function(){
 				$.ajax({
 					url : "http://localhost:8080/xmlws/user/getUser"
 				}).then(
 						function(data) {
-							currnetUserId = data.id;							
+							currentUserId = data.id;							
 				});
 				
 				var temp = localStorage.getItem("chosenRes");
-				var data = $.parseJSON(temp);
+				data = $.parseJSON(temp);
 				if (data !== undefined) {
 					var naziv = document.getElementById("naziv");
 					naziv.innerHTML = data.name;
@@ -62,12 +63,11 @@
 				
 			});
 			
-			
-			$("input[type='submit']").click(function(event) {
-				event.preventDefault();
+			$(document).on("click", ".rezervisi", function(event){
+				event.preventDefault(); 
 				var formData = JSON.stringify({
-					startDate:$("#datumOd").val(),
-					endDate:$("#datumDo").val(),
+					startDate:data.startDate,
+					endDate:data.endDate,
 					userId:currentUserId, 
 					accomodationId:data.id, 
 

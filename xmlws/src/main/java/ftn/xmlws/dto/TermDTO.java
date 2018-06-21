@@ -7,6 +7,15 @@ public class TermDTO {
 	private String userId;
 	private String accomodationId; // za sada
 	private String accomodationName;
+	private Long termId;
+
+	public Long getTermId() {
+		return termId;
+	}
+
+	public void setTermId(Long termId) {
+		this.termId = termId;
+	}
 
 	public String getStartDate() {
 		return startDate;

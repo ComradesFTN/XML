@@ -50,20 +50,61 @@
 		</div>
 		
 		<script>
-		var temp = localStorage.getItem("confirmedRes");
-		var data = $.parseJSON(temp);
-		if (data !== undefined) {
+		var temp = localStorage.getItem("confirmedRes"); //imam userID odatle
+		var termDTO = $.parseJSON(temp);
+		var currentUserId;
+		//treba doc ready
+		$(document).ready(function() {
+			$.ajax({
+				url : "http://localhost:8080/xmlws/user/getUser",
+				async: false,
 			
-				newRow = 
-					"<tr>"
-					+ "<td>" + data.accomodationName + "</td>"
-					+ "<td>" + data.startDate + "</td>"
-					+ "<td>" + data.endDate + "</td>"
-					+ "<td><button type=\"button\" cancel-id=\"" + data[i].id + "\" class=\"btn btn-danger otkazi\">Otkazi</button></td>"
-					
-				+ "</tr>"
-				$("#tableBody").append(newRow)
-		}
+			}).then(
+					function(data) {
+						currentUserId = data.id;
+						$.ajax({
+							url : "http://localhost:8080/xmlws/term/getTerms/"+currentUserId,
+						}).then(
+								function(data) {
+									for(i=0; i<data.length; i++) {
+										
+											newRow = 
+												"<tr>"
+												+ "<td>" + data[i].accomodationName + "</td>"
+												+ "<td>" + data[i].startDate + "</td>"
+												+ "<td>" + data[i].endDate + "</td>"
+												+ "<td><button type=\"button\" cancel-id=\"" + data[i].termId + "\" class=\"btn btn-danger otkazi\">Otkazi</button></td>"
+												
+											+ "</tr>"
+											$("#tableBody").append(newRow)
+										
+									}
+						});
+						
+			});
+			
+				
+		});
+		
+		$(document).on("click", ".otkazi", function(event){
+			event.preventDefault(); 
+			
+			var confirmed = confirm("Da li ste sigurni da zelite da otkazete rezervaciju?");
+			if(confirmed){
+			
+				var selectedTermId = $(this).attr("cancel-id");
+				tr_parent = $(this).closest("tr")
+				
+				$.ajax({
+					url: "/xmlws/term/"+selectedTermId,
+		        	type: "DELETE",
+		        	success: function(){
+						tr_parent.remove()
+			        }
+				});
+			}
+		});
+		
 		</script>
 	</body>
 </html>

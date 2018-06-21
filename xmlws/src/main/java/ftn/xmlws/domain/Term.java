@@ -32,7 +32,7 @@ public class Term {
 	private float price;
 
 	@JoinColumn(name = "accomodation_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Accomodation accomodation;
 
 	@JoinColumn(name = "user_id")

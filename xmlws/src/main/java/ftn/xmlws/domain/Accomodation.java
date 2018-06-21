@@ -58,8 +58,9 @@ public class Accomodation {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "accomodation_services", joinColumns = @JoinColumn(name = "accomodation_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private Set<ExtraService> extraServices = new HashSet<ExtraService>();
-
-	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@Column
+	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Term> terms = new HashSet<Term>();
 	
 	@Column

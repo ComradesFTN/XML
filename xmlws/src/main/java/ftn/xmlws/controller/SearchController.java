@@ -1,6 +1,9 @@
 package ftn.xmlws.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +23,14 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
+import ftn.xmlws.domain.Term;
 import ftn.xmlws.dto.SearchDTO;
 import ftn.xmlws.repository.AccomodationRepository;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
 import ftn.xmlws.repository.ExtraServiceRepository;
 import ftn.xmlws.service.AdminService;
+import ftn.xmlws.service.TermService;
 import ftn.xmlws.dto.SearchResultDTO;
 
 @Controller
@@ -46,8 +51,15 @@ public class SearchController {
 	@Autowired
 	ExtraServiceRepository extraServiceRepository;
 
+	@Autowired
+	TermService termService;
+
 	@RequestMapping(value = "search", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<List<SearchResultDTO>> getAccomodations(@RequestBody SearchDTO searchDTO) {
+	public ResponseEntity<List<SearchResultDTO>> getAccomodations(@RequestBody SearchDTO searchDTO) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = sdf.parse(searchDTO.getStartDate());
+	    Date endDate = sdf.parse(searchDTO.getEndDate());
 		
 		List<SearchResultDTO> searchResultDTOList = new ArrayList<SearchResultDTO>();
 		List<Accomodation> resultAccomodations = new ArrayList<Accomodation>();
@@ -67,7 +79,6 @@ public class SearchController {
 		}
 		
 		Optional<ExtraService> extraServiceOp = null;
-		//List<Optional<ExtraService>> extraServiceOpList = null;
 		ExtraService extraServices = null;
 		Set<ExtraService> extraServicesList = new HashSet<ExtraService>();
 		List<String> dtoServiceList = searchDTO.getExtraServices();
@@ -77,9 +88,6 @@ public class SearchController {
 				extraServices = extraServiceOp.get();
 				extraServicesList.add(extraServices);
 			}
-			
-			//s nekim listama ima se drkas
-			//extraServiceOp = extraServiceRepository.findById()
 		}
 		
 		for (Accomodation ac : accomodations) {
@@ -98,7 +106,6 @@ public class SearchController {
 
 			}
 
-			//mora se porediti el od seta i od liste
 			if (!(extraServicesList.isEmpty())) {
 				if (!(ac.getExtraServices().equals(extraServicesList))) {
 					ok = false;
@@ -119,6 +126,13 @@ public class SearchController {
 					ok = false;
 				}
 
+			}
+			
+			for(Term t : ac.getTerms()) {
+				if(!((t.getStartDate().before(startDate) && t.getStartDate().before(endDate)) || 
+						(t.getEndDate().after(startDate) && t.getEndDate().after(endDate)))) {
+					ok = false;
+				}
 			}
 
 			if (ok) {

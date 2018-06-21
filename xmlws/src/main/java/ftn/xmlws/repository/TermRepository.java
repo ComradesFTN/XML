@@ -7,5 +7,6 @@ import ftn.xmlws.domain.Term;
 
 @Repository
 public interface TermRepository extends JpaRepository<Term, Long> {
+	
 
 }
