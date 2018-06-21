@@ -60,6 +60,7 @@ public class Accomodation {
 	private Set<ExtraService> extraServices = new HashSet<ExtraService>();
 	
 	@Column
+	@XmlTransient
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Term> terms = new HashSet<Term>();
 	
