@@ -78,13 +78,13 @@
 											+ "</tr>"
 											$("#tableBody").append(newRow)
 										} else {
-											if(data[i].rated) {
+											if(data[i].rated == true) {
 												newRow = 
 													"<tr>"
 													+ "<td>" + data[i].accomodationName + "</td>"
 													+ "<td>" + data[i].startDate + "</td>"
 													+ "<td>" + data[i].endDate + "</td>"
-													+ "<td> class=\"btn btn-success\" disabled>Ocenjeno</button></td>";
+													+ "<td><button type=\"button\" class=\"btn btn-success\" disabled>Ocenjeno</button></td>";
 																									
 												+ "</tr>"
 												$("#tableBody").append(newRow)
@@ -94,7 +94,7 @@
 													+ "<td>" + data[i].accomodationName + "</td>"
 													+ "<td>" + data[i].startDate + "</td>"
 													+ "<td>" + data[i].endDate + "</td>"
-													+ "<td><a href='addRating.html?id=" + data[i].termId +"\" class=\"btn btn-success oceni\">Oceni</button></td>";
+													+ "<td><button type=\"button\"<a href='addRating.html?id=" + data[i].termId +"\" class=\"btn btn-success oceni\">Oceni</button></td>";
 																									
 												+ "</tr>"
 												$("#tableBody").append(newRow)

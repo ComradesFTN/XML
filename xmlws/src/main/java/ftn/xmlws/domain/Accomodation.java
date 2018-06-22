@@ -78,10 +78,10 @@ public class Accomodation {
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<MonthPrice> pricePlan = new HashSet<MonthPrice>();
 
-	/*@Column
+	@Column
 	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "rejting", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))*/
-	/*private List<Long> rating = new ArrayList<Long>();
+	@CollectionTable(name = "rejting", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
+	private List<Long> rating = new ArrayList<Long>();
 
 	public List<Long> getRating() {
 		return rating;
@@ -89,7 +89,7 @@ public class Accomodation {
 
 	public void setRating(List<Long> rating) {
 		this.rating = rating;
-	}*/
+	}
 
 	public Set<MonthPrice> getPricePlan() {
 		return pricePlan;

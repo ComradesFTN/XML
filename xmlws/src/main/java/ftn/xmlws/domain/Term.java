@@ -109,14 +109,6 @@ public class Term {
 		this.user = user;
 	}
 
-	public boolean isconfirmed() {
-		return confirmed;
-	}
-
-	public void setconfirmed(boolean confirmed) {
-		this.confirmed = confirmed;
-	}
-
 	public Term(Long id, Date startDate, Date endDate, float price, Accomodation accomodation, User user,
 			boolean confirmed) {
 		super();
