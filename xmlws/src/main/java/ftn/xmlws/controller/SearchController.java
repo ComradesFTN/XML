@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
@@ -207,6 +209,16 @@ public class SearchController {
 		
 		if(id == 1) {
 			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getTotalPrice));	
+		}else if(id==2) {
+			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getTotalPrice));
+			 Collections.reverse(searchResultDTOList);
+		}else if(id==3) {
+			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getRating));
+		}else if(id==4) {
+			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getRating));
+			 Collections.reverse(searchResultDTOList);
+		}else if(id==5) {
+			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getCategory));
 		}
 		
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
