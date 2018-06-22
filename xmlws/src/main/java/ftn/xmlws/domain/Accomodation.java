@@ -1,10 +1,14 @@
 package ftn.xmlws.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,13 +23,15 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Accomodation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id; //manda
+	private Long id; // manda
 
 	@Column
 	private String name;
@@ -58,19 +64,32 @@ public class Accomodation {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "accomodation_services", joinColumns = @JoinColumn(name = "accomodation_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private Set<ExtraService> extraServices = new HashSet<ExtraService>();
-	
+
 	@Column
 	@XmlTransient
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Term> terms = new HashSet<Term>();
-	
+
 	@Column
 	private Long agent;
-	
+
 	@Column
 	@XmlTransient
 	@OneToMany(mappedBy = "accomodation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<MonthPrice> pricePlan = new HashSet<MonthPrice>();
+
+	/*@Column
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "rejting", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))*/
+	/*private List<Long> rating = new ArrayList<Long>();
+
+	public List<Long> getRating() {
+		return rating;
+	}
+
+	public void setRating(List<Long> rating) {
+		this.rating = rating;
+	}*/
 
 	public Set<MonthPrice> getPricePlan() {
 		return pricePlan;
@@ -142,7 +161,7 @@ public class Accomodation {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}	
+	}
 
 	public int getCapacity() {
 		return capacity;
@@ -158,7 +177,7 @@ public class Accomodation {
 
 	public void setExtraServices(Set<ExtraService> extraServices) {
 		this.extraServices = extraServices;
-	}	
+	}
 
 	public Set<AccomodationImage> getImages() {
 		return images;
@@ -198,8 +217,5 @@ public class Accomodation {
 		this.agent = agent;
 		this.pricePlan = pricePlan;
 	}
-	
-	
-	
 
 }

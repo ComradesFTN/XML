@@ -41,6 +41,25 @@ public class Term {
 
 	@Column
 	private boolean confirmed = false;
+	
+	@Column
+	private boolean rated = false;	
+	
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
+
+	public boolean isRated() {
+		return rated;
+	}
+
+	public void setRated(boolean rated) {
+		this.rated = rated;
+	}
 
 	public Long getId() {
 		return id;

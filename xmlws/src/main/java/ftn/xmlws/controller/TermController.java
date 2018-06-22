@@ -77,6 +77,8 @@ public class TermController {
 				termDTO.setEndDate(t.getEndDate().toString());
 				termDTO.setStartDate(t.getStartDate().toString());
 				termDTO.setTermId(t.getId());
+				termDTO.setConfirmed(t.isconfirmed());
+				termDTO.setRated(t.isRated());
 				listTermDTO.add(termDTO);
 			}
 			
@@ -92,6 +94,19 @@ public class TermController {
 		Term deleted = termService.deleteTerm(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+/*	@RequestMapping(value = "{id}/{ocena}", method = RequestMethod.PUT)
+	public ResponseEntity<String> saveRating(@PathVariable Long id, @PathVariable Long ocena) {
+		Term ratedTerm = termService.findOne(id);
+		ratedTerm.setRated(true);
+			
+		Accomodation accomodation = ratedTerm.getAccomodation();
+		accomodation.getRating().add(ocena);
+		
+		termService.saveTerm(ratedTerm);
+		accomodationService.saveAccomodation(accomodation);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}*/
 	
 
 }

@@ -8,6 +8,24 @@ public class TermDTO {
 	private String accomodationId; // za sada
 	private String accomodationName;
 	private Long termId;
+	private boolean confirmed;
+	private boolean rated;
+
+	public boolean isRated() {
+		return rated;
+	}
+
+	public void setRated(boolean rated) {
+		this.rated = rated;
+	}
+
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 
 	public Long getTermId() {
 		return termId;

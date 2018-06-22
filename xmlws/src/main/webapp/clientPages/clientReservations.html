@@ -67,7 +67,7 @@
 						}).then(
 								function(data) {
 									for(i=0; i<data.length; i++) {
-										
+										if(data[i].confirmed != true) {
 											newRow = 
 												"<tr>"
 												+ "<td>" + data[i].accomodationName + "</td>"
@@ -77,7 +77,30 @@
 												
 											+ "</tr>"
 											$("#tableBody").append(newRow)
-										
+										} else {
+											if(data[i].rated) {
+												newRow = 
+													"<tr>"
+													+ "<td>" + data[i].accomodationName + "</td>"
+													+ "<td>" + data[i].startDate + "</td>"
+													+ "<td>" + data[i].endDate + "</td>"
+													+ "<td> class=\"btn btn-success\" disabled>Ocenjeno</button></td>";
+																									
+												+ "</tr>"
+												$("#tableBody").append(newRow)
+											} else {
+												newRow = 
+													"<tr>"
+													+ "<td>" + data[i].accomodationName + "</td>"
+													+ "<td>" + data[i].startDate + "</td>"
+													+ "<td>" + data[i].endDate + "</td>"
+													+ "<td><a href='addRating.html?id=" + data[i].termId +"\" class=\"btn btn-success oceni\">Oceni</button></td>";
+																									
+												+ "</tr>"
+												$("#tableBody").append(newRow)
+											}
+											
+										}
 									}
 						});
 						
@@ -105,6 +128,21 @@
 			}
 		});
 		
+		$(document).on("click", ".oceni", function(event){
+			event.preventDefault(); 
+
+			var selectedTermId = $(this).attr("oceni-id");
+				tr_parent = $(this).closest("tr")
+
+				$.ajax({
+					url : "/xmlws/term/" + selectedTermId,
+					type : "DELETE",
+					success : function() {
+						tr_parent.remove()
+					}
+				});
+
+		});
 		</script>
 	</body>
 </html>
