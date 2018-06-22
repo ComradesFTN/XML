@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -162,14 +163,17 @@ public class SearchController {
 			searchRes.setEndDate(searchDTO.getEndDate());
 			
 
-			Calendar cStart = Calendar.getInstance(); cStart.setTime(startDate);
-			Calendar cEnd = Calendar.getInstance(); cEnd.setTime(endDate);
+			Calendar cStart = Calendar.getInstance(); 
+			cStart.setTime(startDate);
+			Calendar cEnd = Calendar.getInstance(); 
+			cEnd.setTime(endDate);
 			
 			float sum = 0;
 			
 			while (cStart.before(cEnd) || cStart.equals(cEnd)) {
 
-			    ArrayList<MonthPrice> list = new ArrayList<>(resAc.getPricePlan());			    
+			    ArrayList<MonthPrice> list = new ArrayList<>(resAc.getPricePlan());		
+			    list.sort(Comparator.comparing(MonthPrice::getId));			    
 			    float monthPrice = list.get(cStart.get(Calendar.MONTH)).getPrice();
 			    sum += monthPrice;
 			    cStart.add(Calendar.DAY_OF_MONTH, 1);
@@ -181,6 +185,12 @@ public class SearchController {
 			searchResultDTOList.add(searchRes);
 		}
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
+	}
+	
+	public List<MonthPrice> listSorter(List<MonthPrice> monthPrice) {
+		
+		
+		return null;
 	}
 
 }
