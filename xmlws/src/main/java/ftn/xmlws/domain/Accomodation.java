@@ -79,7 +79,8 @@ public class Accomodation {
 	private Set<MonthPrice> pricePlan = new HashSet<MonthPrice>();
 
 	@Column
-	@ElementCollection(fetch = FetchType.EAGER)
+	@XmlTransient
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "rejting", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
 	private List<Long> rating = new ArrayList<Long>();
 
