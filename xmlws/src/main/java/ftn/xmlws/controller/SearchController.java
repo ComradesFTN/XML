@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +57,8 @@ public class SearchController {
 
 	@Autowired
 	TermService termService;
+	
+	private List<SearchResultDTO> searchResultDTOList;
 
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "search", method = RequestMethod.POST, consumes = "application/json")
@@ -67,7 +70,7 @@ public class SearchController {
 	    
 	    
 		
-		List<SearchResultDTO> searchResultDTOList = new ArrayList<SearchResultDTO>();
+		searchResultDTOList = new ArrayList<SearchResultDTO>();
 		List<Accomodation> resultAccomodations = new ArrayList<Accomodation>();
 		List<Accomodation> accomodations = accomodationRepository.findAll(); // dobijes sve
 		Optional<Category> catOptional = null;
@@ -196,6 +199,16 @@ public class SearchController {
 			searchRes.setRating(ratingResult);
 			searchResultDTOList.add(searchRes);
 		}
+		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/sort/{id}", method = RequestMethod.GET) 
+	public ResponseEntity<List<SearchResultDTO>> sortList(@PathVariable Long id) {
+		
+		if(id == 1) {
+			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getTotalPrice));	
+		}
+		
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
 

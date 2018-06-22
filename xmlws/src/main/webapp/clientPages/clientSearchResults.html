@@ -69,6 +69,33 @@
 			localStorage.setItem('chosenRes', JSON.stringify(chosenReservation));
 			window.location.href = "http://localhost:8080/xmlws/clientPages/confirmReservation.html";
 		});
+		
+		$(document).on("click", ".sort", function(event){
+			event.preventDefault(); 
+			var sortiraj = document.getElementById("sortCombobox");
+			var selectedSort = sortiraj.options[sortiraj.selectedIndex].value; //pokupi
+			
+			$.ajax({
+				url : "http://localhost:8080/xmlws/sort/"+selectedSort,
+			}).then(
+					function(data) {
+						$("#tableBody").empty();
+						for (i = 0; i < data.length; i++) {
+							newRow = 
+								"<tr>"
+								+ "<td>" + data[i].name + "</td>"
+								+ "<td>" + data[i].description + "</td>"
+								+ "<td>" + data[i].category + "</td>"
+								+ "<td>" + data[i].totalPrice + "</td>"
+								+ "<td>" + data[i].rating + "</td>"
+								+ "<td><button type=\"button\" bookReq-id=\"" + data[i].id + "\" class=\"btn btn-success rezervisi\">Rezervisi</button></td>"
+								
+							+ "</tr>"
+							$("#tableBody").append(newRow)
+							//$(".table").trigger("update");
+					}
+			});
+		});
 		</script>
 		
 	   <div class="row">
@@ -93,13 +120,13 @@
 				<div class="form-group row">
 			    	<label for="sortCombobox" class="col-sm-2 col-form-label">Sortiraj po:</label>
 			      	 <select id="sortCombobox" class="col-sm-4">
-					  <option value="cena1">Rastucoj ceni</option>
-					  <option value="cena2">Opadajucoj ceni</option>
-					  <option value="ocena1">Rastucoj oceni</option>
-					  <option value="ocena2">Opadajucoj oceni</option>
-					  <option value="kategorija">Kategoriji</option>
+					  <option value="1">Rastucoj ceni</option>
+					  <option value="2">Opadajucoj ceni</option>
+					  <option value="3">Rastucoj oceni</option>
+					  <option value="4">Opadajucoj oceni</option>
+					  <option value="5">Kategoriji</option>
 					</select> 
-	    			<input type="submit" value="Sortiraj" class="btn btn-danger ml-4" />
+	    			<input type="submit" value="Sortiraj" class="btn btn-danger ml-4 sort" />
 	    			
 			  </div>
 				
