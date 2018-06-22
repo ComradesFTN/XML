@@ -145,8 +145,8 @@ public class SearchController {
 			}
 			
 			for(Term t : ac.getTerms()) {
-				if(!((t.getStartDate().before(startDate) && t.getStartDate().before(endDate)) || 
-						(t.getEndDate().after(startDate) && t.getEndDate().after(endDate)))) {
+				if(!((t.getStartDate().after(startDate) && t.getStartDate().after(endDate)) || 
+						(t.getEndDate().before(startDate) && t.getEndDate().before(endDate)))) {
 					ok = false;
 				}
 			}
