@@ -129,7 +129,13 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 				if(ai.getAccomodation().getId().equals(accomodation.getId())){
 					accomodationDTO.getAccomodationImagesIds().add(ai.getId());					
 				}
-			}				
+			}		
+			List<Term> terms = termRepository.findAll();
+			for(Term term : terms){
+				if(term.getAccomodation().getId().equals(accomodation.getId())){
+					accomodationDTO.getTermsSoapIds().add(term.getId());
+				}
+			}
 			accomodationsDTO.add(accomodationDTO);
 		}
 		return accomodationsDTO;
@@ -162,6 +168,11 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	@Override
 	public AccomodationImage saveAccomodationImage(AccomodationImage accImg) {	
 		return accomodationImageRepository.save(accImg);
+	}
+
+	@Override
+	public Term saveTerm(Term term) {
+		return termRepository.save(term);
 	}
 	
 	

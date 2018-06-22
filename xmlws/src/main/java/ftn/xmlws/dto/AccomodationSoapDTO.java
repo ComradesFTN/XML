@@ -20,7 +20,7 @@ public class AccomodationSoapDTO {
 	private List<Long> accomodationImagesIds = new ArrayList<Long>();
 	private int capacity;
 	private Set<Long> extraServicesIds = new HashSet<Long>();
-	//private List<TermSoap> termsSoap;
+	private List<Long> termsSoapIds = new ArrayList<Long>();
 	private List<Long> monthPricesIds = new ArrayList<Long>();
 	public Long getAccomodationTypeId() {
 		return accomodationTypeId;
@@ -109,6 +109,12 @@ public class AccomodationSoapDTO {
 	}
 	public void setAccomodationImagesIds(List<Long> accomodationImagesIds) {
 		this.accomodationImagesIds = accomodationImagesIds;
+	}
+	public List<Long> getTermsSoapIds() {
+		return termsSoapIds;
+	}
+	public void setTermsSoapIds(List<Long> termsSoapIds) {
+		this.termsSoapIds = termsSoapIds;
 	}
 	
 }

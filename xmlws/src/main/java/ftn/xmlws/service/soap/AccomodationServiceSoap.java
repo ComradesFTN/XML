@@ -25,6 +25,7 @@ public interface AccomodationServiceSoap {
 	public Accomodation save(Accomodation acc);		
 	public MonthPrice saveMP(MonthPrice mp,Long accId);
 	public AccomodationImage saveAccomodationImage(AccomodationImage accImg);
+	public Term saveTerm(Term term);
 
 	public Accomodation findAccomodationById(Long id);
 	public AccomodationImage findImageById(Long id);

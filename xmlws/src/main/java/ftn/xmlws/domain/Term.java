@@ -36,11 +36,11 @@ public class Term {
 	private Accomodation accomodation;
 
 	@JoinColumn(name = "user_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
 
 	@Column
-	private boolean confirmed;
+	private boolean confirmed = false;
 
 	public Long getId() {
 		return id;
