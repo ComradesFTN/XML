@@ -34,6 +34,7 @@
 		  	<div class="row mx-auto">Do:<strong><label id="datumDo"></strong></div>
 			<div class="row mx-auto">Cena:<strong><label id="cena"></label></strong></div>
 			<div class="row mx-auto">Ocena:<strong><label id="ocena"></label></strong></div>
+			<div class="row mx-auto">Slike:<strong><div class="col" id="slike"></div></strong></div>
 			<div class="row mx-auto"><button type="submit" id="rezz" class="btn btn-danger rezervisi">Rezervisi</button></div>
 		</div>
 		
@@ -62,7 +63,12 @@
 					var cena = document.getElementById("cena");
 					cena.innerHTML = data.totalPrice;
 					var ocena = document.getElementById("ocena");
-					ocena.innerHTML = data.rating;
+					ocena.innerHTML = data.rating;					
+					for(i=0;i<data.images.length;i++){
+						var tokens = data.images[i].split("agent\\");	
+						newImage = '<img height="100" width="100" src="\\..\\agent\\'+tokens[1]+'"/>'
+						$("#slike").append(newImage);
+					}
 				}
 				
 			});

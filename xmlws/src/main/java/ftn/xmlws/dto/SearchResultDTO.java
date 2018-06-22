@@ -1,5 +1,6 @@
 package ftn.xmlws.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Mora jos slike tu da vrati kao i..ocenu korisnika i cenu
@@ -13,6 +14,7 @@ public class SearchResultDTO {
 	private String endDate;
 	private float totalPrice;
 	private double rating;
+	private List<String> images = new ArrayList<String>();
 
 	public SearchResultDTO() {
 
@@ -80,6 +82,14 @@ public class SearchResultDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 }

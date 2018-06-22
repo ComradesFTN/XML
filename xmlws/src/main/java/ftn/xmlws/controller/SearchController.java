@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.naming.directory.SearchResult;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,21 +21,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import ftn.xmlws.domain.Accomodation;
+import ftn.xmlws.domain.AccomodationImage;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.MonthPrice;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.dto.SearchDTO;
+import ftn.xmlws.dto.SearchResultDTO;
 import ftn.xmlws.repository.AccomodationRepository;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
 import ftn.xmlws.repository.ExtraServiceRepository;
 import ftn.xmlws.service.AdminService;
 import ftn.xmlws.service.TermService;
-import ftn.xmlws.dto.SearchResultDTO;
 
 @Controller
 public class SearchController {
@@ -166,6 +164,9 @@ public class SearchController {
 			searchRes.setName(resAc.getName());
 			searchRes.setStartDate(searchDTO.getStartDate());
 			searchRes.setEndDate(searchDTO.getEndDate());
+			for(AccomodationImage img : resAc.getImages()){
+				searchRes.getImages().add(img.getUrl());
+			}
 			
 
 			Calendar cStart = Calendar.getInstance(); 
