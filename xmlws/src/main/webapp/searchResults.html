@@ -11,19 +11,10 @@
 				<div class="nav nav-tabs bg-danger">
 			<ul class="nav nav-tabs mr-auto bg-danger">	
 				<li class="nav-item">
-					<a class="nav-link text-white" href="clientHome.html">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-danger active" href="clientSearch.html">Pretraga</a>
+					<a class="nav-link text-danger active" href="#">Pretraga</a>
 				</li>	
-				<li class="nav-item">
-					<a class="nav-link text-white" href="clientReservations.html">Rezervacije</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-white" href="clientSettings.html">Podesavanje</a>
-				</li>					
 			</ul>
-			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
+			<a class="nav-link mr-0 text-white" href="login.html">Prijava</a>
 		</div>
 		<br/>
 		<br/>
@@ -43,7 +34,7 @@
 							+ "<td>" + data[i].description + "</td>"
 							+ "<td>" + data[i].category + "</td>"
 							+ "<td>" + data[i].totalPrice + "</td>"
-							+ "<td> / </td>"
+							+ "<td>" + data[i].rating +"</td>"
 							+ "<td><button type=\"button\" bookReq-id=\"" + data[i].id + "\" class=\"btn btn-success rezervisi\">Rezervisi</button></td>"
 							
 						+ "</tr>"

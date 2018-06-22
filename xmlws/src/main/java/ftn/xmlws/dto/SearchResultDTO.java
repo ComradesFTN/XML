@@ -12,9 +12,18 @@ public class SearchResultDTO {
 	private String startDate;
 	private String endDate;
 	private float totalPrice;
+	private double rating;
 
 	public SearchResultDTO() {
 
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	public float getTotalPrice() {

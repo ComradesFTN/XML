@@ -33,7 +33,7 @@
 		  	<div class="row mx-auto">Od:<strong><label id="datumOd"></label></strong></div>
 		  	<div class="row mx-auto">Do:<strong><label id="datumDo"></strong></div>
 			<div class="row mx-auto">Cena:<strong><label id="cena"></label></strong></div>
-			<div class="row mx-auto">Ocena:</div>
+			<div class="row mx-auto">Ocena:<strong><label id="ocena"></label></strong></div>
 			<div class="row mx-auto"><button type="submit" id="rezz" class="btn btn-danger rezervisi">Rezervisi</button></div>
 		</div>
 		
@@ -61,6 +61,8 @@
 					datumDo.innerHTML = data.endDate;
 					var cena = document.getElementById("cena");
 					cena.innerHTML = data.totalPrice;
+					var ocena = document.getElementById("ocena");
+					ocena.innerHTML = data.rating;
 				}
 				
 			});

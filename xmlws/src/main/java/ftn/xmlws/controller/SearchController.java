@@ -182,6 +182,18 @@ public class SearchController {
 			
 			sum *= resAc.getCapacity();
 			searchRes.setTotalPrice(sum);
+			long sumRating = 0;
+			double ratingResult = 0;
+			
+			if(!(resAc.getRating().isEmpty())) {
+				for(int i = 0; i < resAc.getRating().size(); i++) {
+					sumRating += resAc.getRating().get(i);
+				}
+				
+				ratingResult = sumRating / resAc.getRating().size();
+			}
+			
+			searchRes.setRating(ratingResult);
 			searchResultDTOList.add(searchRes);
 		}
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);

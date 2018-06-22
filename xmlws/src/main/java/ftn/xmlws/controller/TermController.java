@@ -95,7 +95,7 @@ public class TermController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "{id}/{ocena}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/saveRating/{id}/{ocena}", method = RequestMethod.PUT)
 	public ResponseEntity<String> saveRating(@PathVariable Long id, @PathVariable Long ocena) {
 		Term ratedTerm = termService.findOne(id);
 		ratedTerm.setRated(true);
