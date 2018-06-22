@@ -58,8 +58,7 @@
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
-					success: function(){
-						console.log("Ajax zahtev za login.");
+					success: function(data){						
 						window.location.href = "http://localhost:8080/xmlws/clientPages/clientHome.html";
 						currentUser = data;						
 					},

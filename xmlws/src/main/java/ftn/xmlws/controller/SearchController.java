@@ -186,11 +186,5 @@ public class SearchController {
 		}
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
-	
-	public List<MonthPrice> listSorter(List<MonthPrice> monthPrice) {
-		
-		
-		return null;
-	}
 
 }

@@ -11,10 +11,19 @@
 		<div class="nav nav-tabs bg-danger">
 			<ul class="nav nav-tabs mr-auto bg-danger">	
 				<li class="nav-item">
-					<a class="nav-link active text-danger" href="index.html">Home</a>
-				</li>						
+					<a class="nav-link text-white" href="clientHome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-danger active" href="clientSearch.html">Pretraga</a>
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientReservations.html">Rezervacije</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSettings.html">Podesavanje</a>
+				</li>					
 			</ul>
-			<a class="nav-link mr-0 text-white" href="login.html">Prijava</a>
+			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
 		</div>
 		<br/>
 		<br/>
@@ -143,6 +152,8 @@
 					accomodationType:typeId, 
 					category:categoryId, 
 					extraServices:selectedServices,
+					startDate:$("#inputDate").val(),
+					endDate:$("#inputEndDate").val(),
 				});
 				$.ajax({
 					url: "http://localhost:8080/xmlws/search",

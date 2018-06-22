@@ -2,9 +2,9 @@
 <html>
 <head>
 		<title>Rezultati</title>
-		<script src="../scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/jquery-3.2.1.min.js"></script>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
+		<link rel="stylesheet" href="stylesheets/bootstrap.css">
 		
 	</head>	
 	<body class="bg-light">
@@ -38,15 +38,7 @@
 		</div>
 		
 		<script>
-		var currentUserId;
 		var data;
-			$(document).ready(function(){
-				$.ajax({
-					url : "http://localhost:8080/xmlws/user/getUser"
-				}).then(
-						function(data) {
-							currentUserId = data.id;							
-				});
 				
 				var temp = localStorage.getItem("chosenRes");
 				data = $.parseJSON(temp);
