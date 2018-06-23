@@ -27,7 +27,7 @@ public class EmailService {
 	public void send(User user) throws MailException, InterruptedException {
 		
 		String token = UUID.randomUUID().toString();
-		String confirmationUrl = "/user/registrationConfirm.html?token=" + token;
+		String confirmationUrl = "/user/registrationConfirm?token=" + token;
 		service.createVerificationToken(user, token);
 
 		SimpleMailMessage mail = new SimpleMailMessage();

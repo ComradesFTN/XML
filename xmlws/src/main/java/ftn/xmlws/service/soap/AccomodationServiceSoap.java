@@ -8,6 +8,7 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationImage;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
+import ftn.xmlws.domain.Comment;
 import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.MonthPrice;
 import ftn.xmlws.domain.Term;
@@ -34,6 +35,7 @@ public interface AccomodationServiceSoap {
 	public ExtraService findExtraServiceById(Long id);
 	public Term findTermById(Long id);
 	public MonthPrice findMonthPriceById(Long id);
+	public Comment findCommentById(Long id);
 	
 	public List<Accomodation> getAccomodationsOfAgent(Long id);
 }

@@ -1,5 +1,7 @@
 package ftn.xmlws.dto;
 
+import javax.persistence.Column;
+
 public class TermDTO {
 
 	private String startDate;
@@ -10,6 +12,24 @@ public class TermDTO {
 	private Long termId;
 	private boolean confirmed;
 	private boolean rated;
+	private String userQuestion;
+	private String agentAnswer;
+
+	public String getUserQuestion() {
+		return userQuestion;
+	}
+
+	public void setUserQuestion(String userQuestion) {
+		this.userQuestion = userQuestion;
+	}
+
+	public String getAgentAnswer() {
+		return agentAnswer;
+	}
+
+	public void setAgentAnswer(String agentAnswer) {
+		this.agentAnswer = agentAnswer;
+	}
 
 	public boolean isRated() {
 		return rated;

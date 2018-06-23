@@ -22,6 +22,8 @@ public class AccomodationSoapDTO {
 	private Set<Long> extraServicesIds = new HashSet<Long>();
 	private List<Long> termsSoapIds = new ArrayList<Long>();
 	private List<Long> monthPricesIds = new ArrayList<Long>();
+	private List<Long> commentsIds = new ArrayList<Long>();
+	
 	public Long getAccomodationTypeId() {
 		return accomodationTypeId;
 	}
@@ -115,6 +117,12 @@ public class AccomodationSoapDTO {
 	}
 	public void setTermsSoapIds(List<Long> termsSoapIds) {
 		this.termsSoapIds = termsSoapIds;
+	}
+	public List<Long> getCommentsIds() {
+		return commentsIds;
+	}
+	public void setCommentsIds(List<Long> commentsIds) {
+		this.commentsIds = commentsIds;
 	}
 	
 }

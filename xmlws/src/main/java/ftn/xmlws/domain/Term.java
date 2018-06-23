@@ -43,8 +43,30 @@ public class Term {
 	private boolean confirmed = false;
 	
 	@Column
-	private boolean rated = false;	
+	private boolean rated = false;
 	
+	@Column
+	private String userQuestion;
+	
+	@Column
+	private String agentAnswer;
+	
+	public String getUserQuestion() {
+		return userQuestion;
+	}
+
+	public void setUserQuestion(String userQuestion) {
+		this.userQuestion = userQuestion;
+	}
+
+	public String getAgentAnswer() {
+		return agentAnswer;
+	}
+
+	public void setAgentAnswer(String agentAnswer) {
+		this.agentAnswer = agentAnswer;
+	}
+
 	public boolean isConfirmed() {
 		return confirmed;
 	}

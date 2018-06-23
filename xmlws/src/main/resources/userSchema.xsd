@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://soap.service.xmlws.ftn/"
+	version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soap.service.xmlws.ftn/">
+	<xs:element name="findOne" type="tns:findOne" />
+	<xs:element name="findOneResponse" type="tns:findOneResponse" />
+	<xs:element name="verifyAgentLogin" type="tns:verifyAgentLogin" />
+	<xs:element name="verifyAgentLoginResponse" type="tns:verifyAgentLoginResponse" />
+	<xs:complexType name="findOne">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findOneResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:user" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="user">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="adress" type="xs:string" />
+			<xs:element minOccurs="0" name="businessNo" type="xs:string" />
+			<xs:element name="confirmed" type="xs:boolean" />
+			<xs:element minOccurs="0" name="email" type="xs:string" />
+			<xs:element name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="lastName" type="xs:string" />
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+			<xs:element minOccurs="0" name="password" type="xs:string" />
+			<xs:element minOccurs="0" name="userName" type="xs:string" />
+			<xs:element name="userType" type="xs:int" />
+			<xs:element name="banned" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="verifyAgentLogin">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="verifyAgentLoginResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:user" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

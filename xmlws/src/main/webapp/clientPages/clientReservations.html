@@ -36,6 +36,7 @@
 						<th>Naziv smestaja</th>
 						<th>Od</th>
 						<th>Do</th>
+						<th>Oceni/Otkazi</th>						
 						<th></th>
 					</tr>
 				</thead>
@@ -74,7 +75,7 @@
 												+ "<td>" + data[i].startDate + "</td>"
 												+ "<td>" + data[i].endDate + "</td>"
 												+ "<td><button type=\"button\" cancel-id=\"" + data[i].termId + "\" class=\"btn btn-danger otkazi\">Otkazi</button></td>"
-												
+												+ "<td><button type=\"button\" ask-id=\"" + data[i].termId + "\" class=\"btn btn-danger pitaj\">Postavi pitanje</button></td>"
 											+ "</tr>"
 											$("#tableBody").append(newRow)
 										} else {
@@ -84,8 +85,8 @@
 													+ "<td>" + data[i].accomodationName + "</td>"
 													+ "<td>" + data[i].startDate + "</td>"
 													+ "<td>" + data[i].endDate + "</td>"
-													+ "<td><button type=\"button\" class=\"btn btn-success\" disabled>Ocenjeno</button></td>";
-																									
+													+ "<td><button type=\"button\" class=\"btn btn-success\" disabled>Ocenjeno</button></td>"
+													+ "<td><button type=\"button\" ask-id=\"" + data[i].termId + "\" class=\"btn btn-danger pitaj\">Postavi pitanje</button></td>"
 												+ "</tr>"
 												$("#tableBody").append(newRow)
 											} else {
@@ -94,7 +95,8 @@
 													+ "<td>" + data[i].accomodationName + "</td>"
 													+ "<td>" + data[i].startDate + "</td>"
 													+ "<td>" + data[i].endDate + "</td>"
-													+ "<td><a href='addRating.html?id=" + data[i].termId + "' >Oceni</a></td>";																						
+													+ "<td><a href='addRating.html?id=" + data[i].termId + "' >Oceni</a></td>"	
+													+ "<td><button type=\"button\" ask-id=\"" + data[i].termId + "\" class=\"btn btn-danger pitaj\">Postavi pitanje</button></td>"
 												+ "</tr>"
 												$("#tableBody").append(newRow)
 											}
@@ -127,21 +129,11 @@
 			}
 		});
 		
-		$(document).on("click", ".oceni", function(event){
-			event.preventDefault(); 
-
-			var selectedTermId = $(this).attr("oceni-id");
-				tr_parent = $(this).closest("tr")
-
-				$.ajax({
-					url : "/xmlws/term/" + selectedTermId,
-					type : "DELETE",
-					success : function() {
-						tr_parent.remove()
-					}
-				});
-
-		});
+		$(document).on("click", ".pitaj", function(event){
+			event.preventDefault(); 			
+			var selectedTermId = $(this).attr("ask-id");
+			window.location.href = "http://localhost:8080/xmlws/clientPages/termMessages.html?id="+selectedTermId;			
+		});		
 		</script>
 	</body>
 </html>

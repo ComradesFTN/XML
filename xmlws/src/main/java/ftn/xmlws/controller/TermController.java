@@ -130,5 +130,25 @@ public class TermController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/getTerm/{id}", method = RequestMethod.GET)
+	public ResponseEntity<TermDTO> getTerm(@PathVariable Long id) {
+		Term t = termService.findOne(id);
+		TermDTO termDTO = new TermDTO();
+		termDTO.setUserQuestion(t.getUserQuestion());
+		termDTO.setAgentAnswer(t.getAgentAnswer());
+		termDTO.setTermId(t.getId());
+		return new ResponseEntity<>(termDTO, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value = "sendMessage", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<TermDTO> sendMessage(@RequestBody TermDTO termDTO){
+		Term t = termService.findOne(termDTO.getTermId());
+		t.setUserQuestion(termDTO.getUserQuestion());
+		termService.saveTerm(t);
+		return new ResponseEntity<>(termDTO, HttpStatus.OK);
+
+	}
 
 }

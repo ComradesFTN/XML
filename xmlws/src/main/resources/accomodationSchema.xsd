@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://soap.service.xmlws.ftn/"
+	version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soap.service.xmlws.ftn/">
+	<xs:element name="findAccomodationById" type="tns:findAccomodationById" />
+	<xs:element name="findAccomodationByIdResponse" type="tns:findAccomodationByIdResponse" />
+	<xs:element name="findAllAccomodations" type="tns:findAllAccomodations" />
+	<xs:element name="findAllAccomodationsResponse" type="tns:findAllAccomodationsResponse" />
+	<xs:element name="findAllCategories" type="tns:findAllCategories" />
+	<xs:element name="findAllCategoriesResponse" type="tns:findAllCategoriesResponse" />
+	<xs:element name="findAllMonthPrices" type="tns:findAllMonthPrices" />
+	<xs:element name="findAllMonthPricesResponse" type="tns:findAllMonthPricesResponse" />
+	<xs:element name="findAllServices" type="tns:findAllServices" />
+	<xs:element name="findAllServicesResponse" type="tns:findAllServicesResponse" />
+	<xs:element name="findAllTypes" type="tns:findAllTypes" />
+	<xs:element name="findAllTypesResponse" type="tns:findAllTypesResponse" />
+	<xs:element name="findCategoryById" type="tns:findCategoryById" />
+	<xs:element name="findCategoryByIdResponse" type="tns:findCategoryByIdResponse" />
+	<xs:element name="findCommentById" type="tns:findCommentById" />
+	<xs:element name="findCommentByIdResponse" type="tns:findCommentByIdResponse" />
+	<xs:element name="findExtraServiceById" type="tns:findExtraServiceById" />
+	<xs:element name="findExtraServiceByIdResponse" type="tns:findExtraServiceByIdResponse" />
+	<xs:element name="findImageById" type="tns:findImageById" />
+	<xs:element name="findImageByIdResponse" type="tns:findImageByIdResponse" />
+	<xs:element name="findMonthPriceById" type="tns:findMonthPriceById" />
+	<xs:element name="findMonthPriceByIdResponse" type="tns:findMonthPriceByIdResponse" />
+	<xs:element name="findTermById" type="tns:findTermById" />
+	<xs:element name="findTermByIdResponse" type="tns:findTermByIdResponse" />
+	<xs:element name="findTypeById" type="tns:findTypeById" />
+	<xs:element name="findTypeByIdResponse" type="tns:findTypeByIdResponse" />
+	<xs:element name="getAccomodationsOfAgent" type="tns:getAccomodationsOfAgent" />
+	<xs:element name="getAccomodationsOfAgentResponse" type="tns:getAccomodationsOfAgentResponse" />
+	<xs:element name="save" type="tns:save" />
+	<xs:element name="saveAccomodationImage" type="tns:saveAccomodationImage" />
+	<xs:element name="saveAccomodationImageResponse" type="tns:saveAccomodationImageResponse" />
+	<xs:element name="saveMP" type="tns:saveMP" />
+	<xs:element name="saveMPResponse" type="tns:saveMPResponse" />
+	<xs:element name="saveResponse" type="tns:saveResponse" />
+	<xs:element name="saveTerm" type="tns:saveTerm" />
+	<xs:element name="saveTermResponse" type="tns:saveTermResponse" />
+	<xs:complexType name="findTypeById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findTypeByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:accomodationType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="accomodationType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="type" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAllTypes">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:complexType name="findAllTypesResponse">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+				type="tns:accomodationType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findCommentById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findCommentByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:comment" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="comment">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="accomodation" type="tns:accomodation" />
+			<xs:element name="approved" type="xs:boolean" />
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="text" type="xs:string" />
+			<xs:element minOccurs="0" name="user" type="tns:user" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="accomodation">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+			<xs:element minOccurs="0" name="country" type="xs:string" />
+			<xs:element minOccurs="0" name="address" type="xs:string" />
+			<xs:element minOccurs="0" name="accomodationType" type="tns:accomodationType" />
+			<xs:element minOccurs="0" name="category" type="tns:category" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
+			<xs:element name="capacity" type="xs:int" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="extraServices" nillable="true" type="tns:extraService" />
+			<xs:element minOccurs="0" name="agent" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="category">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="category" type="xs:string" />
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="extraService">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="user">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="adress" type="xs:string" />
+			<xs:element minOccurs="0" name="businessNo" type="xs:string" />
+			<xs:element name="confirmed" type="xs:boolean" />
+			<xs:element minOccurs="0" name="email" type="xs:string" />
+			<xs:element name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="lastName" type="xs:string" />
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+			<xs:element minOccurs="0" name="password" type="xs:string" />
+			<xs:element minOccurs="0" name="userName" type="xs:string" />
+			<xs:element name="userType" type="xs:int" />
+			<xs:element name="banned" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findMonthPriceById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findMonthPriceByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:monthPrice" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="monthPrice">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="accomodation" type="tns:accomodation" />
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="month" type="xs:string" />
+			<xs:element name="price" type="xs:float" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findImageById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findImageByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:accomodationImage" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="accomodationImage">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="accomodation" type="tns:accomodation" />
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element minOccurs="0" name="url" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAllMonthPrices">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:complexType name="findAllMonthPricesResponse">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+				type="tns:monthPrice" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAllAccomodations">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:complexType name="findAllAccomodationsResponse">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+				type="tns:accomodationSoapDTO" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="accomodationSoapDTO">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="accomodationImagesIds" nillable="true" type="xs:long" />
+			<xs:element minOccurs="0" name="accomodationTypeId" type="xs:long" />
+			<xs:element minOccurs="0" name="address" type="xs:string" />
+			<xs:element minOccurs="0" name="agent" type="xs:long" />
+			<xs:element name="capacity" type="xs:int" />
+			<xs:element minOccurs="0" name="categoryId" type="xs:long" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="commentsIds"
+				nillable="true" type="xs:long" />
+			<xs:element minOccurs="0" name="country" type="xs:string" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="extraServicesIds" nillable="true" type="xs:long" />
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="monthPricesIds" nillable="true" type="xs:long" />
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="termsSoapIds"
+				nillable="true" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findTermById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findTermByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:term" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="term">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="accomodation" type="tns:accomodation" />
+			<xs:element name="confirmed" type="xs:boolean" />
+			<xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="id" type="xs:long" />
+			<xs:element name="price" type="xs:float" />
+			<xs:element name="rated" type="xs:boolean" />
+			<xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="user" type="tns:user" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="save">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="tns:accomodation" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:accomodation" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveMP">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="tns:monthPrice" />
+			<xs:element minOccurs="0" name="arg1" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveMPResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:monthPrice" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findCategoryById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findCategoryByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:category" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAccomodationById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAccomodationByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:accomodation" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAllServices">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:complexType name="findAllServicesResponse">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+				type="tns:extraService" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findAllCategories">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:complexType name="findAllCategoriesResponse">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+				type="tns:category" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveTerm">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="tns:term" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveTermResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:term" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="getAccomodationsOfAgent">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="getAccomodationsOfAgentResponse">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+				type="tns:accomodation" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveAccomodationImage">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="tns:accomodationImage" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="saveAccomodationImageResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:accomodationImage" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findExtraServiceById">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="arg0" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="findExtraServiceByIdResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="return" type="tns:extraService" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
+  

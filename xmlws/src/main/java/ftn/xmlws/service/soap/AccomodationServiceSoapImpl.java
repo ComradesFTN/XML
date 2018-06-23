@@ -13,6 +13,7 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationImage;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
+import ftn.xmlws.domain.Comment;
 import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.MonthPrice;
 import ftn.xmlws.domain.Term;
@@ -21,6 +22,7 @@ import ftn.xmlws.repository.AccomodationImageRepository;
 import ftn.xmlws.repository.AccomodationRepository;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
+import ftn.xmlws.repository.CommentRepository;
 import ftn.xmlws.repository.ExtraServiceRepository;
 import ftn.xmlws.repository.MonthPriceRepository;
 import ftn.xmlws.repository.TermRepository;
@@ -49,6 +51,9 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	
 	@Autowired
 	private MonthPriceRepository monthPriceRepository;	
+	
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@Override
 	public Accomodation save(Accomodation acc) {			
@@ -136,6 +141,12 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 					accomodationDTO.getTermsSoapIds().add(term.getId());
 				}
 			}
+			List<Comment> comments = commentRepository.findAll();
+			for(Comment c : comments){
+				if(c.getAccomodation().getId().equals(accomodation.getId())){
+					accomodationDTO.getCommentsIds().add(c.getId());
+				}
+			}
 			accomodationsDTO.add(accomodationDTO);
 		}
 		return accomodationsDTO;
@@ -173,6 +184,11 @@ public class AccomodationServiceSoapImpl implements AccomodationServiceSoap {
 	@Override
 	public Term saveTerm(Term term) {
 		return termRepository.save(term);
+	}
+
+	@Override
+	public Comment findCommentById(Long id) {
+		return commentRepository.findById(id).get();
 	}
 	
 	

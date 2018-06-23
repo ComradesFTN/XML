@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html >
+	<head>
+		<title>Posalji pitanje</title>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
+		
+	</head>	
+	<body class="bg-light">
+		<div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">	
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientHome.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSearch.html">Pretraga</a>
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link active text-danger" href="clientReservations.html">Rezervacije</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="clientSettings.html">Podesavanje</a>
+				</li>					
+			</ul>
+			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
+		</div>
+		<div class="row">
+		 <div class="col">
+				
+			</div>
+			<div class="col-6 mt-5">
+			  <div class="form-group row">
+			    <label for="inputPitanje" class="col-sm-2 col-form-label">Pitanje za agenta</label>
+			    <div class="col-sm-10">
+			      <textarea class="form-control" id="inputPitanje" rows="3"></textarea>
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <div class="col-sm-10">
+	    			<button id="posalji" class="btn btn-danger">Posalji</button>
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <div class="col-sm-10" id="odgovor">	    			
+			    </div>
+			  </div>
+			</div>
+			<div class="col">
+				
+			</div>
+		</div>
+		
+		<script>		
+		var id;
+		var term;
+		//treba doc ready
+		$(document).ready(function() {
+			id = getUrlParameter('id');
+			$.ajax({
+				url : "http://localhost:8080/xmlws/term/getTerm/"+id,
+				async: false,
+			}).then(function(data){
+				term = data;
+				if(data.userQuestion != null){
+					if(data.agentAnswer != null){
+						alert("Stigao je odgovor!");
+						var answer = " <label for=\"inputOdgovor\" class=\"col-sm-2 col-form-label\">Odgovor:</label><p id=\"inputOdgovor\">"+data.agentAnswer+"</p>";
+						$("#odgovor").append(answer);
+					}
+					else{
+						alert("Pitanje je vec poslato!");
+					}
+					$("#inputPitanje").val(data.userQuestion);
+					$("#inputPitanje").prop('disabled', true);
+					$("#posalji").prop('disabled', true);
+				}
+			});
+			$("#posalji").click(function(event){
+				event.preventDefault();
+				var formData = JSON.stringify({
+					termId:term.termId,
+					userQuestion:$("#inputPitanje").val()
+				});
+				$.ajax({
+					url : "http://localhost:8080/xmlws/term/sendMessage/",
+					method : "POST",
+					data : formData,
+					contentType : "application/json",
+					success : function(data){
+						alert("Uspesno poslata poruka!");
+						window.location.href="http://localhost:8080/xmlws/clientPages/clientReservations.html";
+					}
+				});
+			});
+		});
+		var getUrlParameter = function getUrlParameter(sParam) {
+		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
+
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : sParameterName[1];
+		        }
+		    }
+		};
+					
+		</script>
+	</body>
+</html>
