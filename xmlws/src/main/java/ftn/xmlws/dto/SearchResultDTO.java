@@ -15,6 +15,15 @@ public class SearchResultDTO {
 	private float totalPrice;
 	private double rating;
 	private List<String> images = new ArrayList<String>();
+	private List<String> comments = new ArrayList<String>();
+
+	public List<String> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<String> comments) {
+		this.comments = comments;
+	}
 
 	public SearchResultDTO() {
 

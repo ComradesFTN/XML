@@ -38,6 +38,18 @@
 			<div class="row mx-auto"><button type="submit" id="rezz" class="btn btn-danger rezervisi">Rezervisi</button></div>
 		</div>
 		
+		<div class="col-6">
+				<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Komentari</th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+				</tbody>
+				</table>
+		</div>
+		
 		<script>
 		var currentUserId;
 		var data;
@@ -68,6 +80,13 @@
 						var tokens = data.images[i].split("agent\\");	
 						newImage = '<img height="100" width="100" src="\\..\\agent\\'+tokens[1]+'"/>'
 						$("#slike").append(newImage);
+					}
+					for(i=0; i<data.comments.length; i++) {
+						newRow = 
+							"<tr>"
+							+ "<td>" + data.comments[i] + "</td>"
+						+ "</tr>"
+						$("#tableBody").append(newRow)
 					}
 				}
 				

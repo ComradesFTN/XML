@@ -87,7 +87,7 @@ public class Accomodation {
 	@Column
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "komentari", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
-	private List<String> comments = new ArrayList<String>();
+	private List<String> comments = new ArrayList<String>(); 
 	
 	
 	

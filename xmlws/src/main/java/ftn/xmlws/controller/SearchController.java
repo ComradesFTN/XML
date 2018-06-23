@@ -172,6 +172,10 @@ public class SearchController {
 				searchRes.getImages().add(img.getUrl());
 			}
 			
+			for(String s : resAc.getComments()) {
+				searchRes.getComments().add(s);
+			}
+			
 
 			Calendar cStart = Calendar.getInstance(); 
 			cStart.setTime(startDate);
@@ -229,7 +233,7 @@ public class SearchController {
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/getAccomodationComments/{id}", method = RequestMethod.GET) 
+	/*@RequestMapping(value = "/getAccomodationComments/{id}", method = RequestMethod.GET) 
 	public ResponseEntity<List<String>> getAccomodation(@PathVariable Long id) {
 
 		Accomodation accomodation = accomodationService.findOne(id);
@@ -238,7 +242,7 @@ public class SearchController {
 		//TODO nesto dobro ne vraca ovaj existingComments prazno je
 		
 		return new ResponseEntity<>(existingComments, HttpStatus.OK);
-	}
+	}*/
 	
 
 }
