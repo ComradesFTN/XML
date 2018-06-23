@@ -76,8 +76,21 @@ public class AdminController {
 	
 	@RequestMapping(value = "category/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
-		Category deleted = aService.deleteCategory(id);
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
+		boolean exist=false;
+		List<Accomodation> provera = accomService.findAllAccomodations();
+		Category cat = aService.findOneCategory(id);
+		for(int i=0;i<provera.size();i++) {
+			if(provera.get(i).getCategory().equals(cat)) {
+				exist=true;
+				break;
+			}
+		}
+		if(exist==false) {
+			Category deleted = aService.deleteCategory(id);
+			return new ResponseEntity<>(deleted, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(value = "getExtraServices", method = RequestMethod.GET )
@@ -95,7 +108,22 @@ public class AdminController {
 	
 	@RequestMapping(value = "extraService/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ExtraService> deleteExtraService(@PathVariable Long id) {
-		ExtraService deleted = aService.deleteExtraService(id);
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
+		boolean exist=false;
+		List<Accomodation> provera = accomService.findAllAccomodations();
+		ExtraService es = aService.findOneExtraService(id);
+		for(int i=0;i<provera.size();i++) {
+			for(ExtraService e:provera.get(i).getExtraServices()) {
+				if(e==es) {
+					exist=true;
+					break;
+				}
+			}
+		}
+		if(exist==false) {
+			ExtraService deleted = aService.deleteExtraService(id);
+			return new ResponseEntity<>(deleted, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}	
 	}
 }
