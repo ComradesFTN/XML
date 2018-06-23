@@ -25,6 +25,7 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationImage;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
+import ftn.xmlws.domain.Comment;
 import ftn.xmlws.domain.ExtraService;
 import ftn.xmlws.domain.MonthPrice;
 import ftn.xmlws.domain.Term;
@@ -172,8 +173,10 @@ public class SearchController {
 				searchRes.getImages().add(img.getUrl());
 			}
 			
-			for(String s : resAc.getComments()) {
-				searchRes.getComments().add(s);
+			for(Comment c : resAc.getComments()) {
+				if(c.isApproved()) {
+					searchRes.getComments().add(c.getText());
+				}
 			}
 			
 
@@ -232,17 +235,6 @@ public class SearchController {
 		
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
-	
-	/*@RequestMapping(value = "/getAccomodationComments/{id}", method = RequestMethod.GET) 
-	public ResponseEntity<List<String>> getAccomodation(@PathVariable Long id) {
-
-		Accomodation accomodation = accomodationService.findOne(id);
-		List<String> existingComments = accomodation.getComments();
-	
-		//TODO nesto dobro ne vraca ovaj existingComments prazno je
-		
-		return new ResponseEntity<>(existingComments, HttpStatus.OK);
-	}*/
 	
 
 }

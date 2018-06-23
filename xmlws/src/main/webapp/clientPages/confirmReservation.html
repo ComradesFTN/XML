@@ -35,9 +35,10 @@
 			<div class="row mx-auto">Cena:<strong><label id="cena"></label></strong></div>
 			<div class="row mx-auto">Ocena:<strong><label id="ocena"></label></strong></div>
 			<div class="row mx-auto">Slike:<strong><div class="col" id="slike"></div></strong></div>
+			<br/>
 			<div class="row mx-auto"><button type="submit" id="rezz" class="btn btn-danger rezervisi">Rezervisi</button></div>
 		</div>
-		
+		<br/>
 		<div class="col-6">
 				<table class="table">
 				<thead class="thead-dark">
@@ -81,6 +82,7 @@
 						newImage = '<img height="100" width="100" src="\\..\\agent\\'+tokens[1]+'"/>'
 						$("#slike").append(newImage);
 					}
+					
 					for(i=0; i<data.comments.length; i++) {
 						newRow = 
 							"<tr>"

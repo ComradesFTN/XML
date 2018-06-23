@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
+import ftn.xmlws.domain.Comment;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.domain.User;
 import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.TermDTO;
 import ftn.xmlws.service.AccomodationService;
+import ftn.xmlws.service.CommentService;
 import ftn.xmlws.service.TermService;
 import ftn.xmlws.service.UserService;
 
@@ -39,6 +41,9 @@ public class TermController {
 
 	@Autowired
 	AccomodationService accomodationService;
+	
+	@Autowired
+	CommentService commentService;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@RequestMapping(value = "create", method = RequestMethod.POST, consumes = "application/json")
@@ -113,8 +118,14 @@ public class TermController {
 	public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO) {
 		
 		Term tempTerm = termService.findOne(commentDTO.getTermId());
-		tempTerm.getAccomodation().getComments().add(commentDTO.getComment());
 		
+		Comment newComment = new Comment();
+		newComment.setText(commentDTO.getComment());
+		newComment.setUser(tempTerm.getUser());
+		newComment.setAccomodation(tempTerm.getAccomodation());
+		tempTerm.getAccomodation().getComments().add(newComment);
+		
+		commentService.saveComment(newComment);
 		accomodationService.saveAccomodation(tempTerm.getAccomodation());
 		
 		return new ResponseEntity<>(HttpStatus.OK);

@@ -83,19 +83,18 @@ public class Accomodation {
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "rejting", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
 	private List<Long> rating = new ArrayList<Long>();
-	
+
 	@Column
+	@XmlTransient
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "komentari", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
-	private List<String> comments = new ArrayList<String>(); 
-	
-	
-	
-	public List<String> getComments() {
+	private List<Comment> comments = new ArrayList<Comment>();
+
+	public List<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(List<String> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 

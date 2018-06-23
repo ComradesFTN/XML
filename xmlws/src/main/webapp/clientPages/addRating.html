@@ -30,15 +30,12 @@
 			  <option value="4">4</option>
 			  <option value="5">5</option>
 			</select>
+			<br/>
 			<div>Komentar: <input type="text" id="komentar"/></div>			
 			<div class="row mx-auto"><button type="submit" class="btn btn-danger oceni">Oceni</button></div>
 		</div>
 		<br/>
 		<br/>
-		Dodajte komentar:
-		
-		
-		
 		
 		<script>
 			var getUrlParameter = function getUrlParameter(sParam) {
@@ -74,17 +71,18 @@
 					contentType: "application/json",
 					success: function() {
 						alert("Komentar dodat");
+						$.ajax({
+							url: "/xmlws/term/saveRating/"+id+"/"+selectedOcena,
+							type: "PUT",					
+							success: function(){
+								window.location.href="http://localhost:8080/xmlws/clientPages/clientReservations.html";
+							}
+							
+						});
 					}
 				});
 
-				/* $.ajax({
-					url: "/xmlws/term/saveRating/"+id+"/"+selectedOcena,
-					type: "PUT",					
-					success: function(){
-						window.location.href="http://localhost:8080/xmlws/clientPages/clientReservations.html";
-					}
-					
-				}); */
+				
 				
 				
 				
