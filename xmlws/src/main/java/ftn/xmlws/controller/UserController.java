@@ -117,7 +117,7 @@ public class UserController {
 		}
 		if(currentUser.getPassword().equals(pass)) {
 			if(currentUser.isConfirmed()) {
-				if(currentUser.getUserType()==1 || currentUser.getUserType()==2) {
+				if(currentUser.getUserType()==0 || currentUser.getUserType()==2) {
 					headers.add(HttpHeaders.SET_COOKIE, "Id="+currentUser.getId());
 					return new ResponseEntity<>(currentUser,headers,HttpStatus.OK);				
 				}
