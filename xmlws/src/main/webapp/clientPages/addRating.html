@@ -10,13 +10,13 @@
 		<div class="nav nav-tabs bg-danger">
 			<ul class="nav nav-tabs mr-auto bg-danger">			
 				<li class="nav-item">
-					<a class="nav-link text-white" href="homePage.html">Home</a>
+					<a class="nav-link text-white" href="clientHome.html">Home</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-danger active">Ocenjivanje</a>
 				</li>
 			</ul>
-			<a class="nav-link mr-0 text-white" href="/index.html">Odjava</a>
+			<a class="nav-link mr-0 text-white" href="../index.html">Odjava</a>
 			
 		</div>
 		<br/>
@@ -29,9 +29,15 @@
 			  <option value="3">3</option>
 			  <option value="4">4</option>
 			  <option value="5">5</option>
-			</select>			
+			</select>
+			<div>Komentar: <input type="text" id="komentar"/></div>			
 			<div class="row mx-auto"><button type="submit" class="btn btn-danger oceni">Oceni</button></div>
 		</div>
+		<br/>
+		<br/>
+		Dodajte komentar:
+		
+		
 		<script>
 			var getUrlParameter = function getUrlParameter(sParam) {
 			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -54,15 +60,29 @@
 				var id = getUrlParameter('id');
 				var ocena = document.getElementById("ocena");
 				var selectedOcena = ocena.options[ocena.selectedIndex].value; //pokupi
-
+				commentData = JSON.stringify({
+					comment:$("#komentar").val(),
+					termId:id,
+				});
+				
 				$.ajax({
+					url: "http://localhost:8080/xmlws/term/addComment",
+					type: "POST",
+					data: commentData,
+					contentType: "application/json",
+					success: function() {
+						alert("Komentar dodat");
+					}
+				});
+
+				/* $.ajax({
 					url: "/xmlws/term/saveRating/"+id+"/"+selectedOcena,
 					type: "PUT",					
 					success: function(){
 						window.location.href="http://localhost:8080/xmlws/clientPages/clientReservations.html";
 					}
 					
-				});
+				}); */
 				
 				
 				

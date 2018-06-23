@@ -21,6 +21,7 @@ import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.domain.User;
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.dto.TermDTO;
 import ftn.xmlws.service.AccomodationService;
 import ftn.xmlws.service.TermService;
@@ -108,5 +109,15 @@ public class TermController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/addComment", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO) {
+		
+		Term tempTerm = termService.findOne(commentDTO.getTermId());
+		tempTerm.getAccomodation().getComments().add(commentDTO.getComment());
+		
+		accomodationService.saveAccomodation(tempTerm.getAccomodation());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }

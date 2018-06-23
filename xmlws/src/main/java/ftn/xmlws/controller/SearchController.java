@@ -34,6 +34,7 @@ import ftn.xmlws.repository.AccomodationRepository;
 import ftn.xmlws.repository.AccomodationTypeRepository;
 import ftn.xmlws.repository.CategoryRepository;
 import ftn.xmlws.repository.ExtraServiceRepository;
+import ftn.xmlws.service.AccomodationService;
 import ftn.xmlws.service.AdminService;
 import ftn.xmlws.service.TermService;
 
@@ -57,6 +58,9 @@ public class SearchController {
 
 	@Autowired
 	TermService termService;
+	
+	@Autowired
+	AccomodationService accomodationService;
 	
 	private List<SearchResultDTO> searchResultDTOList;
 
@@ -224,5 +228,17 @@ public class SearchController {
 		
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/getAccomodationComments/{id}", method = RequestMethod.GET) 
+	public ResponseEntity<List<String>> getAccomodation(@PathVariable Long id) {
+
+		Accomodation accomodation = accomodationService.findOne(id);
+		List<String> existingComments = accomodation.getComments();
+	
+		//TODO nesto dobro ne vraca ovaj existingComments prazno je
+		
+		return new ResponseEntity<>(existingComments, HttpStatus.OK);
+	}
+	
 
 }

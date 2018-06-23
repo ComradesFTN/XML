@@ -83,6 +83,21 @@ public class Accomodation {
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "rejting", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
 	private List<Long> rating = new ArrayList<Long>();
+	
+	@Column
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "komentari", joinColumns = @JoinColumn(name = "accomodation_id", referencedColumnName = "id"))
+	private List<String> comments = new ArrayList<String>();
+	
+	
+	
+	public List<String> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<String> comments) {
+		this.comments = comments;
+	}
 
 	public List<Long> getRating() {
 		return rating;
