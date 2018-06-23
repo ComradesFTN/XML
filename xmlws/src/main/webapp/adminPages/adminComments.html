@@ -12,16 +12,14 @@
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
-								if(data[i].approved == false){
 									newRow = 
 										"<tr>"
-											+ "<td>" + data[i].user.userName + "</td>"
-											+ "<td>" + data[i].text + "</td>"
-											+ "<td><button type=\"button\" approve-id=\"" + data[i].id + "\" class=\"btn btn-success prihvati\">Prihvati</button></td>"
-											+ "<td><button type=\"button\" cancel-id=\"" + data[i].id + "\" class=\"btn btn-danger odbij\">Odbij</button></td>"
+											+ "<td>" + data[i].userName + "</td>"
+											+ "<td>" + data[i].comment + "</td>"
+											+ "<td><button type=\"button\" approve-id=\"" + data[i].commentId + "\" class=\"btn btn-success prihvati\">Prihvati</button></td>"
+											+ "<td><button type=\"button\" cancel-id=\"" + data[i].commentId + "\" class=\"btn btn-danger odbij\">Odbij</button></td>"
 										+ "</tr>"
 									$("#tableBody").append(newRow)
-								}
 							}
 						});
 			});

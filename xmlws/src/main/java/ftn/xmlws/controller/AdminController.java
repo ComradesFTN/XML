@@ -1,5 +1,6 @@
 package ftn.xmlws.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.Comment;
 import ftn.xmlws.domain.ExtraService;
+import ftn.xmlws.dto.CommentDTO;
 import ftn.xmlws.service.AccomodationService;
 import ftn.xmlws.service.AdminService;
 import ftn.xmlws.service.CommentService;
@@ -133,25 +135,37 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/getAllComments", method = RequestMethod.GET)
-	public ResponseEntity<List<Comment>> getAllComments() {
-		System.out.println("ODJE SAM JEBA GA TI");
+	public ResponseEntity<List<CommentDTO>> getComments() {
+		
 		List<Comment> comments = commentService.findAll();
-		return new ResponseEntity<>(comments, HttpStatus.OK);
+		List<CommentDTO> commentDTOList = new ArrayList<CommentDTO>();
+		
+ 		for(Comment c : comments) {
+ 			if(!(c.isApproved())) {
+ 				CommentDTO commentDTO = new CommentDTO();
+ 				commentDTO.setComment(c.getText());
+ 				commentDTO.setUserName(c.getUser().getName());
+ 				commentDTO.setCommentId(c.getId());
+ 				commentDTOList.add(commentDTO);
+ 			}
+			
+		}
+		return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "disapproveComment/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Comment> disapproveComment(@PathVariable Long id) {
 		Comment deleted = commentService.deleteComment(id);
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
 	
-	@RequestMapping(value = "approveComment/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "approveComment/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Comment> approveComment(@PathVariable Long id) {
 		Comment approved = commentService.findOne(id);
 		approved.setApproved(true);
 		commentService.saveComment(approved);
-		return new ResponseEntity<>(approved, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
 
