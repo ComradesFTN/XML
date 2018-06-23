@@ -133,7 +133,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/getAllComments", method = RequestMethod.GET)
-	public ResponseEntity<List<Comment>> getComments() {
+	public ResponseEntity<List<Comment>> getAllComments() {
 		System.out.println("ODJE SAM JEBA GA TI");
 		List<Comment> comments = commentService.findAll();
 		return new ResponseEntity<>(comments, HttpStatus.OK);
