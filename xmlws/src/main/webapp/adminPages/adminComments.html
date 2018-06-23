@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<script src="../scripts/jquery-3.2.1.min.js"></script>
+		<link rel="stylesheet" href="../stylesheets/bootstrap.css">
+		<meta charset="UTF-8">
+		<title>Admin</title>
+		  <script>
+			$(document).ready(function(){
+				$.ajax({
+					url : "http://localhost:8080/xmlws/admin/getAllComments"
+				}).then(
+						function(data) {
+							for (i = 0; i < data.length; i++) {
+								if(data[i].approved == false){
+									newRow = 
+										"<tr>"
+											+ "<td>" + data[i].user.userName + "</td>"
+											+ "<td>" + data[i].text + "</td>"
+											+ "<td><button type=\"button\" approve-id=\"" + data[i].id + "\" class=\"btn btn-success prihvati\">Prihvati</button></td>"
+											+ "<td><button type=\"button\" cancel-id=\"" + data[i].id + "\" class=\"btn btn-danger odbij\">Odbij</button></td>"
+										+ "</tr>"
+									$("#tableBody").append(newRow)
+								}
+							}
+						});
+			});
+			$(document).on("click", ".prihvati", function(event) {
+				event.preventDefault(); 
+
+				var id = $(this).attr("approve-id")
+				tr_parent = $(this).closest("tr")
+				$.ajax({
+		        	url: "/xmlws/admin/approveComment/"+id,
+		        	type: "PUT",
+		        	success: function(){
+		        		//ukloni i na strani 
+						tr_parent.remove()
+			        }
+				});
+				
+			});
+			
+			$(document).on("click", ".odbij", function(event) {
+				event.preventDefault(); 
+				
+				var confirmed = confirm("Da li ste sigurni da zelite da odbijete ovaj komentar?");
+				if(confirmed){
+				
+					var id = $(this).attr("cancel-id")					
+					tr_parent = $(this).closest("tr")
+					$.ajax({
+						url: "/xmlws/admin/disapproveComment/"+id,
+			        	type: "DELETE",
+			        	success: function(){			        		
+							tr_parent.remove()
+				        }
+					});
+				}
+			});
+			
+		</script>			
+	</head>
+	<body class="bg-light">			
+		 <div class="nav nav-tabs bg-danger">
+			<ul class="nav nav-tabs mr-auto bg-danger">	
+				<li class="nav-item">
+					<a class="nav-link active text-danger" href="adminHome.html">Home</a>
+				</li>							
+			</ul>
+			<a class="nav-link mr-0 text-white" href="../login.html">Odjava</a>
+		</div>
+		<nav class="navbar navbar-expand-md bg-dark">
+			    <div class="mx-auto order-0 w-50">
+			        <div class="nav nav-pills bg-dark flex-row justify-content-center">
+						<ul class="nav nav-tabs bg-danger flex-row">			
+							<li class="nav-item">
+								<a class="nav-link text-white" href="adminHome.html">Sifarnici</a>				
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="adminUser.html">Korisnici</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-white" href="adminAgents.html">Agenti</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-danger active" href="#">Komentari</a>
+							</li>
+						</ul>
+					</div>
+			    </div>
+		</nav>
+			
+		 <div class="row">
+		 <div class="col">
+				
+			</div>
+			<div class="col-6">
+				<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Korisnik</th>
+						<th>Komentar</th>
+						<th>Prihvati</th>
+						<th>Odbij</th>
+					</tr>
+				</thead>
+				<tbody id="tableBody">
+				</tbody>
+				</table>
+			</div>
+			<div class="col">
+				
+			</div>
+		</div>		
+	</body>
+</html>
