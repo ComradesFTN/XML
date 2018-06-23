@@ -38,7 +38,10 @@
 		        	success: function(){
 		        		//ukloni i na strani 
 						tr_parent.remove()
-			        }
+			        },
+					error: function(request){
+						alert("Ne mozete obrisati ovaj tip jer se nalazi u nekom od smestaja!");
+					}
 				});
 			}
 		});

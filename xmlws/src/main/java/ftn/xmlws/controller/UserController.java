@@ -103,7 +103,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")	 
-	public ResponseEntity<String> loginProcess(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<User> loginProcess(@RequestBody UserDTO userDTO) {
 		String email = userDTO.getEmail();
 		String pass = userDTO.getPassword();
 		System.out.println("email: " + email + "pass: "+ pass);		
@@ -119,7 +119,7 @@ public class UserController {
 			if(currentUser.isConfirmed()) {
 				if(currentUser.getUserType()==1 || currentUser.getUserType()==2) {
 					headers.add(HttpHeaders.SET_COOKIE, "Id="+currentUser.getId());
-					return new ResponseEntity<>(headers,HttpStatus.OK);				
+					return new ResponseEntity<>(currentUser,headers,HttpStatus.OK);				
 				}
 			} else {
 				headers.add("Error2","Vas nalog nije aktivan!");

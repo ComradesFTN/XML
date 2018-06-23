@@ -58,9 +58,13 @@
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",
-					success: function(data){						
-						window.location.href = "http://localhost:8080/xmlws/clientPages/clientHome.html";
-						currentUser = data;						
+					success: function(data){
+						if(data.banned==false){
+							window.location.href = "http://localhost:8080/xmlws/clientPages/clientHome.html";
+						currentUser = data;
+						}else{
+							window.location.href = "http://localhost:8080/xmlws/clientPages/clientBanned.html";
+						}
 					},
 					error: function(request){
 						alert("Greska!");

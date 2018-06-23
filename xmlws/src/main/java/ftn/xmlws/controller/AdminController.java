@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Category;
 import ftn.xmlws.domain.ExtraService;
+import ftn.xmlws.service.AccomodationService;
 import ftn.xmlws.service.AdminService;
 
 @Controller
@@ -22,6 +24,9 @@ public class AdminController {
 
 	@Autowired
 	AdminService aService;
+	
+	@Autowired
+	AccomodationService accomService;
 	
 	@RequestMapping(value = "getAccomTypes", method = RequestMethod.GET )
 	public ResponseEntity<List<AccomodationType>> getAccomTypes() {
@@ -38,8 +43,22 @@ public class AdminController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<AccomodationType> deleteAccomType(@PathVariable Long id) {
-		AccomodationType deleted = aService.deleteAcomType(id);
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
+		boolean exist=false;
+		List<Accomodation> provera = accomService.findAllAccomodations();
+		AccomodationType type = aService.findOneAcomType(id);
+		for(int i=0;i<provera.size();i++) {
+			if(provera.get(i).getAccomodationType().equals(type)) {
+				exist=true;
+				break;
+			}
+		}
+		if(exist==false) {
+			AccomodationType deleted = aService.deleteAcomType(id);
+			return new ResponseEntity<>(deleted, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	@RequestMapping(value = "getCategories", method = RequestMethod.GET )
