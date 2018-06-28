@@ -1,7 +1,12 @@
 package ftn.xmlws.configuration;
 
 
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -65,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     		http
                 .cors()
-	            	.and()
+	            	.and()	            	
 	            .headers()
 	            	.frameOptions()
             		.disable()
@@ -78,7 +83,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
-                    .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                    .httpBasic()
+                    .and()
                 .authorizeRequests()
                 	.antMatchers(HttpMethod.OPTIONS, "/xmlws/**").permitAll()                	
                     .antMatchers("/user/**").permitAll()
@@ -87,13 +93,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/services/**").permitAll()
                     .antMatchers("/accommodation/{id}").permitAll()
                     .antMatchers("/accommodation/getHistory{username}").permitAll()                    
-                    .antMatchers("/term/**").hasRole("USER")
-                    .antMatchers("/admin/**").hasRole("ADMIN");
+                    .antMatchers("/term/**").hasAuthority("USER")
+    				.antMatchers("/adminPages/**").hasAuthority("ADMIN");
     				
-                    
-       /* // Add our custom JWT security filter
-        http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);*/
+        http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         
-    }
+    }    
+   
 
 }

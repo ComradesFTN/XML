@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,7 @@ public class AdminController {
 		return new ResponseEntity<>(aTypes, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "addAccomodationType", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<AccomodationType> addAccomType(@RequestBody AccomodationType accomodationType) {
 		AccomodationType newAccomType = aService.saveAcomType(accomodationType);
@@ -49,6 +51,7 @@ public class AdminController {
 
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<AccomodationType> deleteAccomType(@PathVariable Long id) {
 		boolean exist = false;
@@ -75,6 +78,7 @@ public class AdminController {
 		return new ResponseEntity<>(categoryTypes, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "addCategory", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Category> addCategory(@RequestBody Category category) {
 		Category newCategory = aService.saveCategory(category);
@@ -82,6 +86,7 @@ public class AdminController {
 
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "category/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
 		boolean exist = false;
@@ -107,6 +112,7 @@ public class AdminController {
 		return new ResponseEntity<>(extraServices, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "addExtraService", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ExtraService> addExtraServices(@RequestBody ExtraService extraService) {
 		ExtraService newExtraService = aService.saveExtraService(extraService);
@@ -114,6 +120,7 @@ public class AdminController {
 
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "extraService/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ExtraService> deleteExtraService(@PathVariable Long id) {
 		boolean exist = false;
@@ -135,6 +142,7 @@ public class AdminController {
 		}
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/getAllComments", method = RequestMethod.GET)
 	public ResponseEntity<List<CommentDTO>> getComments() {
 		
@@ -154,6 +162,7 @@ public class AdminController {
 		return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "disapproveComment/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Comment> disapproveComment(@PathVariable Long id) {
 		Comment deleted = commentService.deleteComment(id);
@@ -161,6 +170,7 @@ public class AdminController {
 
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "approveComment/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Comment> approveComment(@PathVariable Long id) {
 		Comment approved = commentService.findOne(id);

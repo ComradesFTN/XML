@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import ftn.xmlws.configuration.MutableHttpServletRequest;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -29,15 +32,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String jwt = getJwtFromRequest(request);
+    	MutableHttpServletRequest myRequest = new MutableHttpServletRequest(request);
+    	String cookie = myRequest.getHeader("Cookie");
+    	if(cookie!=null){
+	    	String token = cookie.substring(3);
+	    	String[] tokens = token.split("\\;");
+	    	if(!tokens[0].equals("null")){
+	    		myRequest.putHeader("Authorization","Bearer "+tokens[0]);
+	    	}
+    	}
+    	try {        	
+            String jwt = getJwtFromRequest(myRequest);
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 Long userId = tokenProvider.getUserIdFromJWT(jwt);
 
                 UserDetails userDetails = customUserDetailsService.loadUserById(userId);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(myRequest));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -45,11 +57,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.error("Could not set user authentication in security context", ex);
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(myRequest, response);
     }
     
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+    private String getJwtFromRequest(MutableHttpServletRequest myRequest) {
+        String bearerToken = myRequest.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
         }

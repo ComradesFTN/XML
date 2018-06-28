@@ -57,6 +57,12 @@ public class UserController {
 	@Autowired
 	private JwtTokenProvider tokenProvider;
 
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public ResponseEntity<?> test(){
+		System.out.println("uso");
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET )
 	public ResponseEntity<List<User>> getUserAds() {
