@@ -17,7 +17,7 @@ public class UserServiceSoapImpl implements UserServiceSoap {
 
 	@Override
 	public User verifyAgentLogin(String username) {
-		return userRepository.findByuserName(username);
+		return userRepository.findByuserName(username).get();
 	}
 
 	@Override

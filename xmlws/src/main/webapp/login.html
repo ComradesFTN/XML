@@ -15,7 +15,7 @@
 		<form class="text-center mt-5" id="loginForm">
 			<div class="form-group">
 				<label for="email">Email</label>
-				<input class="form-control text-center w-25 mx-auto" type="email" id="email" placeholder="Unesite email"><br/>				
+				<input class="form-control text-center w-25 mx-auto" type="text" id="email" placeholder="Unesite email"><br/>				
 			    <label for="password">Sifra</label>
 			    <input class="form-control text-center w-25 mx-auto" type="password"  id="password" placeholder="Sifra">			
 			</div>
@@ -54,25 +54,47 @@
 					url: "http://localhost:8080/xmlws/user/login",
 					type: 'POST',
 					data: formData,
+					async : false,
 					contentType: "application/json",
 					success: function(data){
-						if(data.userType==2){
-							if(data.banned==false){
+						$.ajaxSetup({
+							beforeSend: function(xhr) {
+				                 xhr.setRequestHeader('Authorization', 'Bearer '+data.accessToken);
+				             }
+						});
+						localStorage.setItem("token",data.accessToken);
+						if(data.user.userType==2){
+							if(data.user.banned==false){
 								window.location.href = "http://localhost:8080/xmlws/clientPages/clientHome.html";
-							currentUser = data;
 							}else{
 								window.location.href = "http://localhost:8080/xmlws/clientPages/clientBanned.html";
 							}
-						}else if(data.userType==0){
-							window.location.href = "http://localhost:8080/xmlws/adminPages/adminHome.html";
+						}else if(data.user.userType==0){
+							
+							var oReq = new XMLHttpRequest();
+							oReq.open("get", "http://localhost:8080/xmlws/adminPages/adminHome.html", true, data.accessToken);
+							oReq.send();
+							/* window.location.href = "http://localhost:8080/xmlws/adminPages/adminHome.html"; */
 						}
 					},
 					error: function(request){
-						alert("Greska!");
-						
+						alert("Greska!");						
 				  	}
 				});
 			});
+			(function(open) {
+			    XMLHttpRequest.prototype.open = function(method, url, async, token, user, pass) {
+			        this.addEventListener("readystatechange", function() {
+						if (this.readyState == 4) 
+			            { 
+							console.log(this.status);							
+						}
+			        }, false);
+			        open.call(this, method, url, async, user, pass);
+			        var token = localStorage.getItem("token");
+					this.setRequestHeader("Authorization", "Bearer "+token)
+			    };
+			})(XMLHttpRequest.prototype.open);
 		</script>	
 </body>
 </html>

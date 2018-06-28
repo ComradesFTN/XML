@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
@@ -22,7 +23,7 @@ import ftn.xmlws.service.AccomodationService;
 import ftn.xmlws.service.AdminService;
 import ftn.xmlws.service.CommentService;
 
-@Controller
+@RestController
 @RequestMapping(value = "/admin")
 public class AdminController {
 

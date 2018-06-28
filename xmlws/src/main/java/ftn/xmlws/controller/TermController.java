@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.domain.Accomodation;
 import ftn.xmlws.domain.AccomodationType;
@@ -29,7 +30,7 @@ import ftn.xmlws.service.CommentService;
 import ftn.xmlws.service.TermService;
 import ftn.xmlws.service.UserService;
 
-@Controller
+@RestController
 @RequestMapping(value = "/term")
 public class TermController {
 

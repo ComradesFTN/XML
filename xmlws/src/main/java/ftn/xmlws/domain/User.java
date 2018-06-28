@@ -153,5 +153,14 @@ public class User {
 		this.confirmed = confirmed;
 	}
 	
+	public String getRole(){
+		if(this.getUserType()==0){
+			return "ADMIN";
+		}
+		else if(this.getUserType()==1){
+			return "AGENT";
+		}
+		else return "USER";
+	}
 
 }
