@@ -58,7 +58,7 @@
 		$(document).ready(function() {
 			id = getUrlParameter('id');
 			$.ajax({
-				url : "http://localhost:8080/xmlws/term/getTerm/"+id,
+				url : "/xmlws/term/getTerm/"+id,
 				async: false,
 			}).then(function(data){
 				term = data;
@@ -83,7 +83,7 @@
 					userQuestion:$("#inputPitanje").val()
 				});
 				$.ajax({
-					url : "http://localhost:8080/xmlws/term/sendMessage/",
+					url : "/xmlws/term/sendMessage/",
 					method : "POST",
 					data : formData,
 					contentType : "application/json",

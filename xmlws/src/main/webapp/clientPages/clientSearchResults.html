@@ -76,7 +76,7 @@
 			var selectedSort = sortiraj.options[sortiraj.selectedIndex].value; //pokupi
 			
 			$.ajax({
-				url : "http://localhost:8080/xmlws/sort/"+selectedSort,
+				url : "/xmlws/sort/"+selectedSort,
 			}).then(
 					function(data) {
 						$("#tableBody").empty();

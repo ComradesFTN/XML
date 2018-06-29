@@ -8,7 +8,7 @@
 		  <script>
 			$(document).ready(function(){
 				$.ajax({
-					url : "http://localhost:8080/xmlws/user/getUsers"
+					url : "/xmlws/user/getUsers"
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
@@ -70,7 +70,7 @@
 					//red koji se treba izbrisati ako je brisanje na serveru bilo uspesno
 					tr_parent = $(this).closest("tr")
 					$.ajax({
-			        	url: "http://localhost:8080"+url1,
+			        	url: url1,
 			        	type: "PUT",
 			        	success: function(){
 			        		//ukloni i na strani 

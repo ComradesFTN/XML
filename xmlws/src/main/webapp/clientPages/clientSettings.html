@@ -64,7 +64,7 @@
 		var currentUserEmail;
 		$(document).ready(function(){
 			$.ajax({
-				url : "http://localhost:8080/xmlws/user/getUser"
+				url : "/xmlws/user/getUser"
 			}).then(
 					function(data) {
 						currnetUserId = data.id;
@@ -103,7 +103,7 @@
 					confirmed: false,
 				});
 				$.ajax({
-					url: "http://localhost:8080/xmlws/user/editUser/" + currnetUserId,
+					url: "/xmlws/user/editUser/" + currnetUserId,
 					type: 'PUT',
 					data: formData,
 					contentType: "application/json",

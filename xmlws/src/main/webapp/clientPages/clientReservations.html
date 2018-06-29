@@ -57,14 +57,14 @@
 		//treba doc ready
 		$(document).ready(function() {
 			$.ajax({
-				url : "http://localhost:8080/xmlws/user/getUser",
+				url : "/xmlws/user/getUser",
 				async: false,
 			
 			}).then(
 					function(data) {
 						currentUserId = data.id;
 						$.ajax({
-							url : "http://localhost:8080/xmlws/term/getTerms/"+currentUserId,
+							url : "/xmlws/term/getTerms/"+currentUserId,
 						}).then(
 								function(data) {
 									for(i=0; i<data.length; i++) {

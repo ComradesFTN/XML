@@ -90,7 +90,7 @@
 				var input = '';
 
 				$.ajax({
-					url : "http://localhost:8080/xmlws/admin/getAccomTypes"
+					url : "/xmlws/admin/getAccomTypes"
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
@@ -101,7 +101,7 @@
 							
 				});
 				$.ajax({
-					url : "http://localhost:8080/xmlws/admin/getCategories"
+					url : "/xmlws/admin/getCategories"
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
@@ -111,7 +111,7 @@
 							$("#inputCategory").prop("selectedIndex", -1);
 				});
 				$.ajax({
-					url : "http://localhost:8080/xmlws/admin/getExtraServices"
+					url : "/xmlws/admin/getExtraServices"
 				}).then(
 						function(data) {
 							for (i = 0; i < data.length; i++) {
@@ -156,7 +156,7 @@
 					endDate:$("#inputEndDate").val(),
 				});
 				$.ajax({
-					url: "http://localhost:8080/xmlws/search",
+					url: "/xmlws/search",
 					type: 'POST',
 					data: formData,
 					contentType: "application/json",

@@ -88,7 +88,7 @@
 					confirmed: false,
 				});
 				$.ajax({
-					url : "http://localhost:8080/xmlws/user/getUsers",
+					url : "/xmlws/user/getUsers",
 					async:false,
 				}).then(
 						function(data) {
@@ -101,7 +101,7 @@
 							}
 							if(provera==true){
 								$.ajax({
-									url: "http://localhost:8080/xmlws/user",
+									url: "/xmlws/user",
 									type: 'POST',
 									data: formData,
 									contentType: "application/json",
