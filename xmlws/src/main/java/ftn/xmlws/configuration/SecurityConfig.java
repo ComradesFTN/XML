@@ -97,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     				.antMatchers("/adminPages/**").hasAuthority("ADMIN");
     				
         http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.requiresChannel().anyRequest().requiresSecure();
         
     }    
    
