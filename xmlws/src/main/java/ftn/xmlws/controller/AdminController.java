@@ -3,11 +3,12 @@ package ftn.xmlws.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,8 @@ import ftn.xmlws.service.CommentService;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);	
+	
 	@Autowired
 	AdminService aService;
 
@@ -40,6 +43,7 @@ public class AdminController {
 	@RequestMapping(value = "getAccomTypes", method = RequestMethod.GET)
 	public ResponseEntity<List<AccomodationType>> getAccomTypes() {
 		List<AccomodationType> aTypes = aService.findAllAccomoations();
+		logger.info("Getting accomodation types.", aTypes);
 		return new ResponseEntity<>(aTypes, HttpStatus.OK);
 	}
 
@@ -47,6 +51,7 @@ public class AdminController {
 	@RequestMapping(value = "addAccomodationType", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<AccomodationType> addAccomType(@RequestBody AccomodationType accomodationType) {
 		AccomodationType newAccomType = aService.saveAcomType(accomodationType);
+		logger.info("Adding accomodation type.", newAccomType);
 		return new ResponseEntity<>(newAccomType, HttpStatus.OK);
 
 	}
@@ -65,8 +70,10 @@ public class AdminController {
 		}
 		if (exist == false) {
 			AccomodationType deleted = aService.deleteAcomType(id);
+			logger.info("Accomodation deleted.");
 			return new ResponseEntity<>(deleted, HttpStatus.OK);
 		} else {
+			logger.error("Accomodation doesn't exist.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
@@ -75,6 +82,7 @@ public class AdminController {
 	@RequestMapping(value = "getCategories", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getCategories() {
 		List<Category> categoryTypes = aService.findAllCategories();
+		logger.info("Getting all categories.");
 		return new ResponseEntity<>(categoryTypes, HttpStatus.OK);
 	}
 
@@ -82,6 +90,7 @@ public class AdminController {
 	@RequestMapping(value = "addCategory", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Category> addCategory(@RequestBody Category category) {
 		Category newCategory = aService.saveCategory(category);
+		logger.info("Adding a category.");
 		return new ResponseEntity<>(newCategory, HttpStatus.OK);
 
 	}
@@ -100,8 +109,11 @@ public class AdminController {
 		}
 		if (exist == false) {
 			Category deleted = aService.deleteCategory(id);
+			logger.info("Category deleted.");
 			return new ResponseEntity<>(deleted, HttpStatus.OK);
+			
 		} else {
+			logger.error("Category not found.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -109,6 +121,7 @@ public class AdminController {
 	@RequestMapping(value = "getExtraServices", method = RequestMethod.GET)
 	public ResponseEntity<List<ExtraService>> getExtraServices() {
 		List<ExtraService> extraServices = aService.findAllExtraServices();
+		logger.info("Getting all extra services.");
 		return new ResponseEntity<>(extraServices, HttpStatus.OK);
 	}
 
@@ -116,6 +129,7 @@ public class AdminController {
 	@RequestMapping(value = "addExtraService", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<ExtraService> addExtraServices(@RequestBody ExtraService extraService) {
 		ExtraService newExtraService = aService.saveExtraService(extraService);
+		logger.info("Adding an extra service.");
 		return new ResponseEntity<>(newExtraService, HttpStatus.OK);
 
 	}
@@ -136,8 +150,10 @@ public class AdminController {
 		}
 		if (exist == false) {
 			ExtraService deleted = aService.deleteExtraService(id);
+			logger.info("Extra service deleted.");
 			return new ResponseEntity<>(deleted, HttpStatus.OK);
 		} else {
+			logger.error("Extra service not found.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -159,6 +175,7 @@ public class AdminController {
  			}
 			
 		}
+ 		logger.info("Getting all comments.");
 		return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
 	}
 
@@ -166,6 +183,7 @@ public class AdminController {
 	@RequestMapping(value = "disapproveComment/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Comment> disapproveComment(@PathVariable Long id) {
 		Comment deleted = commentService.deleteComment(id);
+		logger.info("Comment disapproved.");
 		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
@@ -176,6 +194,7 @@ public class AdminController {
 		Comment approved = commentService.findOne(id);
 		approved.setApproved(true);
 		commentService.saveComment(approved);
+		logger.info("Comment approved");
 		return new ResponseEntity<>(HttpStatus.OK);
 
 	}

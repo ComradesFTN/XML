@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,8 @@ import ftn.xmlws.service.TermService;
 @RestController
 public class SearchController {
 
+	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+
 	@Autowired
 	AccomodationRepository accomodationRepository;
 
@@ -60,60 +63,56 @@ public class SearchController {
 
 	@Autowired
 	TermService termService;
-	
+
 	@Autowired
 	AccomodationService accomodationService;
-	
+
 	private List<SearchResultDTO> searchResultDTOList;
 
-	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "search", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<List<SearchResultDTO>> getAccomodations(@RequestBody SearchDTO searchDTO) throws ParseException {
-		
+	public ResponseEntity<List<SearchResultDTO>> getAccomodations(@RequestBody SearchDTO searchDTO)
+			throws ParseException {
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = sdf.parse(searchDTO.getStartDate());
-	    Date endDate = sdf.parse(searchDTO.getEndDate());
-	    
-	    
-		
+		Date endDate = sdf.parse(searchDTO.getEndDate());
+
 		searchResultDTOList = new ArrayList<SearchResultDTO>();
 		List<Accomodation> resultAccomodations = new ArrayList<Accomodation>();
 		List<Accomodation> accomodations = accomodationRepository.findAll(); // dobijes sve
 		Optional<Category> catOptional = null;
 		Category category = null;
-		if(searchDTO.getCategory() != null) {
+		if (searchDTO.getCategory() != null) {
 			catOptional = categoryRepository.findById(Long.parseLong(searchDTO.getCategory()));
 			category = catOptional.get();
 		}
-		
-		Optional<AccomodationType> accomodationTypeOp = null;		
-		AccomodationType accomodationType = null; 
-		if(searchDTO.getAccomodationType() != null) {
+
+		Optional<AccomodationType> accomodationTypeOp = null;
+		AccomodationType accomodationType = null;
+		if (searchDTO.getAccomodationType() != null) {
 			accomodationTypeOp = accomodationTypeRepository.findById(Long.parseLong(searchDTO.getAccomodationType()));
 			accomodationType = accomodationTypeOp.get();
 		}
-		
+
 		Optional<ExtraService> extraServiceOp = null;
 		ExtraService extraServices = null;
 		Set<ExtraService> extraServicesList = new HashSet<ExtraService>();
 		List<String> dtoServiceList = searchDTO.getExtraServices();
-		if(dtoServiceList != null) {
-			for(String s : dtoServiceList) {
+		if (dtoServiceList != null) {
+			for (String s : dtoServiceList) {
 				extraServiceOp = extraServiceRepository.findById(Long.parseLong(s));
 				extraServices = extraServiceOp.get();
 				extraServicesList.add(extraServices);
 			}
 		}
-		
+
 		for (Accomodation ac : accomodations) {
 			boolean ok = true;
-			
-			if(ac.getPricePlan().isEmpty()) {
+
+			if (ac.getPricePlan().isEmpty()) {
 				ok = false;
 			}
-			
-			
-			
+
 			if (category != null) {
 				if (!(ac.getCategory().equals(category))) {
 					ok = false;
@@ -134,7 +133,6 @@ public class SearchController {
 				}
 
 			}
-			 
 
 			if (searchDTO.getCountry() != null) {
 				if (!(ac.getCountry().equals(searchDTO.getCountry()))) {
@@ -149,10 +147,10 @@ public class SearchController {
 				}
 
 			}
-			
-			for(Term t : ac.getTerms()) {
-				if(!((t.getStartDate().after(startDate) && t.getStartDate().after(endDate)) || 
-						(t.getEndDate().before(startDate) && t.getEndDate().before(endDate)))) {
+
+			for (Term t : ac.getTerms()) {
+				if (!((t.getStartDate().after(startDate) && t.getStartDate().after(endDate))
+						|| (t.getEndDate().before(startDate) && t.getEndDate().before(endDate)))) {
 					ok = false;
 				}
 			}
@@ -162,7 +160,7 @@ public class SearchController {
 			}
 		}
 
-		for(Accomodation resAc : resultAccomodations) {
+		for (Accomodation resAc : resultAccomodations) {
 			SearchResultDTO searchRes = new SearchResultDTO();
 			searchRes.setCategory(resAc.getCategory().getCategory());
 			searchRes.setDescription(resAc.getDescription());
@@ -170,72 +168,71 @@ public class SearchController {
 			searchRes.setName(resAc.getName());
 			searchRes.setStartDate(searchDTO.getStartDate());
 			searchRes.setEndDate(searchDTO.getEndDate());
-			for(AccomodationImage img : resAc.getImages()){
+			for (AccomodationImage img : resAc.getImages()) {
 				searchRes.getImages().add(img.getUrl());
 			}
-			
-			for(Comment c : resAc.getComments()) {
-				if(c.isApproved()) {
+
+			for (Comment c : resAc.getComments()) {
+				if (c.isApproved()) {
 					searchRes.getComments().add(c.getText());
 				}
 			}
-			
 
-			Calendar cStart = Calendar.getInstance(); 
+			Calendar cStart = Calendar.getInstance();
 			cStart.setTime(startDate);
-			Calendar cEnd = Calendar.getInstance(); 
+			Calendar cEnd = Calendar.getInstance();
 			cEnd.setTime(endDate);
-			
+
 			float sum = 0;
-			
+
 			while (cStart.before(cEnd) || cStart.equals(cEnd)) {
 
-			    ArrayList<MonthPrice> list = new ArrayList<>(resAc.getPricePlan());		
-			    list.sort(Comparator.comparing(MonthPrice::getId));			    
-			    float monthPrice = list.get(cStart.get(Calendar.MONTH)).getPrice();
-			    sum += monthPrice;
-			    cStart.add(Calendar.DAY_OF_MONTH, 1);
+				ArrayList<MonthPrice> list = new ArrayList<>(resAc.getPricePlan());
+				list.sort(Comparator.comparing(MonthPrice::getId));
+				float monthPrice = list.get(cStart.get(Calendar.MONTH)).getPrice();
+				sum += monthPrice;
+				cStart.add(Calendar.DAY_OF_MONTH, 1);
 
 			}
-			
+
 			sum *= resAc.getCapacity();
 			searchRes.setTotalPrice(sum);
 			long sumRating = 0;
 			double ratingResult = 0;
-			
-			if(!(resAc.getRating().isEmpty())) {
-				for(int i = 0; i < resAc.getRating().size(); i++) {
+
+			if (!(resAc.getRating().isEmpty())) {
+				for (int i = 0; i < resAc.getRating().size(); i++) {
 					sumRating += resAc.getRating().get(i);
 				}
-				
+
 				ratingResult = sumRating / resAc.getRating().size();
 			}
-			
+
 			searchRes.setRating(ratingResult);
 			searchResultDTOList.add(searchRes);
 		}
+		logger.info("Returning search result list.");
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/sort/{id}", method = RequestMethod.GET) 
+
+	@RequestMapping(value = "/sort/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<SearchResultDTO>> sortList(@PathVariable Long id) {
-		
-		if(id == 1) {
-			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getTotalPrice));	
-		}else if(id==2) {
+
+		if (id == 1) {
 			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getTotalPrice));
-			 Collections.reverse(searchResultDTOList);
-		}else if(id==3) {
+		} else if (id == 2) {
+			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getTotalPrice));
+			Collections.reverse(searchResultDTOList);
+		} else if (id == 3) {
 			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getRating));
-		}else if(id==4) {
+		} else if (id == 4) {
 			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getRating));
-			 Collections.reverse(searchResultDTOList);
-		}else if(id==5) {
+			Collections.reverse(searchResultDTOList);
+		} else if (id == 5) {
 			searchResultDTOList.sort(Comparator.comparing(SearchResultDTO::getCategory));
 		}
-		
+		logger.info("Search result list sorting type: " + id + ".");
 		return new ResponseEntity<>(searchResultDTOList, HttpStatus.OK);
 	}
-	
 
 }

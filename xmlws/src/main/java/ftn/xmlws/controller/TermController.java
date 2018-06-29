@@ -7,19 +7,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.xmlws.domain.Accomodation;
-import ftn.xmlws.domain.AccomodationType;
 import ftn.xmlws.domain.Comment;
 import ftn.xmlws.domain.Term;
 import ftn.xmlws.domain.User;
@@ -33,6 +32,8 @@ import ftn.xmlws.service.UserService;
 @RestController
 @RequestMapping(value = "/term")
 public class TermController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
 	@Autowired
 	TermService termService;
@@ -68,6 +69,7 @@ public class TermController {
 		
 		termService.saveTerm(newTerm);
 		termDTO.setAccomodationName(accomodation.getName());
+		logger.info("Term creation.");
 		return new ResponseEntity<>(termDTO, HttpStatus.OK);
 
 	}
@@ -91,7 +93,7 @@ public class TermController {
 			
 			
 		}
-		
+		logger.info("Getting term by id. Term id: " + id + ".");
 		return new ResponseEntity<>(listTermDTO, HttpStatus.OK);
 	}
 	
@@ -99,7 +101,9 @@ public class TermController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<TermDTO> deleteTerm(@PathVariable Long id) {
 		Term deleted = termService.deleteTerm(id);
+		logger.info("Term deleted.");
 		return new ResponseEntity<>(HttpStatus.OK);
+		
 	}
 	
 	@RequestMapping(value = "/saveRating/{id}/{ocena}", method = RequestMethod.PUT)
@@ -112,6 +116,7 @@ public class TermController {
 		
 		termService.saveTerm(ratedTerm);
 		accomodationService.saveAccomodation(accomodation);
+		logger.info("Saving a rating.");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -128,7 +133,7 @@ public class TermController {
 		
 		commentService.saveComment(newComment);
 		accomodationService.saveAccomodation(tempTerm.getAccomodation());
-		
+		logger.info("Comment added: " + newComment.getText() + ".");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -139,6 +144,7 @@ public class TermController {
 		termDTO.setUserQuestion(t.getUserQuestion());
 		termDTO.setAgentAnswer(t.getAgentAnswer());
 		termDTO.setTermId(t.getId());
+		logger.info("Getting term");
 		return new ResponseEntity<>(termDTO, HttpStatus.OK);
 	}
 	
@@ -148,6 +154,7 @@ public class TermController {
 		Term t = termService.findOne(termDTO.getTermId());
 		t.setUserQuestion(termDTO.getUserQuestion());
 		termService.saveTerm(t);
+		logger.info("Message sent: " + t.getUserQuestion() + ".");
 		return new ResponseEntity<>(termDTO, HttpStatus.OK);
 
 	}

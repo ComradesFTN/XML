@@ -69,6 +69,7 @@ public class UserController {
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET )
 	public ResponseEntity<List<User>> getUserAds() {
 		List<User> users = userService.findAll();
+		logger.info("Getting all users.");
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
@@ -78,21 +79,22 @@ public class UserController {
 		String[] parse = cookie.split("\\=");
 		String[] parse2 = parse[1].split("\\;");
 		User user = userService.findOne(Long.parseLong(parse2[0]));
+		logger.info("Getting a user: " + user.getId());
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<User> addUserAd(@RequestBody User user) {
+	public ResponseEntity<User> addUser(@RequestBody User user) {
 		User newUser = userService.save(user);
 		
 		if(user.getUserType()==2) {
 			try {
 				emailService.send(user);
 			} catch (Exception e) {
-				System.out.println("Greska prilikom slanja emaila: " + e.getMessage());
+				logger.error("Greska prilikom slanja emaila: " + e.getMessage());
 			}
 		}
-		System.out.println("NADJI ME!!!!!!! KREIRAO SAM KORISNIKA!!!");		
+		logger.info("User added. Id: " + newUser.getId());
 		return new ResponseEntity<>(newUser, HttpStatus.OK);
 
 	}
@@ -103,7 +105,7 @@ public class UserController {
 
 		VerificationToken verificationToken = userService.getVerificationToken(token);
 		if (verificationToken == null) {
-			System.out.println("Nema tokena");
+			logger.info("No token.");			
 			return new RedirectView("NeregistrovaniKorisnici/badUser.html");
 		}
 
@@ -111,6 +113,7 @@ public class UserController {
 
 		user.setConfirmed(true);
 		userService.save(user);
+		logger.info("User confirmed. Id: " + user.getId());
 		return new RedirectView("http://localhost:8080/xmlws/index.html");
 
 	}
@@ -119,6 +122,7 @@ public class UserController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
 		User deleted = userService.delete(id);
+		logger.info("User deleted.");
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	}
 	
@@ -128,6 +132,7 @@ public class UserController {
 		User user = userService.findOne(id);
 		if(user.isbanned()==false) {
 			user.setbanned(true);
+			logger.info("User banned. Id: " + user.getId());
 		}else {
 			user.setbanned(false);
 		}
@@ -140,11 +145,12 @@ public class UserController {
 	public ResponseEntity<?> loginProcess(@RequestBody UserDTO userDTO) throws IOException {
 		String email = userDTO.getEmail();
 		String pass = userDTO.getPassword();
-		System.out.println("email: " + email + "pass: "+ pass);		
+		logger.info("Login. email: " + email + " pass: "+ pass);					
 		User currentUser = userService.getUserByEmail(email);
 		HttpHeaders headers = new HttpHeaders();
 		if(currentUser.equals(null)) {
 			headers.add("Error2","Nepostojeci email!");
+			logger.error("Email not found.");
 			return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);			
 		}
 		if (currentUser.isConfirmed()) {
@@ -159,7 +165,7 @@ public class UserController {
 
 					String jwt = tokenProvider.generateToken(authentication);
 					headers.add(HttpHeaders.SET_COOKIE, "Id=" + jwt);
-					
+					logger.info("Authentication completed. Username: " + currentUser.getUserName());
 					return new ResponseEntity<>(new JwtAuthenticationResponse(jwt,currentUser),headers, HttpStatus.OK);
 				} catch (AuthenticationException e) {
 					logger.error("Authentication error: {}", e.getMessage());
@@ -167,8 +173,10 @@ public class UserController {
 				}
 			}
 		} else {
+			logger.error("Unauthorized user. Username: " + currentUser.getUserName());
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}		
+		}
+		logger.info("Bad request.");
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 	}
 	
@@ -181,6 +189,7 @@ public class UserController {
 		editedUser.setUserName(user.getUserName());
 		editedUser.setPassword(user.getPassword());
 		User editedUser2 = userService.save(editedUser);
+		logger.info("User edited. Id: " + editedUser.getId());
 		return new ResponseEntity<>(editedUser2, HttpStatus.OK);
 	}
 	
@@ -189,6 +198,7 @@ public class UserController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.SET_COOKIE, null);
 		SecurityContextHolder.getContext().setAuthentication(null);
+		logger.info("User logged out.");
 		return new ResponseEntity<>(headers, HttpStatus.OK);
 	}
 	
@@ -198,15 +208,16 @@ public class UserController {
 		User user = userService.getUserByEmail(userDTO.getEmail());
 		
 		if(user == null) {
+			logger.info("Password reset, invalid user.");
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		String generatedString = RandomStringUtils.randomAlphanumeric(10); //org.apache.commons.lang3.RandomStringUtils ti treba
+		String generatedString = RandomStringUtils.randomAlphanumeric(10);
 		
 		user.setPassword(generatedString);
 		userService.save(user);
 		emailService.resetPassInfo(user);
-		
+		logger.info("User password reseted. User id: " + user.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
