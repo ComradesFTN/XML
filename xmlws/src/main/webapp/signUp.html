@@ -50,12 +50,16 @@
 				</div>		
 			</div>
 			
-		</form>	
+		</form>
+		<ul class="helper-text">
+			<li class="length">Lozinka mora da sadrzi bar 8 karaktera, da sadrzi brojeve, mala i velika slova.</li>
+		</ul>	
 		</div>
 		
 		<script>		
 		$("input[type='submit']").click(function(event) {
 			event.preventDefault();
+			
 			function validate(){
 				if($('#name').val()=="" || $('#lastName').val()=="" || $('#userName').val()=="" || $('#password').val()=="" || $('#email').val()==""){
 					alert("Molimo vas popunite sva polja!");
@@ -63,9 +67,16 @@
 				}
 				return true;
 			}
+			
+		
 			if(!validate()) {
 				return;
 			}
+			
+			if(!validatePass()) {
+				alert("Lozinka mora da sadrzi bar 8 karaktera, da sadrzi brojeve, mala i velika slova.");
+			}
+			
 			var provera=true;
 				var formData = JSON.stringify({
 					name:$('#name').val(),
@@ -104,7 +115,52 @@
 				});
 				
 		});
+		
+		function validatePass() {
+			var password = document.getElementById("password").value;
 			
+			function lowercase() {
+				var regex = /[a-z]/;
+				if(regex.test(password)) {
+					return true;
+				} else return false;
+			};
+			
+			function uppercase() {
+				var regex = /[A-Z]/;
+				if(regex.test(password)) {
+					return true;
+				} else return false;
+			};
+			
+			function numbers() {
+				var regex = /[0-9]/;
+				if(regex.test(password)) {
+					return true;
+				} else return false;
+			};
+			
+			if(password.length < 8) {
+				return false;
+			}
+			
+			if(!lowercase()) {
+				return false;
+			}
+
+			if(!uppercase()) {
+				return false;
+			}
+			
+			if(!numbers()) {
+				return false;
+			}
+
+			return true;
+			
+		};
+		
+		
 		</script>
 	</body>
 </html>

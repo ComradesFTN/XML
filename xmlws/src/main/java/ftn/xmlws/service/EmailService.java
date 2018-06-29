@@ -40,4 +40,16 @@ public class EmailService {
 		System.out.println("Email poslat!");
 	}
 	
+	@Async
+	public void resetPassInfo(User user) throws MailException, InterruptedException {
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setTo(user.getEmail());
+		mail.setFrom(env.getProperty("spring.mail.username"));
+		mail.setSubject("Reset lozinke xml");
+		mail.setText("Pozdrav " + user.getName() + ",\n\n Vas promenjeni password je: " + user.getPassword());
+		javaMailSender.send(mail);
+
+		System.out.println("Password resetovan!");
+	}
+	
 }

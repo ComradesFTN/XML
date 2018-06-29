@@ -6,12 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -188,6 +190,24 @@ public class UserController {
 		headers.add(HttpHeaders.SET_COOKIE, null);
 		SecurityContextHolder.getContext().setAuthentication(null);
 		return new ResponseEntity<>(headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/resetPass", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<UserDTO> resetPass(@RequestBody UserDTO userDTO) throws MailException, InterruptedException {
+		
+		User user = userService.getUserByEmail(userDTO.getEmail());
+		
+		if(user == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		String generatedString = RandomStringUtils.randomAlphanumeric(10); //org.apache.commons.lang3.RandomStringUtils ti treba
+		
+		user.setPassword(generatedString);
+		userService.save(user);
+		emailService.resetPassInfo(user);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	

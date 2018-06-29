@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="stylesheets/bootstrap.css">
+<title>HomePage</title>
+</head>
+<body class="bg-light">	
+	<ul class="nav nav-tabs bg-danger">	
+			<li class="nav-item">
+				<a class="nav-link text-white" href="index.html">Pretraga</a>
+			</li>
+		</ul>
+		<form class="text-center mt-5" id="resetForm">
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input class="form-control text-center w-25 mx-auto" type="email" id="email" placeholder="Unesite email"><br/>		
+			</div>
+			<input type="submit" class="btn btn-primary bg-danger" value="Resetuj lozinku"> 
+		</form>
+		<script>
+		
+		$("input[type='submit']").click(function(event) {
+			event.preventDefault();
+			var formData = JSON.stringify({
+				email:$("#email").val(),
+			});
+			$.ajax({
+				url: "/xmlws/user/resetPass",
+				type: "POST",
+				data: formData,
+				contentType: "application/json",
+				success: function() {
+					alert("Informacije o lozinci su poslate na Vas email.");
+					window.location.href = "http://localhost:8080/xmlws/login.html";
+				}
+			})
+		});
+		</script>	
+</body>
+</html>
